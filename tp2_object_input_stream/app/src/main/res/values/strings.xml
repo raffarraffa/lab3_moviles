@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Trabajo Practico 1</string>
+    <string name="login_title">Login</string>
+    <string name="registro_title">Registro</string>
+    <string name="user_label">Usuario Email</string>
+    <string name="passw_label">Password</string>
+    <string name="input_user">Ingrese su email</string>
+    <string name="input_passw">Ingrese Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_registro">Registro</string>
+</resources>
