@@ -10,8 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.rafalopez.tp1_sharedpref.model.Usuario;
-import com.rafalopez.tp1_sharedpref.databinding.ActivityProfileBinding;
+import com.rafalopez.tp2_object_input_stream.databinding.ActivityProfileBinding;
+import com.rafalopez.tp2_object_input_stream.model.Usuario;
+
 
 public class ProfileActivity extends AppCompatActivity {
 
