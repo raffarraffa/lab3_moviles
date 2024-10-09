@@ -16,6 +16,8 @@ import com.rafalopez.tp2_object_input_stream.request.ApiCliente;
 import com.rafalopez.tp2_object_input_stream.ui.profile.ProfileActivity;
 import com.rafalopez.tp2_object_input_stream.utils.UtilsValidation;
 
+import java.io.FileNotFoundException;
+
 public class LoginActivityViewModel extends AndroidViewModel {
     private Intent intent;
     private Context context;
@@ -67,5 +69,18 @@ public class LoginActivityViewModel extends AndroidViewModel {
         intent =new Intent(context, ProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+    public void verifyData(){
+
+
+        Usuario user=null;
+        user = ApiCliente.leerDatos(context);
+        if (user==null){
+            Toast.makeText(context, "No hay registros \n Deber registrar usuario",
+                    Toast.LENGTH_LONG).show();
+            this.registerUser();
+        return;
+        }
+        Log.d("salida", "verifyData: "+ user.toString() );
     }
 }

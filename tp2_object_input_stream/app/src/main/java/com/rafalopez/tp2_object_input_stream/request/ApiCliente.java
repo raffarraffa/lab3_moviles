@@ -124,19 +124,18 @@ public class ApiCliente {
             ObjectInputStream ois = new ObjectInputStream(bis);
             usuario = (Usuario) ois.readObject();
         } catch (FileNotFoundException e) {
-            Toast.makeText(context, "Error al encontrar el archivo", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(context, "Error al encontrar el archivo", Toast.LENGTH_SHORT).show();
             throw new RuntimeException(e);
         } catch (IOException e) {
             Toast.makeText(context, "Error entrada/salida", Toast.LENGTH_SHORT).show();
         } catch (ClassNotFoundException e) {
             Toast.makeText(context, "Error al obtener usuario", Toast.LENGTH_SHORT).show();
+        }finally {
+            return usuario;
         }
-        return usuario;
-
-
     }
 
-    public static Usuario login(Context context,String mail,String password){
+    public static Usuario login(Context context,String email,String pass){
         file=conectar(context);
         Usuario usuario = null;
         try{
@@ -152,6 +151,7 @@ public class ApiCliente {
         } catch (ClassNotFoundException e) {
             Toast.makeText(context, "Error al obtener usuario", Toast.LENGTH_SHORT).show();
         }
+        if(!usuario.isAuth(email,pass)) usuario = null;
         return usuario;
 
     }

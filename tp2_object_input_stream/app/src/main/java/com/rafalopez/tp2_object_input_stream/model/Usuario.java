@@ -62,6 +62,9 @@ public class Usuario implements Serializable {
         if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || dni<=0 || pass.isEmpty() ) return false;
         return true;
     }
+    public boolean isAuth(String email, String pass){
+        return (this.email.equals(email) && this.pass.equals(pass));
+    }
     @Override
     public String toString() {
         return "Usuario{" +

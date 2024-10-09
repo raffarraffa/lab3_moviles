@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
        viewModel =ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginActivityViewModel.class);
+       viewModel.verifyData();
        viewModel.getMErrorMail().observe(this, new Observer<String>() {
            @Override
            public void onChanged(String s) {
