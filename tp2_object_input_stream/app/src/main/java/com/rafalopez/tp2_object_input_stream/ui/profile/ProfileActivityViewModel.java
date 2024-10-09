@@ -16,7 +16,6 @@ import com.rafalopez.tp2_object_input_stream.ui.login.LoginActivity;
 
 
 public class ProfileActivityViewModel extends AndroidViewModel {
-    //private Intent intent;
     private Context context;
     public MutableLiveData<Usuario> mUsuario =new MutableLiveData<>();
     public  MutableLiveData<Integer> mRegistroError;

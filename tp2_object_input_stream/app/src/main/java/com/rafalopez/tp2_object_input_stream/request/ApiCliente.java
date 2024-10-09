@@ -18,51 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
-//    public static Usuario leer(Context context){
-//        Usuario usuario = null;
-//        File file = conectar(context);
-//        try{
-//            FileInputStream fis = new FileInputStream(file);
-//            BufferedInputStream bis = new BufferedInputStream(fis);
-//            ObjectInputStream ois = new ObjectInputStream(bis);
-//            usuario = (Usuario) ois.readObject();
-//        } catch (FileNotFoundException e) {
-//            Toast.makeText(context, "Error al encontrar el archivo", Toast.LENGTH_SHORT).show();
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            Toast.makeText(context, "Error entrada/salida", Toast.LENGTH_SHORT).show();
-//        } catch (ClassNotFoundException e) {
-//            Toast.makeText(context, "Error al obtener usuario", Toast.LENGTH_SHORT).show();
-//        }
-//        return usuario;
-//    }
-//
-//
-//    public static boolean Guardar(Context context, Usuario usuario){
-//        File file = conectar(context);
-//        try{
-//            FileOutputStream fos = new FileOutputStream(file);
-//            BufferedOutputStream bos = new BufferedOutputStream(fos);
-//            ObjectOutputStream oos = new ObjectOutputStream(bos);
-//            oos.writeObject(usuario);
-//            bos.flush();
-//            oos.close();
-//            return true;
-//        } catch (FileNotFoundException e) {
-//            Toast.makeText(context, "Error de archivo", Toast.LENGTH_SHORT).show();
-//            return false;
-//        } catch (IOException e) {
-//            Toast.makeText(context, "Error de enrada/salida", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//    }
-//
-//
-//}
-
 public class ApiCliente {
-
 
     private static File file;
     private static boolean result=false;
