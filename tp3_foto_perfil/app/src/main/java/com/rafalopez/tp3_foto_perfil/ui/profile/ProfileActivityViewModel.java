@@ -104,7 +104,7 @@ public class ProfileActivityViewModel extends AndroidViewModel {
     }
 
     public void setRegistro(Usuario u){
-    //    getPermiso();
+     //   getPermiso();
         if(!u.isValid()){
 
             mRegistroError.setValue(0);
@@ -121,7 +121,7 @@ public class ProfileActivityViewModel extends AndroidViewModel {
         context.startActivity(intent);
     }
 
-    public void a@{
+    public void getPermiso(){
         if(PermissionChecker.checkSelfPermission(context,
                 Manifest.permission.READ_EXTERNAL_STORAGE)== PermissionChecker.PERMISSION_GRANTED){
             Toast.makeText(context,"permiso  77 -> " + PermissionChecker.PERMISSION_GRANTED ,
@@ -132,15 +132,6 @@ public class ProfileActivityViewModel extends AndroidViewModel {
             Toast.makeText(context,"permiso 80  -> " + PermissionChecker.PERMISSION_GRANTED ,
                     Toast.LENGTH_LONG).show();
         }
-//        if (context.checkSelfPermission(getApplication(),
-//                Manifest.permission.READ_EXTERNAL_STORAGE)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            permissionGranted.setValue(true);
-//        } else {
-//            permissionGranted.setValue(false);
-//        }
-//
-//
     }
     public void getRegistro(boolean login){
         if(!login) return ;
