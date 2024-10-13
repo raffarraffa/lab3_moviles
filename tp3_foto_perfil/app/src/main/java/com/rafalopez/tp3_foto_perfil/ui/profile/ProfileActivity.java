@@ -24,7 +24,7 @@ import com.rafalopez.tp3_foto_perfil.model.Usuario;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private static final int CAMERA_REQUEST_CODE = 100;
+    private static final int CAMERA_REQUEST_CODE = 100; // TODO para usar camara, hacerlo leugo
     private ActivityProfileBinding binding;
     private ProfileActivityViewModel viewModel;
     private ActivityResultLauncher<Intent> imgProfileLanzador;
