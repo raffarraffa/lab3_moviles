@@ -3,6 +3,7 @@ package com.rafalopez.tp3_foto_perfil.ui.login;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,9 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.rafalopez.tp3_foto_perfil.model.Usuario;
 import com.rafalopez.tp3_foto_perfil.request.ApiCliente;
 import com.rafalopez.tp3_foto_perfil.ui.profile.ProfileActivity;
-import com.rafalopez.tp3_foto_perfil.utils.UtilsValidation;
-
-import java.io.FileNotFoundException;
+import com.rafalopez.tp3_foto_perfil.utils.UtilsValidate;
 
 public class LoginActivityViewModel extends AndroidViewModel {
     private Intent intent;
@@ -44,7 +43,7 @@ public class LoginActivityViewModel extends AndroidViewModel {
 
     public void loginUser(Usuario user) {
         //validacion email
-        if (!UtilsValidation.isValidEmail(user.getEmail())){
+        if (!UtilsValidate.isValidEmail(user.getEmail())){
             Toast.makeText(context, "Email invalido ", Toast.LENGTH_SHORT).show();
             mErrorMail.setValue("Email invalido");
             return;
@@ -72,7 +71,6 @@ public class LoginActivityViewModel extends AndroidViewModel {
     }
     public void verifyData(){
 
-
         Usuario user=null;
         user = ApiCliente.leerDatos(context);
         if (user==null){
@@ -83,4 +81,5 @@ public class LoginActivityViewModel extends AndroidViewModel {
         }
         Log.d("salida", "verifyData: "+ user.toString() );
     }
+
 }

@@ -79,6 +79,7 @@ public class ApiCliente {
             BufferedInputStream bis = new BufferedInputStream(fis);
             ObjectInputStream ois = new ObjectInputStream(bis);
             usuario = (Usuario) ois.readObject();
+            Log.d("salida", "leerDatos: 82 " + usuario);
         } catch (FileNotFoundException e) {
          //   Toast.makeText(context, "Error al encontrar el archivo", Toast.LENGTH_SHORT).show();
             throw new RuntimeException(e);

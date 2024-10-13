@@ -1,5 +1,7 @@
 package com.rafalopez.tp3_foto_perfil.model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
@@ -8,19 +10,26 @@ public class Usuario implements Serializable {
     private String email;
     private int dni=0;
     private String pass;
+    private String photoUri="android.resource://com.rafalopez.tp3_foto_perfil/drawable/no_avatar" ;
     public Usuario() {}
-    public Usuario(String nombre, String apellido, String email, int dni, String pass) {
+    public Usuario(String nombre, String apellido, String email, int dni, String pass, Uri photoUri) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.dni = dni;
         this.pass = pass;
+        if(photoUri!=null) this.photoUri=photoUri.toString();
     }
-
+    public Uri getPhotoUri() {
+        Uri photoUri = Uri.parse(this.photoUri);
+        return photoUri;
+    }
+    public void setPhotoUri(Uri photoUri) {
+        this.photoUri = photoUri.toString();
+    }
     public int getDni() {
         return dni;
     }
-
     public void setDni(int dni) {
         this.dni = dni;
     }
@@ -65,6 +74,7 @@ public class Usuario implements Serializable {
     public boolean isAuth(String email, String pass){
         return (this.email.equals(email) && this.pass.equals(pass));
     }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -73,7 +83,7 @@ public class Usuario implements Serializable {
                 ", email='" + email + '\'' +
                 ", dni=" + dni +
                 ", pass='" + pass + '\'' +
-                ", dni='" + dni + '\'' +
+                ", photoUri='" + photoUri + '\'' +
                 '}';
     }
 }
