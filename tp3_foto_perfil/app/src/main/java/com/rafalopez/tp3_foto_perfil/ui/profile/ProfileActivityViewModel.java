@@ -32,16 +32,28 @@ public class ProfileActivityViewModel extends AndroidViewModel {
     public MutableLiveData<Usuario> mUsuario =new MutableLiveData<>();
     public  MutableLiveData<Integer> mRegistroError;
     public MutableLiveData<String> mImg;
+    //public MutableLiveData<Boolean> mPermiso;
+   // private ActivityResultLauncher<Intent> galeriaLauncher;
     private ActivityResultLauncher<String> permisoLauncher;
 
     public ProfileActivityViewModel(@NonNull Application application){
         super(application);
         context=application.getApplicationContext();
-        getPermiso();
+      //  initPermisoLauncher();
+       // getPermiso();
+    }
+    private void initPermisoLauncher() {
+   //     permisoLauncher = getActivityResultLauncher();
     }
 
-
-
+//    private ActivityResultLauncher<String> getActivityResultLauncher() {
+//        return new ActivityResultLauncher<String>() {
+//            @Override
+//            public void launch(String input, @Nullable ActivityOptionsCompat options) {
+//                // Aquí se lanza el permiso
+//            }
+//        }
+//    }
 
     //    private void initPermisoLauncher() {
 //        permisoLauncher = new ActivityResultLauncher<String>() {
@@ -92,7 +104,7 @@ public class ProfileActivityViewModel extends AndroidViewModel {
     }
 
     public void setRegistro(Usuario u){
-        getPermiso();
+    //    getPermiso();
         if(!u.isValid()){
 
             mRegistroError.setValue(0);
@@ -109,7 +121,7 @@ public class ProfileActivityViewModel extends AndroidViewModel {
         context.startActivity(intent);
     }
 
-    public void getPermiso(){
+    public void a@{
         if(PermissionChecker.checkSelfPermission(context,
                 Manifest.permission.READ_EXTERNAL_STORAGE)== PermissionChecker.PERMISSION_GRANTED){
             Toast.makeText(context,"permiso  77 -> " + PermissionChecker.PERMISSION_GRANTED ,
