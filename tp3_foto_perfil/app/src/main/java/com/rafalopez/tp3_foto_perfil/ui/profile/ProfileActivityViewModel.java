@@ -1,5 +1,7 @@
 package com.rafalopez.tp3_foto_perfil.ui.profile;
 
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +34,7 @@ public class ProfileActivityViewModel extends AndroidViewModel {
     public MutableLiveData<Usuario> mUsuario =new MutableLiveData<>();
     public  MutableLiveData<Integer> mRegistroError;
     public MutableLiveData<String> mImg;
-    //public MutableLiveData<Boolean> mPermiso;
+    public MutableLiveData<Boolean> mPermiso; //TODO hacerl el pmiso con mutable
    // private ActivityResultLauncher<Intent> galeriaLauncher;
     private ActivityResultLauncher<String> permisoLauncher;
 
@@ -111,7 +113,7 @@ public class ProfileActivityViewModel extends AndroidViewModel {
             Toast.makeText(context, "Error de registro \n verifique datos",Toast.LENGTH_LONG).show();
             return;
         }
-        Log.d("salida", "setRegistro: 59 " + u);
+        Log.d("salida", "setRegistro: 114 " + u);
         ApiCliente.guardar(context,u);
         Toast.makeText(context, "Datos guardados \n Identifiquese",
                 Toast.LENGTH_LONG).show();
@@ -120,23 +122,41 @@ public class ProfileActivityViewModel extends AndroidViewModel {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+    public void verificarPermiso(String permission, ActivityResultLauncher<String> permisoLanzador) {
+        if (checkSelfPermission(getApplication(), permission) != PackageManager.PERMISSION_GRANTED) {
 
-    public void getPermiso(){
+            permisoLanzador.launch(permission);
+        } else {
+            Log.d("Permiso", "Permiso ya concedido");
+
+        }
+    }
+    public void onPermisoResultado(boolean isGranted) {
+        if (isGranted) {
+
+            Log.d("Permiso", "Permiso concedido");
+        } else {
+
+            Log.d("Permiso", "Permiso denegado");
+        }
+    }
+    //BUG esto no anda no s epoorque
+    public void getPermiso(ActivityResult result){
         if(PermissionChecker.checkSelfPermission(context,
                 Manifest.permission.READ_EXTERNAL_STORAGE)== PermissionChecker.PERMISSION_GRANTED){
-            Toast.makeText(context,"permiso  77 -> " + PermissionChecker.PERMISSION_GRANTED ,
+            Toast.makeText(context,"permiso  127 -> " + PermissionChecker.PERMISSION_GRANTED ,
                     Toast.LENGTH_LONG).show();
 
         }else{
             permisoLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-            Toast.makeText(context,"permiso 80  -> " + PermissionChecker.PERMISSION_GRANTED ,
+            Toast.makeText(context,"permiso 132  -> " + PermissionChecker.PERMISSION_GRANTED ,
                     Toast.LENGTH_LONG).show();
         }
     }
     public void getRegistro(boolean login){
         if(!login) return ;
         Usuario u = ApiCliente.leerDatos(context);
-        Log.d("salida", "usuario VM linea 70 : " + u.toString());
+        Log.d("salida", "usuario VM linea 139 : " + u.toString());
 
         if(u==null) return;
         mUsuario.setValue(u);
@@ -147,12 +167,14 @@ public class ProfileActivityViewModel extends AndroidViewModel {
         }
         return  Integer.parseInt(dni);
     }
+    //TODO hacerlo para sacar shelfi
     public Uri sacarFoto(){
 
         Uri photoUri=null;
         Toast.makeText(context,"60 view model profile", Toast.LENGTH_LONG).show();
         return photoUri;
     }
+    // intentio con camara nlopudoe hace rnadar
     public void imgCapture(ActivityResult result){
         Log.d("salida", "imgCapture: " + result.toString());
     }
@@ -161,8 +183,6 @@ public class ProfileActivityViewModel extends AndroidViewModel {
         if(result!=null){
             mImg.setValue( result.getData().getData().toString());
         }
-
-
         Log.d("galeria", "iniciarGaleria: " + result.getData().getData().toString());
     }
 }
