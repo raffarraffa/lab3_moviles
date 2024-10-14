@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -19,8 +20,8 @@ public class LoginActivity extends AppCompatActivity {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+       binding = ActivityLoginBinding.inflate(getLayoutInflater());
+       setContentView(binding.getRoot());
        viewModel =ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginActivityViewModel.class);
        viewModel.verifyData();
        viewModel.getMErrorMail().observe(this, new Observer<String>() {
@@ -67,13 +68,14 @@ public class LoginActivity extends AppCompatActivity {
                viewModel.loginUser(usuario);
            }
        });
-
        binding.btnRegistro.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                viewModel.registerUser();
            }
        });
-
+       Toast.makeText(getApplication().getApplicationContext(),
+               "USER y PASSWORD \n esta Harcodeado  \n para facilitar \n el debuging",
+               Toast.LENGTH_LONG).show();
     }
 }
