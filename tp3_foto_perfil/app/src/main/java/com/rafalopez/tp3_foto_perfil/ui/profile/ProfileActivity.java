@@ -75,6 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
                 binding.textViewTitle.setText("Perfil");
                 Log.d("galeria", "imagen desde usuario -> " + usuario.getPhotoUri());
                 binding.imageView.setImageURI(usuario.getPhotoUri());
+                binding.imageView.setTag(usuario.getPhotoUri());
             }
         });
 
@@ -116,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
                 int telefono = viewModel.verifyDni(binding.inputTelefono.getText().toString());
                 String pass = binding.inputPassword.getText().toString();
                 Uri photoUri = (Uri) binding.imageView.getTag();
-                Log.d("usuario", "onClick: 108" + photoUri);
+                Log.d("U_avatar", "onClick: 119" + photoUri);
                 Usuario usuario = new Usuario(nombre, apellido, email, telefono, pass, photoUri);
                 viewModel.setRegistro(usuario);
             }

@@ -108,7 +108,6 @@ public class ProfileActivityViewModel extends AndroidViewModel {
     public void setRegistro(Usuario u){
      //   getPermiso();
         if(!u.isValid()){
-
             mRegistroError.setValue(0);
             Toast.makeText(context, "Error de registro \n verifique datos",Toast.LENGTH_LONG).show();
             return;
