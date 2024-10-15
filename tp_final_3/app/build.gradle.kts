@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.rafalopez.menu_inferior"
+    namespace = "com.rafalopez.inmobiliaria"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.rafalopez.menu_inferior"
+        applicationId = "com.rafalopez.inmobiliaria"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -43,7 +43,10 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation(libs.annotation)
+    implementation(libs.activity)
+    implementation(libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.scalars)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
