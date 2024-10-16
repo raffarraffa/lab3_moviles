@@ -15,6 +15,7 @@ import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.User;
 import com.rafalopez.inmobiliaria.request.ApiClient;
+import com.rafalopez.inmobiliaria.services.PropietarioServices;
 
 import java.util.Map;
 
@@ -28,33 +29,57 @@ public class LoginViewModel extends AndroidViewModel {
     private static final String TOKEN_KEY = "token";
     private static final String TAG = "PropietarioServices";
     private static Context context;
+    private PropietarioServices propServ;
     private MutableLiveData<Propietario> mPropietario;
     private MutableLiveData<Boolean> mLoginError;
     private MutableLiveData<String> mLoginMsgError;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        context =application.getApplicationContext();
+        context = application.getApplicationContext();
+        propServ = new PropietarioServices(context);
     }
-    LiveData<Propietario> getMPropietario (){
-        if(mPropietario==null){
-            mPropietario =new MutableLiveData<>();
+
+    LiveData<Propietario> getMPropietario() {
+        if (mPropietario == null) {
+            mPropietario = new MutableLiveData<>();
         }
         return mPropietario;
     }
-    LiveData<Boolean> getMLoginError (){
-        if(mLoginError==null){
-            mLoginError =new MutableLiveData<>();
+
+    LiveData<Boolean> getMLoginError() {
+        if (mLoginError == null) {
+            mLoginError = new MutableLiveData<>();
             mLoginError.setValue(false);
         }
         return mLoginError;
     }
-    LiveData<String> getMsgLoginError (){
-        if(mLoginMsgError==null){
-            mLoginMsgError =new MutableLiveData<>();
+
+    LiveData<String> getMsgLoginError() {
+        if (mLoginMsgError == null) {
+            mLoginMsgError = new MutableLiveData<>();
         }
         return mLoginMsgError;
     }
+    public void loginUser(String email, String password){
+        User user= new User(email,password);
+        propServ.login(user, new Callback<String>(){
+
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable throwable) {
+
+                            }
+                        });
+    }
+}
+
+
+/*
 //    public void checkToken(){
 //        String token = ApiData.leerData(context);
 //        if( token!=null){
@@ -84,6 +109,9 @@ public class LoginViewModel extends AndroidViewModel {
 //        }
 //        Log.d("salida", "checkToken: 61 " + token);
 //    }
+*/
+/*
+
 public void checkDataToken(){
     String token = ApiData.leerData(context, "datos", "token"){
 
@@ -106,6 +134,8 @@ public void checkDataToken(){
         }
     });
 }
+*/
+/*
     public void loginUser(String email, String password){
 
         User user= new User(email,password);
@@ -141,3 +171,4 @@ public void checkDataToken(){
     }
 
 }
+*/

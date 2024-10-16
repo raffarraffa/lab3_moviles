@@ -74,13 +74,12 @@ public class PropietarioServices {
     /**
      * Inicia SESSION
      *
-     * @param email    El correo del usuario
-     * @param password La contraseña del usuario
+     * @param  user   clase con (pass y contrasñea)
      * @param callback Maneja la respuesta de la API, la cual puede ser exitosa o fallida
      */
-    public void login(String email, String password, Callback<String> callback) {
+    public void login(User user,Callback<String> callback) {
         // entidad a autenticar
-        User user = new User(email, password);
+//        User user = new User(email, password);
         Call<String> request = api.PostLogin(user);
 
         // encola la solicitud
