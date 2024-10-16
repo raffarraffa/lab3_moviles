@@ -76,6 +76,7 @@
         android:ems="10"
         android:hint="Ingrese email"
         android:inputType="textEmailAddress"
+        android:text="uno@prop.com"
         app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
@@ -102,6 +103,7 @@
         android:ems="10"
         android:hint="Ingrese su Clave"
         android:inputType="textPassword"
+        android:text="1234"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -139,5 +141,17 @@
         app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="125dp"
+        android:layout_height="117dp"
+        android:indeterminateTint="@color/purple_500"
+        android:progressBackgroundTint="#EC3131"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.863" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
