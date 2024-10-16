@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.entity.User;
 import com.rafalopez.inmobiliaria.request.ApiClient;
@@ -13,13 +15,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PropietarioServices {
-    private ApiClient.InmobiliariaServices api;
+    private final ApiClient.InmobiliariaServices api;
 
 
     private static final String PREFERENCES_NAME = "datos";
     private static final String TOKEN_KEY = "token";
     private static final String TAG = "PropietarioServices";
-    private static Context contexto;
+    private final Context contexto;
 
     /**
      * Constructor de la clase
@@ -38,7 +40,9 @@ public class PropietarioServices {
      * @return `true` si el token fue guardado, de lo contrario, `false`
      */
     public boolean guardarToken(@NonNull String token) {
-        return ApiData.guardarData(contexto, PREFERENCES_NAME, token, TOKEN_KEY);
+
+        String stringToken = JsonParser.parseString(token).getAsJsonObject().get("token").getAsString();
+        return ApiData.guardarData(contexto, PREFERENCES_NAME, stringToken, TOKEN_KEY);
     }
 
     /**
@@ -89,7 +93,7 @@ public class PropietarioServices {
                 if (response.isSuccessful() && response.body() != null) {
                     String token = response.body();
                     guardarToken(token);
-                    callback.onResponse(call, response);
+                    callback.onResponse(call, response );
                 } else {
                     errorRespuesta(response);
                     callback.onResponse(call, null);

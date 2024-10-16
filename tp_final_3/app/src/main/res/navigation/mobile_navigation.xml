@@ -22,4 +22,24 @@
         android:name="com.rafalopez.inmobiliaria.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/propietarioFragment"
+        android:name="com.rafalopez.inmobiliaria.ui.propietario.PropietarioFragment"
+        android:label="fragment_propietario"
+        tools:layout="@layout/fragment_propietario" />
+    <fragment
+        android:id="@+id/inqulinoFragment"
+        android:name="com.rafalopez.inmobiliaria.ui.inquilino.InqulinoFragment"
+        android:label="fragment_inqulino"
+        tools:layout="@layout/fragment_inqulino" />
+    <fragment
+        android:id="@+id/inmuebleFragment"
+        android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleFragment"
+        android:label="fragment_inmueble"
+        tools:layout="@layout/fragment_inmueble" />
+    <fragment
+        android:id="@+id/contratoFragment"
+        android:name="com.rafalopez.inmobiliaria.ui.contrato.ContratoFragment"
+        android:label="fragment_contrato"
+        tools:layout="@layout/fragment_contrato" />
 </navigation>

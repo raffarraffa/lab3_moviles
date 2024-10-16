@@ -1,4 +1,4 @@
-package com.rafalopez.inmobiliaria.ui.login;
+package com.rafalopez.inmobiliaria;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,14 +10,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.gson.Gson;
-import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.User;
-import com.rafalopez.inmobiliaria.request.ApiClient;
 import com.rafalopez.inmobiliaria.services.PropietarioServices;
-
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,10 +22,11 @@ import retrofit2.Response;
 public class LoginViewModel extends AndroidViewModel {
     private static final String PREFERENCES_NAME = "datos";
     private static final String TOKEN_KEY = "token";
-    private static final String TAG = "PropietarioServices";
+    private static final String TAG = "LoginViewModel";
     private static Context context;
     private PropietarioServices propServ;
     private MutableLiveData<Propietario> mPropietario;
+    private MutableLiveData<Boolean> mLoginOk;
     private MutableLiveData<Boolean> mLoginError;
     private MutableLiveData<String> mLoginMsgError;
 
@@ -54,6 +50,13 @@ public class LoginViewModel extends AndroidViewModel {
         }
         return mLoginError;
     }
+    LiveData<Boolean> getMLoginOk() {
+        if (mLoginOk == null) {
+            mLoginOk = new MutableLiveData<>();
+       //     mLoginOk.setValue(false);
+        }
+        return mLoginOk;
+    }
 
     LiveData<String> getMsgLoginError() {
         if (mLoginMsgError == null) {
@@ -67,6 +70,13 @@ public class LoginViewModel extends AndroidViewModel {
 
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
+                                if(response!=null || response.body()!=null) {
+                                    Log.d(TAG, "onResponse: " + response.body());
+                                    mLoginOk.setValue(true);
+                                }else{
+                                    Log.d(TAG, "onResponse:  eror");
+                                }
+
 
                             }
 
@@ -76,39 +86,45 @@ public class LoginViewModel extends AndroidViewModel {
                             }
                         });
     }
+    public  void checkDataToken(){
+        String token=propServ.obtenerToken();
+
+        Toast.makeText(context,token,Toast.LENGTH_SHORT).show();
+    }
+
 }
 
 
 /*
-//    public void checkToken(){
-//        String token = ApiData.leerData(context);
-//        if( token!=null){
-//            ApiClient.InmobiliariaServices api= ApiClient.getApiInmobiliaria();
-//            Call<Propietario> request = api.GetPerfil(token);
-//            Log.d("salida", "checkToken: 61 response.body()");
-//            request.enqueue(new Callback<Propietario>() {
-//                @Override
-//                public void onResponse(Call<Propietario> call, Response<Propietario> response) {
-//                    Log.d("salida", "checkToken: 64 " + response.body());
-//                    if(response.body()==null){
-//                        ApiData.guardarData(context,"");
-//                    }
-//                    Log.d("salida", "checkToken: 68 " + response.body());
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Propietario> call, Throwable throwable) {
-//
-//                }
-//            });
-//            ApiData.guardarData(context,"h");
-//            Log.d("salida", "checkToken: 78 " + token);
-//        }else{
-//
-//        }
-//        Log.d("salida", "checkToken: 61 " + token);
-//    }
+    public void checkToken(){
+        String token = ApiData.leerData(context);
+        if( token!=null){
+            ApiClient.InmobiliariaServices api= ApiClient.getApiInmobiliaria();
+            Call<Propietario> request = api.GetPerfil(token);
+            Log.d("salida", "checkToken: 61 response.body()");
+            request.enqueue(new Callback<Propietario>() {
+                @Override
+                public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+                    Log.d("salida", "checkToken: 64 " + response.body());
+                    if(response.body()==null){
+                        ApiData.guardarData(context,"");
+                    }
+                    Log.d("salida", "checkToken: 68 " + response.body());
+
+                }
+
+                @Override
+                public void onFailure(Call<Propietario> call, Throwable throwable) {
+
+                }
+            });
+            ApiData.guardarData(context,"h");
+            Log.d("salida", "checkToken: 78 " + token);
+        }else{
+
+        }
+        Log.d("salida", "checkToken: 61 " + token);
+    }
 */
 /*
 
