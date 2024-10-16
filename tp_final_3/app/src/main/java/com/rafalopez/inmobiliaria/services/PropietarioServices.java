@@ -1,9 +1,11 @@
 package com.rafalopez.inmobiliaria.services;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.entity.User;
 import com.rafalopez.inmobiliaria.request.ApiClient;
 import retrofit2.Call;
@@ -12,62 +14,76 @@ import retrofit2.Response;
 
 public class PropietarioServices {
     private ApiClient.InmobiliariaServices api;
-    private SharedPreferences sharedPreferences;
+
 
     private static final String PREFERENCES_NAME = "datos";
     private static final String TOKEN_KEY = "token";
+    private static final String TAG = "PropietarioServices";
+    private static Context contexto;
 
-
+    /**
+     * Constructor de la clase
+     *
+     * @param contexto Contexto de la app, accede a recursos como SharedPreferences.
+     */
     public PropietarioServices(Context contexto) {
         this.api = ApiClient.getApiInmobiliaria();
-        this.sharedPreferences = contexto.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
-    }
-
-    // guardar token
-    public boolean guardarToken(@NonNull String token) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TOKEN_KEY, token);
-        return editor.commit();
-    }
-
-    // obtener token guardado
-    @NonNull
-    public String obtenerToken() {
-        return sharedPreferences.getString(TOKEN_KEY, "");
-    }
-
-    // eliminar token (cerrar session)
-    public boolean eliminarToken() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(TOKEN_KEY);
-        return editor.commit();
-    }
-
-    // verifica  usuario esta autenicado
-    public boolean isAutenticado() {
-        String token = obtenerToken();
-        if(token==null || token.isEmpty()) return false;
-        return true;
+        this.contexto = contexto;
     }
 
     /**
-     * LOGIN Inicia SESSION del usuario con las credenciales proporcionadas.
+     * Guarda el token de autenticacion en SharedPreferences
      *
-     * Realiza una llamada a la API para autenticar al usuario
-     * si es exitoso  guarda el token de SESSION  en las preferencias compartidas.
+     * @param token El token JWT recibido de la API
+     * @return `true` si el token fue guardado, de lo contrario, `false`
+     */
+    public boolean guardarToken(@NonNull String token) {
+        return ApiData.guardarData(contexto, PREFERENCES_NAME, token, TOKEN_KEY);
+    }
+
+    /**
+     * Obtiene el token almacenado en SharedPreferences
      *
-     * @param email    El correo del usuario.
-     * @param password La contraseña del usuario.
-     * @param callback El objeto Callback que maneja la respuesta de la API.
-     *                 Este callback se invoca con el resultado  y obliga
-     *                 imlemntacion de metodos cuando s eutilice
-     *                 En caso de exito, se llama a onResponse con la respuesta,
-     *                 y en caso de error, se llama a onFailure con el error.
+     * @return El token JWT almacenado. Si no existe, retorna una cadena caci
+     */
+    @NonNull
+    public String obtenerToken() {
+        return ApiData.leerData(contexto, PREFERENCES_NAME, TOKEN_KEY);
+    }
+
+    /**
+     * Elimina el token de  SharedPreferences
+     *
+     * @return `true` o `false` resultado poeracion
+     */
+    public boolean eliminarToken() {
+        return ApiData.deleteData(contexto, PREFERENCES_NAME, TOKEN_KEY);
+    }
+
+    /**
+     * Verifica si el usuario está autenticado al revisar si existe un token almacenado
+     * Puede no se valido, debe verificar contra el servidor
+     * *
+     * @return `true` o  `fasle` si exite un token
+     */
+    public boolean isAutenticado() {
+        String token = obtenerToken();
+        return token != null && !token.isEmpty();
+    }
+
+    /**
+     * Inicia SESSION
+     *
+     * @param email    El correo del usuario
+     * @param password La contraseña del usuario
+     * @param callback Maneja la respuesta de la API, la cual puede ser exitosa o fallida
      */
     public void login(String email, String password, Callback<String> callback) {
+        // entidad a autenticar
         User user = new User(email, password);
         Call<String> request = api.PostLogin(user);
 
+        // encola la solicitud
         request.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -76,51 +92,63 @@ public class PropietarioServices {
                     guardarToken(token);
                     callback.onResponse(call, response);
                 } else {
-                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.message()));
+                    errorRespuesta(response);
+                    callback.onResponse(call, null);
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
-                callback.onFailure(call, throwable);
+                errorConexion(throwable);
+                callback.onResponse(call, null);
             }
         });
     }
 
-
     /**
-     * Obtiene el perfil del usuario autenticado mediante el token.
+     * Obtiene el perfil
      *
-     * Rrealiza una llamada a la API para obtener el perfil del usuario.
-     * El token de autenticación se incluye en la cabecera de la solicitud.
-     *
-     * @param token El token de autenticación del usuario. Debe ser un token válido
-     *              que se ha obtenido previamente tras el inicio de sesión.
-     *              En caso de exito, el perfil del usuario se puede procesar en
-     *              el callback.
-     *              En caso de error, se puede manejar el fallo en el callback.
-     * @param callback Maneja la respuesta de la API.
-     *                 Este callback se invoca con el resultado .
-     *                 En caso de exito, se llama a onResponse con la respuesta,
-     *                 y en caso de error, se llama a onFailure con el error.
+     * @param token    JWT
+     * @param callback manejador respuesta de la API, que incluye el perfil
      */
     public void obtenerPerfil(String token, Callback<String> callback) {
         Call<String> request = api.GetPerfil("Bearer " + token);
+
+        // encola la solicitud
         request.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     callback.onResponse(call, response);
                 } else {
-                    callback.onFailure(call, new Throwable("Error en la respuesta: " + response.message()));
+                    errorRespuesta(response);
+                    callback.onResponse(call, null);
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
-                //callback.onFailure(call, throwable);
+                errorConexion(throwable);
+                callback.onResponse(call, null);
             }
         });
     }
 
+    /**
+     * gestionerrores
+     *
+     * @param response respuesta de la API con el erro
+     */
+    private void errorRespuesta(@NonNull Response<?> response) {
+        Log.e(TAG, "Error en la respuesta: " + response.message() + " Code: " + response.code());
+    }
+
+    /**
+     * gestionerrores
+     *
+     * @param throwable excepción o error
+     */
+    private void errorConexion(@NonNull Throwable throwable) {
+        Log.e(TAG, "Error de conexión: " + throwable.getMessage());
+    }
 }

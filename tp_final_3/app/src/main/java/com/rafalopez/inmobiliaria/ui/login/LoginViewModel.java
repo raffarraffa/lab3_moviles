@@ -24,7 +24,10 @@ import retrofit2.Response;
 
 
 public class LoginViewModel extends AndroidViewModel {
-    private Context context;
+    private static final String PREFERENCES_NAME = "datos";
+    private static final String TOKEN_KEY = "token";
+    private static final String TAG = "PropietarioServices";
+    private static Context context;
     private MutableLiveData<Propietario> mPropietario;
     private MutableLiveData<Boolean> mLoginError;
     private MutableLiveData<String> mLoginMsgError;
@@ -82,7 +85,7 @@ public class LoginViewModel extends AndroidViewModel {
 //        Log.d("salida", "checkToken: 61 " + token);
 //    }
 public void checkDataToken(){
-    String token = ApiData.leerData(context);
+    String token = ApiData.leerData(context, "datos", "token"){
 
     Log.d("salida", "checkDataToken: " + token);
     ApiClient.InmobiliariaServices api = ApiClient.getApiInmobiliaria();
@@ -123,7 +126,7 @@ public void checkDataToken(){
                     Map<String, Object> map = gson.fromJson(response.body(), Map.class);
                     String token = (String) map.get("token");
                     Log.i("salida", "Código de estado 105: " + token);
-                    ApiData.guardarData(context,token);
+                    Boolean resultado = ApiData.guardarData(context, );
                 }
                 return null;
             }
