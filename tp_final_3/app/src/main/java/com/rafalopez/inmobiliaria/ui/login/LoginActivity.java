@@ -1,4 +1,4 @@
-package com.rafalopez.inmobiliaria;
+package com.rafalopez.inmobiliaria.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,9 +33,10 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getMLoginOk().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                startActivity(intent);
-                finish();
+
+//                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+//                startActivity(intent);
+                //TODO probar el back de android para ver si vuelve a LOGIN
             }
         });
         loginViewModel.getMsgLoginError().observe(this, new Observer<String>() {
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 //                binding.progressBar.setVisibility(View.INVISIBLE);
 
                 Toast.makeText(getApplicationContext(),"Login error " + s,Toast.LENGTH_SHORT).show();
-                Log.e("salida", "mutable 40: " + s.toString()  );
+
             }
         });
   //  loginViewModel.checkDataToken();
@@ -64,11 +65,15 @@ public class LoginActivity extends AppCompatActivity {
         btnRestore.setOnClickListener(new View.OnClickListener(){
             @Override
                  public void onClick(View v) {
-                        loginViewModel.checkDataToken();
+                      loginViewModel.checkDataToken();
                   }
         });
+        inciarApp();
 
-
+    }
+    private void inciarApp(){
+        Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+        startActivity(intent);
     }
 
 }

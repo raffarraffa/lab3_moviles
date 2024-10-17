@@ -4,10 +4,22 @@ public class User {
     private String email;
     private String password;
     private String token= null;
+    private Propietario propietario=null;
 
     public User(String email, String password) {
         this.email=email;
         this.password=password;
+    }
+
+    public User(String token, Propietario propietario) {
+        this.token = token;
+        this.propietario = propietario;
+    }
+
+    public User(String email, String password, String token) {
+        this.email = email;
+        this.password = password;
+        this.token = token;
     }
 
     public String getEmail() {
@@ -34,11 +46,21 @@ public class User {
         this.token = token;
     }
 
+    public Propietario getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(Propietario propietario) {
+        this.propietario = propietario;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                ", propietario=" + propietario +
                 '}';
     }
 }

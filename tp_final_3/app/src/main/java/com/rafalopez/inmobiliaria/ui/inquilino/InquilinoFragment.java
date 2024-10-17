@@ -14,24 +14,24 @@ import android.view.ViewGroup;
 
 import com.rafalopez.inmobiliaria.R;
 
-public class InqulinoFragment extends Fragment {
+public class InquilinoFragment extends Fragment {
 
-    private InqulinoViewModel mViewModel;
+    private InquilinoViewModel mViewModel;
 
-    public static InqulinoFragment newInstance() {
-        return new InqulinoFragment();
+    public static InquilinoFragment newInstance() {
+        return new InquilinoFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_inqulino, container, false);
+        return inflater.inflate(R.layout.fragment_inquilino, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(InqulinoViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(InquilinoViewModel.class);
         // TODO: Use the ViewModel
     }
 

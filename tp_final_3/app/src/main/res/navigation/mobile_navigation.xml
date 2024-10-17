@@ -3,43 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/nav_map">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_map"
         android:name="com.rafalopez.inmobiliaria.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_map" />
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.rafalopez.inmobiliaria.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_gallery"-->
+<!--        android:name="com.rafalopez.inmobiliaria.ui.gallery.GalleryFragment"-->
+<!--        android:label="@string/menu_gallery"-->
+<!--        tools:layout="@layout/fragment_gallery" />-->
 
+<!--    <fragment-->
+<!--        android:id="@+id/nav_slideshow"-->
+<!--        android:name="com.rafalopez.inmobiliaria.ui.slideshow.SlideshowFragment"-->
+<!--        android:label="@string/menu_slideshow"-->
+<!--        tools:layout="@layout/fragment_slideshow" />-->
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.rafalopez.inmobiliaria.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/propietarioFragment"
+        android:id="@+id/nav_propietario"
         android:name="com.rafalopez.inmobiliaria.ui.propietario.PropietarioFragment"
-        android:label="fragment_propietario"
+        android:label="Propietario"
         tools:layout="@layout/fragment_propietario" />
     <fragment
-        android:id="@+id/inqulinoFragment"
-        android:name="com.rafalopez.inmobiliaria.ui.inquilino.InqulinoFragment"
-        android:label="fragment_inqulino"
-        tools:layout="@layout/fragment_inqulino" />
+        android:id="@+id/nav_inquilino"
+        android:name="com.rafalopez.inmobiliaria.ui.inquilino.InquilinoFragment"
+        android:label="fragment_inquilino"
+        tools:layout="@layout/fragment_inquilino" />
     <fragment
-        android:id="@+id/inmuebleFragment"
+        android:id="@+id/nav_inmueble"
         android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleFragment"
         android:label="fragment_inmueble"
         tools:layout="@layout/fragment_inmueble" />
     <fragment
-        android:id="@+id/contratoFragment"
+        android:id="@+id/nav_contrato"
         android:name="com.rafalopez.inmobiliaria.ui.contrato.ContratoFragment"
         android:label="fragment_contrato"
         tools:layout="@layout/fragment_contrato" />
+<!--    <fragment-->
+<!--        android:id="@+id/nav_map"-->
+<!--        android:name="com.rafalopez.inmobiliaria.ui.map.MapFragment"-->
+<!--        android:label="fragment_map"-->
+<!--        tools:layout="@layout/fragment_home" />-->
 </navigation>

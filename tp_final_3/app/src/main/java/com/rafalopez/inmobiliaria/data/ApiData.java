@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 
+import com.rafalopez.inmobiliaria.entity.Propietario;
+
 /**
  * Clase para almacenamiento de datos con SharedPreferences.
  */
@@ -31,17 +33,39 @@ public class ApiData {
      *
      * @param context Contexto de la app
      * @param archivo Nombre del archivo (sin ext)
-     * @param dato Dato a almacenar
-     * @param tag Etiqueta del dato
+     * @param dato    Dato a almacenar
+     * @param tag     Etiqueta del dato
      * @return Booleano que indica si la resulkto exitosa
      */
-    public static boolean guardarData(Context context, @NonNull String archivo,
-                                      @NonNull String dato, @NonNull String tag) {
+    public static boolean guardarData(
+            Context context,
+            @NonNull String archivo,
+            @NonNull String dato,
+            @NonNull String tag) {
         SharedPreferences appData = conectar(context, archivo);
         SharedPreferences.Editor editor = appData.edit();
         editor.putString(tag, dato);
         return editor.commit();
     }
+
+    public static boolean guardarData(
+            Context context,
+            @NonNull String archivo,
+            @NonNull Propietario dato,
+            @NonNull String tag) {
+        SharedPreferences appData = conectar(context, archivo);
+        SharedPreferences.Editor editor = appData.edit();
+        editor.putString("nombre", dato.getNombre());
+        editor.putString("apellido", dato.getApellido());
+        editor.putString("dni", dato.getDni());
+        editor.putString("email", dato.getEmail());
+        editor.putString("telefono", dato.getTelefono());
+        editor.putString("avatar", dato.getAvatar());
+        return (editor.commit());
+
+}
+
+
 
     /**
      * Lee un dato de SharedPreferences.

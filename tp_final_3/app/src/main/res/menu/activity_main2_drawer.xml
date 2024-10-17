@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+<!-- Inicio mapa -->
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_map"
+            android:icon="@drawable/logo7"
+            android:title="Inicio" />
+<!-- Perfil popietario       -->
+        <item
+            android:id="@+id/nav_propietario"
+            android:icon="@drawable/logo_final"
+            android:title="Perfil" />
+<!--  -->
+        <item
+            android:id="@+id/nav_inmueble"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Inmuebles" />
+        <item
+            android:id="@+id/nav_inquilino"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Inquilinos" />
+        <item
+            android:id="@+id/nav_contrato"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:title="Contratos" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_salir"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Salir" />
+<!--        <item-->
+<!--            android:id="@+id/nav_home"-->
+<!--            android:icon="@drawable/ic_menu_camera"-->
+<!--            android:title="@string/menu_home" />-->
+
     </group>
 </menu>
