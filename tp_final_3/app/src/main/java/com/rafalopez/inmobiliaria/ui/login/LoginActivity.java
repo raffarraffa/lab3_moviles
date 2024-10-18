@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getMLoginOk().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
+                inciarApp();
 
 //                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
 //                startActivity(intent);
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                       loginViewModel.checkDataToken();
                   }
         });
-        inciarApp();
+    //    inciarApp();
 
     }
     private void inciarApp(){
