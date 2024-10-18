@@ -7,21 +7,9 @@
 
     <fragment
         android:id="@+id/nav_map"
-        android:name="com.rafalopez.inmobiliaria.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:name="com.rafalopez.inmobiliaria.ui.map.MapFragment"
+        android:label="Ubicacion Api"
         tools:layout="@layout/fragment_map" />
-
-<!--    <fragment-->
-<!--        android:id="@+id/nav_gallery"-->
-<!--        android:name="com.rafalopez.inmobiliaria.ui.gallery.GalleryFragment"-->
-<!--        android:label="@string/menu_gallery"-->
-<!--        tools:layout="@layout/fragment_gallery" />-->
-
-<!--    <fragment-->
-<!--        android:id="@+id/nav_slideshow"-->
-<!--        android:name="com.rafalopez.inmobiliaria.ui.slideshow.SlideshowFragment"-->
-<!--        android:label="@string/menu_slideshow"-->
-<!--        tools:layout="@layout/fragment_slideshow" />-->
     <fragment
         android:id="@+id/nav_propietario"
         android:name="com.rafalopez.inmobiliaria.ui.propietario.PropietarioFragment"
@@ -30,21 +18,17 @@
     <fragment
         android:id="@+id/nav_inquilino"
         android:name="com.rafalopez.inmobiliaria.ui.inquilino.InquilinoFragment"
-        android:label="fragment_inquilino"
+        android:label="Inquilinos"
         tools:layout="@layout/fragment_inquilino" />
     <fragment
         android:id="@+id/nav_inmueble"
         android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleFragment"
-        android:label="fragment_inmueble"
+        android:label="Inmuebles"
         tools:layout="@layout/fragment_inmueble" />
     <fragment
         android:id="@+id/nav_contrato"
         android:name="com.rafalopez.inmobiliaria.ui.contrato.ContratoFragment"
-        android:label="fragment_contrato"
+        android:label="Contratos"
         tools:layout="@layout/fragment_contrato" />
-<!--    <fragment-->
-<!--        android:id="@+id/nav_map"-->
-<!--        android:name="com.rafalopez.inmobiliaria.ui.map.MapFragment"-->
-<!--        android:label="fragment_map"-->
-<!--        tools:layout="@layout/fragment_home" />-->
+
 </navigation>

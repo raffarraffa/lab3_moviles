@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string name="titulo">Api</string>
-        <string name="sub_titulo">Promocionando Inmuebles</string>
-        <string name="slogan">_____________________</string>
+        <string name="app_titulo">Api</string>
+        <string name="app_sub_titulo">Promocionando Inmuebles</string>
+        <string name="app_slogan">_________________________</string>
+
 
 </resources>
