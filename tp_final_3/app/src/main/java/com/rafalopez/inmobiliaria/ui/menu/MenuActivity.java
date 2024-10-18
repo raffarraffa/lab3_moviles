@@ -15,18 +15,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafalopez.inmobiliaria.R;
-import com.rafalopez.inmobiliaria.databinding.ActivityMain2Binding;
+import com.rafalopez.inmobiliaria.databinding.ActivityMenuBinding;
 
 public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMain2Binding binding;
+    private ActivityMenuBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMain2Binding.inflate(getLayoutInflater());
+        binding = ActivityMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain2.toolbar);
