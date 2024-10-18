@@ -16,8 +16,8 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public class ApiClient {
-   // public static final String URL_BASE= "https://lab3.rafalopez.ar/api/";
-    public static final String URL_BASE= "http://192.168.10.25:8104/api/";
+    public static final String URL_BASE= "https://lab3.rafalopez.ar/api/";
+//    public static final String URL_BASE= "http://192.168.10.25:8104/api/";
     //public static final String URL_BASE= "https://api.rafalopez.ar/";
 
     @NonNull
