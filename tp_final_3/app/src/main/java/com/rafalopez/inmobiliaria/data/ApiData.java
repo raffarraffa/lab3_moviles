@@ -33,7 +33,7 @@ public class ApiData {
      *
      * @param context Contexto de la app
      * @param archivo Nombre del archivo (sin ext)
-     * @param dato    Dato a almacenar
+     * @param dato    Dato  a almacenar
      * @param tag     Etiqueta del dato
      * @return Booleano que indica si la resulkto exitosa
      */
@@ -47,7 +47,15 @@ public class ApiData {
         editor.putString(tag, dato);
         return editor.commit();
     }
-
+    /**
+     * Guarda los datos de un propietario en SharedPreferences
+     *
+     * @param context Contexto de la app
+     * @param archivo Nombre del archivo (sin ext)
+     * @param dato    Objeto Propietario a almacenar
+     * @param tag     Etiqueta del dato que se utilizará para identificarlos
+     * @return Booleano que indica RESULTADO operacion
+     */
     public static boolean guardarData(
             Context context,
             @NonNull String archivo,
@@ -62,7 +70,6 @@ public class ApiData {
         editor.putString("telefono", dato.getTelefono());
         editor.putString("avatar", dato.getAvatar());
         return (editor.commit());
-
 }
 
 
@@ -80,18 +87,6 @@ public class ApiData {
         SharedPreferences appData = conectar(context, archivo);
         return appData.getString(tag, null);
     }
-//    public static Propietario leerDataPropietario(Context context, String archivo, String tag) {
-//        SharedPreferences appData = conectar(context, archivo);
-//        Propietario propietario = new Propietario(
-//        appData.getString("nombre",null),
-//        appData.getString("apellido",null),
-//        appData.getString("dni", null),
-//        appData.getString("email", null),
-//        appData.getString("telefono", null),
-//        appData.getString("avatar", null)
-//        );
-//        return propietario;
-//    }
 
     /**
      * Borra un dato de SharedPreferences
