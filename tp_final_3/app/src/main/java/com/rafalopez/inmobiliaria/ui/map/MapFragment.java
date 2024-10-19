@@ -17,9 +17,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.R;
 
 public class MapFragment extends Fragment {
+    private GoogleMap mMap;
+    private Marker mMarker;
 
     /**
      * Callback que se llama cuando el mapa
@@ -29,14 +32,13 @@ public class MapFragment extends Fragment {
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            GoogleMap mMap = googleMap;
-            LatLng laPunta = new LatLng(-33.18661420561766, -66.31147456212325);
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(laPunta)
-                    .title("API")
+            mMap = googleMap;
+            LatLng mapPosicion = new LatLng(AppParams.MAP_LAT, AppParams.MAP_LON);
+            mMarker = mMap.addMarker(new MarkerOptions()
+                    .position(mapPosicion)
+                    .title(AppParams.MAP_TITLE)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-            float zoomLevel = 18.0f;
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(laPunta, zoomLevel));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapPosicion, AppParams.MAP_ZOOM));
         }
     };
 
