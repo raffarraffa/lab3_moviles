@@ -28,6 +28,15 @@ public class Propietario {
         this.borrado = borrado;
     }
 
+    public Propietario(String nombre, String apellido, String dni, String email, String telefono, String avatar) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.email = email;
+        this.telefono = telefono;
+        this.avatar = avatar;
+    }
+
     public int getId() {
         return id;
     }

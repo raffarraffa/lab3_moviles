@@ -89,6 +89,27 @@ public class ApiData {
     }
 
     /**
+     * Lee un dato de SharedPreferences.
+     *
+     * @param context Contexto de la app
+     * @param archivo Nombre del archivo (sin ext)
+     * @param tag Etiqueta del dato a leer
+     * @return Propeitario , null si fallo
+     */
+    @NonNull
+    public static Propietario leerDataPropietario(Context context,String archivo, String tag) {
+        SharedPreferences appData = conectar(context, archivo);
+        String nombre = appData.getString("nombre", "");
+        String apellido = appData.getString("apellido", "");
+        String dni = appData.getString("dni", "");
+        String email = appData.getString("email", "");
+        String telefono = appData.getString("telefono", "");
+        String avatar = appData.getString("avatar", "");
+        return new Propietario(nombre, apellido, dni, email, telefono, avatar);
+    }
+
+
+    /**
      * Borra un dato de SharedPreferences
      *
      * @param context Contexto de la app

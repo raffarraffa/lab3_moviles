@@ -1,12 +1,15 @@
 package com.rafalopez.inmobiliaria.ui.menu;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -70,7 +73,29 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        // Añadir listener para manejar la selección de "Salir"
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.nav_salir) {
+
+                    Toast.makeText(MenuActivity.this, "Has seleccionado Salir", Toast.LENGTH_SHORT).show();
+                    // Cerrar el drawer
+                    drawer.closeDrawers();
+                    // Finalizar la actividad para salir de la aplicación
+                    finish();
+                    return true;
+                }
+
+                // Dejar que NavigationUI maneje los demás ítems
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            }
+        });
     }
+
+
 
     /**
      * infaldo del menu en barra e
@@ -84,7 +109,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     /**
-     * madoir de  navegacion hacia arriba
+     * contoller de  navegacion hacia arriba
      * @return True si se navego hacia arriba
      */
     @Override
@@ -93,6 +118,7 @@ public class MenuActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 
     /**
      * cuando la actividad se reanuda
