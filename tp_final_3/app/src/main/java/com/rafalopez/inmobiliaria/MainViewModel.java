@@ -80,7 +80,7 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
     private void checkJwt() {
-        Toast.makeText(context,isPresentToken()+"",Toast.LENGTH_LONG).show();
+     //   Toast.makeText(context,isPresentToken()+"",Toast.LENGTH_LONG).show();
         if (isPresentToken()) {
             isValidToken();
         } else {

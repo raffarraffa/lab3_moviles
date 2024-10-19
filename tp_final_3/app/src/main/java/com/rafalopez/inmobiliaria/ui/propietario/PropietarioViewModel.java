@@ -76,10 +76,11 @@ public class PropietarioViewModel extends AndroidViewModel {
         return mLoginMsgError;
     }
     public void verSiAnda(){
-        Propietario propietario = ApiData.leerDataPropietario(context, AppParams.PREFERENCES_DATA, AppParams.PROPIETARIO_KEY);
-        if(propietario!=null){
-            mPropietario.setValue(propietario);
-        }
+//      //  Propietario propietario = ApiData.leerDataPropietario(context,
+//                AppParams.PREFERENCES_DATA, AppParams.PROPIETARIO_KEY);
+//        if(propietario!=null){
+//            mPropietario.setValue(propietario);
+//        }
     }
 
     // TODO: Implement the ViewModel

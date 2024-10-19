@@ -7,6 +7,5 @@ public class AppParams {
         //  public static final String URL_BASE= "https://lab3.rafalopez.ar/api/";
         public static final String URL_BASE= "http://192.168.10.25:8104/api/";
         public static final String URL_BASE_FILE= "http://192.168.10.25:8104/archivos/";
-
         //public static final String URL_BASE= "https://api.rafalopez.ar/";
 }

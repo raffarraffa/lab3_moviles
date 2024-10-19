@@ -80,18 +80,18 @@ public class ApiData {
         SharedPreferences appData = conectar(context, archivo);
         return appData.getString(tag, null);
     }
-    public static Propietario leerDataPropietario(Context context, String archivo, String tag) {
-        SharedPreferences appData = conectar(context, archivo);
-        Propietario propietario = new Propietario(
-        appData.getString("nombre",null),
-        appData.getString("apellido",null),
-        appData.getString("dni", null),
-        appData.getString("email", null),
-        appData.getString("telefono", null),
-        appData.getString("avatar", null)
-        );
-        return propietario;
-    }
+//    public static Propietario leerDataPropietario(Context context, String archivo, String tag) {
+//        SharedPreferences appData = conectar(context, archivo);
+//        Propietario propietario = new Propietario(
+//        appData.getString("nombre",null),
+//        appData.getString("apellido",null),
+//        appData.getString("dni", null),
+//        appData.getString("email", null),
+//        appData.getString("telefono", null),
+//        appData.getString("avatar", null)
+//        );
+//        return propietario;
+//    }
 
     /**
      * Borra un dato de SharedPreferences
