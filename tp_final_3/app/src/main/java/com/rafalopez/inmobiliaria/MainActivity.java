@@ -36,12 +36,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean aBoolean) {
                 iniciarLogin();
+                finish();
             }
         });
         mainViewModel.getMTokenValid().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 iniciarApp();
+                finish();
             }
         });
         mainViewModel.getMInternet().observe(this, new Observer<Boolean>() {

@@ -25,7 +25,7 @@ import retrofit2.Response;
  */
 public class MainViewModel extends AndroidViewModel {
 
-    private static final String TAG = "getMainViewModel"; // tag para log
+    private static final String TAG = "MainViewModel"; // tag para log
     private final Context context;
     private final ApiClient.InmobiliariaServices api;
     private MutableLiveData<Boolean> mTokenInvalid;
@@ -82,9 +82,10 @@ public class MainViewModel extends AndroidViewModel {
      */
     private boolean isPresentToken() {
         String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
-        Log.d(TAG, "isPresentToken: " + token);
+        Log.d(TAG, "isPresentToken: 85 " + token);
         if (token == null || token.isEmpty()) {
-            mTokenInvalid.setValue(true);
+            //
+            // mTokenInvalid.setValue(true);
             return false;
         }
         return true;
@@ -95,13 +96,14 @@ public class MainViewModel extends AndroidViewModel {
      */
     private void isValidToken() {
         String token = "Bearer " + ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
-
         Call<Propietario> propReq = api.GetPerfil(token);
         propReq.enqueue(new Callback<Propietario>() {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
                 if (response.isSuccessful()) {
+                    Log.d(TAG, "isValidToken: 103 " + response.body().toString());
                     mTokenValid.setValue(true);
+                 //   Log.d(TAG, "onResponse: ");
                 } else {
                     mTokenInvalid.setValue(true);
                 }
@@ -113,6 +115,7 @@ public class MainViewModel extends AndroidViewModel {
                 mTokenInvalid.setValue(true);
             }
         });
+
     }
 
     /**

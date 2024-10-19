@@ -16,6 +16,8 @@ public class Propietario {
 //        private Set<Inmueble> inmuebles = new HashSet<>();
 //        private Set<Contrato> contratos = new HashSet<>();
 
+    public Propietario() { }
+
     public Propietario(int id, String nombre, String apellido, String dni, String email, String telefono, String password, String avatar, boolean borrado) {
         this.id = id;
         this.nombre = nombre;

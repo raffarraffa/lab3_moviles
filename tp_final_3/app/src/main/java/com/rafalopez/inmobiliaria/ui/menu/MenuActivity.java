@@ -80,16 +80,11 @@ public class MenuActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_salir) {
-
                     Toast.makeText(MenuActivity.this, "Has seleccionado Salir", Toast.LENGTH_SHORT).show();
-                    // Cerrar el drawer
                     drawer.closeDrawers();
-                    // Finalizar la actividad para salir de la aplicación
                     finish();
                     return true;
                 }
-
-                // Dejar que NavigationUI maneje los demás ítems
                 return NavigationUI.onNavDestinationSelected(item, navController);
             }
         });
