@@ -33,7 +33,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     /**
      * cnstructor de LoginViewModel
-     * @param application contexto de la aplicacin
+     * @param application contexto de la app
      */
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -115,12 +115,13 @@ public class LoginViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
+                Log.e(TAG, "onFailure: " + throwable.getMessage());
             }
         });
     }
 
     /**
-     * Verifica el token de datos.
+     * Verifyel token de datos
      */
     public void checkDataToken() {
         String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
