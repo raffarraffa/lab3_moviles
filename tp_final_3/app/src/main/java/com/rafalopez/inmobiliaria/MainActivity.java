@@ -11,20 +11,31 @@ import com.rafalopez.inmobiliaria.databinding.ActivityMainBinding;
 import com.rafalopez.inmobiliaria.ui.login.LoginActivity;
 import com.rafalopez.inmobiliaria.ui.menu.MenuActivity;
 
+/**
+ * Punto de entrada de la applicación, gestiona la inicialización de la vista
+ */
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private MainViewModel mainViewModel;
+
+    /**
+     * Llama cuando la actividad on create al iniciar la app
+     * incia  binding, configura el ViewModel y observa la validación
+     * deltoken, el estado de la conexión a internet
+     *
+     * @param savedInstanceState  instancia anterior de la actividad.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       binding = ActivityMainBinding.inflate(getLayoutInflater());
-       setContentView(binding.getRoot());
-        mainViewModel =ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainViewModel.class);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        mainViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainViewModel.class);
         mainViewModel.getMTokenInvalid().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-            iniciarLogin();
+                iniciarLogin();
             }
         });
         mainViewModel.getMTokenValid().observe(this, new Observer<Boolean>() {
@@ -36,18 +47,25 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getMInternet().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                Toast.makeText(getApplicationContext(), "Debe Activar internet",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe Activar internet", Toast.LENGTH_LONG).show();
             }
         });
-        Log.d("Salida", "onCreate: "+ mainViewModel.isInmobiliariaOk());
+        Log.d("Salida", "onCreate: " + mainViewModel.isInmobiliariaOk());
     }
-    private void iniciarLogin(){
+
+    /**
+     * iicia  actividad de inicio de sesión (LoginActivity) si el token no es valido
+     */
+    private void iniciarLogin() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
-    private void iniciarApp(){
+
+    /**
+     * inciia actividad de a aplicación (MenuActivity) si el token es valido
+     */
+    private void iniciarApp() {
         Intent intent = new Intent(MainActivity.this, MenuActivity.class);
         startActivity(intent);
     }
-
 }
