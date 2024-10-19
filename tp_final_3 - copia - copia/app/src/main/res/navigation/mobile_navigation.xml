@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_map">
+
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.rafalopez.inmobiliaria.ui.map.MapFragment"
+        android:label="Ubicacion Api"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/nav_propietario"
+        android:name="com.rafalopez.inmobiliaria.ui.propietario.PropietarioFragment"
+        android:label="Propietario"
+        tools:layout="@layout/fragment_propietario" />
+    <fragment
+        android:id="@+id/nav_inquilino"
+        android:name="com.rafalopez.inmobiliaria.ui.inquilino.InquilinoFragment"
+        android:label="Inquilinos"
+        tools:layout="@layout/fragment_inquilino" />
+    <fragment
+        android:id="@+id/nav_inmueble"
+        android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleFragment"
+        android:label="Inmuebles"
+        tools:layout="@layout/fragment_inmueble" />
+    <fragment
+        android:id="@+id/nav_contrato"
+        android:name="com.rafalopez.inmobiliaria.ui.contrato.ContratoFragment"
+        android:label="Contratos"
+        tools:layout="@layout/fragment_contrato" />
+
+</navigation>
