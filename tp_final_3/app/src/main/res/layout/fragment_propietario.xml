@@ -216,8 +216,7 @@
             android:hint="Imagen Perfil"
             android:paddingBottom="30dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/no_avatar"
-            android:tag="asf" />
+            android:src="@drawable/no_avatar"/>
 
         <TextView
             android:id="@+id/textView2"

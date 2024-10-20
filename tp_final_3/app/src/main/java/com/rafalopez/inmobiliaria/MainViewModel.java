@@ -25,7 +25,7 @@ import retrofit2.Response;
  */
 public class MainViewModel extends AndroidViewModel {
 
-    private static final String TAG = "MainViewModel"; // tag para log
+    private static final String TAG = "salidaDebug"; // tag para log
     private final Context context;
     private final ApiClient.InmobiliariaServices api;
     private MutableLiveData<Boolean> mTokenInvalid;
@@ -74,70 +74,66 @@ public class MainViewModel extends AndroidViewModel {
         if (mInternet == null) mInternet = new MutableLiveData<>();
         return mInternet;
     }
-
-    /**
-     * verificacion  token presente
-     *
-     * @return true si el token resente, false si ausente
-     */
-    private boolean isPresentToken() {
-        String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
-        Log.d(TAG, "isPresentToken: 85 " + token);
-        if (token == null || token.isEmpty()) {
-            //
-            // mTokenInvalid.setValue(true);
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * verifica tsoken valido con una solicitud a la API
-     */
-    private void isValidToken() {
-        String token = "Bearer " + ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
-        Call<Propietario> propReq = api.GetPerfil(token);
-        propReq.enqueue(new Callback<Propietario>() {
-            @Override
-            public void onResponse(Call<Propietario> call, Response<Propietario> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "isValidToken: 103 " + response.body().toString());
-                    mTokenValid.setValue(true);
-                 //   Log.d(TAG, "onResponse: ");
-                } else {
-                    mTokenInvalid.setValue(true);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Propietario> call, Throwable throwable) {
-                Log.e(TAG, "Error en la solicitud de token: " + throwable.getMessage());
-                mTokenInvalid.setValue(true);
-            }
-        });
-
-    }
-
-    /**
-     * Verifica si  JWT es valido
-     */
-    private void checkJwt() {
-        if (isPresentToken()) {
-            isValidToken();
-        } else {
-            Log.d(TAG, "checkJwt: No hay jwt");
-        }
-    }
-
+    /**  logica aplicacion*/
     /**
      * inicia la verificacio  token al iniciar la aplicacin
      *
      * @return String  inicio del proceso
      */
-    public String isInmobiliariaOk() {
-        checkJwt();
-        return "iniciando";
+    public void isInmobiliariaOk() {
+        // verifico si token presente
+         if(notPresentToken()) {
+             //  salgo de flujo y paso a vista login usando mutableLiveData
+             mTokenInvalid.setValue(false);
+             return;
+         }
+         // responsabiulidad del metodo, tiene asincronia  se trbaja con eventos mutableLiveData
+         isValidToken();
+      }
+    /**
+     * verificacion  token presente
+     *
+     * @return true si el token resente, false si ausente
+     */
+    private boolean notPresentToken() {
+        String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
+        return (token == null || token.isEmpty());
+
+
     }
+
+    /**
+     * verifica Token valido con una solicitud a la API
+     */
+    private void isValidToken() {
+        String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
+        Call<Propietario> propReq = api.GetPerfil(token);
+        propReq.enqueue(new Callback<Propietario>() {
+            @Override
+            public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "isValidToken: 113 " + response.body().toString());
+                 //  mTokenValid.setValue(true);
+                 //   Log.d(TAG, "onResponse: ");
+                } else {
+                    Log.d(TAG, "isValidToken: 117 " + response.body().toString());
+                  //  mTokenInvalid.setValue(true);
+                }
+            }
+            @Override
+            public void onFailure(Call<Propietario> call, Throwable throwable) {
+                Log.e(TAG, "Error en la solicitud de token: " + throwable.getMessage());
+              //  mTokenInvalid.setValue(true);
+            }
+        });
+    }
+
+    /**
+     * Verifica si  JWT es valido
+     */
+//   //}
+
+
 
     /**
      *  registra el reciver  para verificar cambios en la conectividad a internet
@@ -165,7 +161,7 @@ public class MainViewModel extends AndroidViewModel {
             if (!isInternet() && mInternet.getValue() == null) {
                 mInternet.setValue(false);
             } else {
-                checkJwt();
+             //   checkJwt();
             }
         }
 

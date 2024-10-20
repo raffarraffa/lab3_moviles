@@ -40,6 +40,7 @@ public class PropietarioFragment extends Fragment {
                 binding.inputNombre.setText(propietario.getNombre());
                 binding.inputApellido.setText(propietario.getApellido());
                 binding.inputEmail.setText(propietario.getEmail());
+                binding.inputDni.setText(propietario.getDni());
                 binding.inputTelefono.setText(propietario.getTelefono());
                 Glide.with(getContext())
                         .load(AppParams.URL_BASE_FILE+propietario.getAvatar())
@@ -47,8 +48,6 @@ public class PropietarioFragment extends Fragment {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(binding.imgAvatar);
                 binding.imgAvatar.setTag(propietario.getAvatar());
-                Toast.makeText(getContext(),binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
-
             }
         });
         mViewModel.getMBtnAction().observe(getViewLifecycleOwner(),new Observer<String>() {
@@ -85,7 +84,13 @@ public class PropietarioFragment extends Fragment {
 //                mViewModel.verSiAnda();
             }
         });
-        mViewModel.verSiAnda();
+        binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
+                Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
+            }
+        });
         return binding.getRoot();
     }
     @Override
@@ -105,4 +110,5 @@ public class PropietarioFragment extends Fragment {
         binding.inputPassword.setFocusable(editable);
         binding.inputPassword.setFocusableInTouchMode(editable);
     }
+
 }

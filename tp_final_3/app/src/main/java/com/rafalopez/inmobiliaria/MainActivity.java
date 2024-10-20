@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         mainViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainViewModel.class);
+
         mainViewModel.getMTokenInvalid().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Debe Activar internet", Toast.LENGTH_LONG).show();
             }
         });
-        Log.d("Salida", "onCreate: " + mainViewModel.isInmobiliariaOk());
+        mainViewModel.isInmobiliariaOk();
     }
 
     /**

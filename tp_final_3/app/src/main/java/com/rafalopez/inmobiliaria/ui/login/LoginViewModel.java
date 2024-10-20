@@ -23,11 +23,11 @@ import retrofit2.Response;
  * ViewModel  inicio de SESSION
  */
 public class LoginViewModel extends AndroidViewModel {   
-    private static final String TAG = "LoginViewModel";
+    private static final String TAG = "salida";
     private final Context context;
     private MutableLiveData<Propietario> mPropietario;
-    private MutableLiveData<Boolean> mLoginOk;
-    private MutableLiveData<Boolean> mLoginError;
+    private MutableLiveData<String> mLoginOk;
+    private MutableLiveData<String> mLoginError;
     private MutableLiveData<String> mLoginMsgError;
     private final ApiClient.InmobiliariaServices api;
 
@@ -57,7 +57,7 @@ public class LoginViewModel extends AndroidViewModel {
      * Obtiene LiveData que indica si hubo un error en el inicio de SESSION
      * @return LiveData de tipo Boolean
      */
-    LiveData<Boolean> getMLoginError() {
+    LiveData<String> getMLoginError() {
         if (mLoginError == null) {
             mLoginError = new MutableLiveData<>();
         }
@@ -68,7 +68,7 @@ public class LoginViewModel extends AndroidViewModel {
      * Obtiene LiveData que indica si el inicio de SESSION fue exitoso
      * @return LiveData de tipo Boolean
      */
-    LiveData<Boolean> getMLoginOk() {
+    LiveData<String> getMLoginOk() {
         if (mLoginOk == null) {
             mLoginOk = new MutableLiveData<>();
         }
@@ -98,33 +98,28 @@ public class LoginViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    // mapeo usuario
                     User userReq = response.body();
-                    boolean isSavetoken = ApiData.guardarData(context, AppParams.PREFERENCES_DATA, userReq.getToken(), AppParams.TOKEN_KEY);
+
+                    // save token data
+                    //TODO ver agrega bearer
+                    boolean isSavetoken = ApiData.guardarData(context, AppParams.PREFERENCES_DATA,"Bearer "+ userReq.getToken(),AppParams.TOKEN_KEY);
+
+                    //save propietario data
                     boolean isSavePropietario = ApiData.guardarData(context, AppParams.PREFERENCES_DATA, userReq.getPropietario(), AppParams.PROPIETARIO_KEY);
-                    String propietario = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.PROPIETARIO_KEY);
-                    Log.d(TAG, "onResponse: propietario " + isSavePropietario + "\n" + propietario);
-                    mLoginOk.setValue(true);
-                    Log.d(TAG, "onResponse: " + userReq.getToken());
+
+                    // set valor login ok para mostar perfil
+                    mLoginOk.setValue("Hola "+ userReq.getPropietario().getApellido()+", " + userReq.getPropietario().getApellido());
                 } else {
-                    Log.d(TAG, "onResponse: error en el inicio de SESSION");
-                    mLoginError.setValue(true);
-                    mLoginMsgError.setValue("Error en el inicio de sESESION");
+                    mLoginError.setValue("Error de acceso");
+
                 }
             }
-
-            @Override
+           @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
                 Log.e(TAG, "onFailure: " + throwable.getMessage());
             }
         });
-    }
-
-    /**
-     * Verifyel token de datos
-     */
-    public void checkDataToken() {
-        String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
-        Log.d(TAG, "checkDataToken: " + token);
     }
 }

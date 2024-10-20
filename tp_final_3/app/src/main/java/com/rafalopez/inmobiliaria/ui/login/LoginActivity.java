@@ -29,24 +29,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        final EditText email = binding.inputUsuario;
-        final EditText password = binding.inputPassword;
-        final Button btnLogin = binding.btnLogin;
-        final Button btnRestore = binding.btnRestore;
+//        final EditText email = binding.inputUsuario;
+//        final EditText password = binding.inputPassword;
+//        final Button btnLogin = binding.btnLogin;
+//        final Button btnRestore = binding.btnRestore;
 
         loginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginViewModel.class);
-
-        loginViewModel.getMLoginError().observe(this, new Observer<Boolean>() {
+/** mutables */
+        loginViewModel.getMLoginError().observe(this, new Observer<String>() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                // errores de inicio de SESSION
+            public void onChanged(String s) {
+                Toast.makeText(getApplicationContext(),s, Toast.LENGTH_SHORT).show();
             }
         });
 
-        loginViewModel.getMLoginOk().observe(this, new Observer<Boolean>() {
+        loginViewModel.getMLoginOk().observe(this, new Observer<String>() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                iniciarApp();
+            public void onChanged(String s) {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+        //        iniciarApp();
             }
         });
 
@@ -56,26 +57,27 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error en el inicio de sesión", Toast.LENGTH_SHORT).show();
             }
         });
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+/** binidngs */
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginViewModel.loginUser(email.getText().toString(), password.getText().toString());
+                loginViewModel.loginUser(binding.inputUsuario.getText().toString(),
+                        binding.inputPassword.getText().toString());
             }
         });
-
-        btnRestore.setOnClickListener(new View.OnClickListener() {
+        binding.btnRestore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginViewModel.checkDataToken();
             }
         });
+        //iniciarApp();
     }
 
     /**
      * iniciando la actividad login de  app
      */
-    private void iniciarApp() {
+    private void iniciarApp2() {
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
         startActivity(intent);
     }
