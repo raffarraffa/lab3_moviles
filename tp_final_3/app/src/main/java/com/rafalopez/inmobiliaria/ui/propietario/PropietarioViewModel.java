@@ -3,6 +3,7 @@ package com.rafalopez.inmobiliaria.ui.propietario;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,6 +17,10 @@ import com.rafalopez.inmobiliaria.request.ApiClient;
 
 import java.lang.reflect.Array;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PropietarioViewModel extends AndroidViewModel {
     private ActionMutable actionMutable =new ActionMutable();
@@ -108,8 +113,6 @@ public class PropietarioViewModel extends AndroidViewModel {
             return;
         }
         mLoginMsgError.setValue("Error de session  logerse");
-
-
     }
     public void setActionBtn(String  action){
         switch (action){
@@ -142,11 +145,35 @@ public class PropietarioViewModel extends AndroidViewModel {
                 actionMutable.setAction("Editar");
                 mBtnAction2.setValue(actionMutable);
                 // acciones de guardado
+                updatePerfil(prop);
+
                 break;
         }
     }
-    private class record {
+    public void updatePerfil(Propietario propToUpdate){
+        Log.d(TAG, "updatePerfil: " + propToUpdate.toString());
+        Call<Propietario> req = api.PatchPerfil(ApiData.getDataToken(context),propToUpdate);
+        req.enqueue(new Callback<Propietario>() {
+            @Override
+            public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, response.body() +"");
+                } else {
+                    Log.e(TAG,
+                            "Error: " + response.code() + " - " + response.message() + " - " + response.body());
+                }
+//                Toast.makeText(context,"uptade linea 159",Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, "onResponse:160 " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Propietario> call, Throwable throwable) {
+
+            }
+        });
+
     }
+
     // TODO: Implement the ViewModel
 
 }

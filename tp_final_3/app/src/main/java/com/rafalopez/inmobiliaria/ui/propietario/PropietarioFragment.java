@@ -76,7 +76,8 @@ public class PropietarioFragment extends Fragment {
                 prop.setTelefono(binding.inputTelefono.getText().toString());
                 prop.setPassword(binding.inputPassword.getText().toString());
                 prop.setAvatar(binding.imgAvatar.getTag().toString());
-                Toast.makeText(getContext(),"Propitario freament Edita", LENGTH_LONG).show();
+                prop.setDni(binding.inputDni.getText().toString());
+                Toast.makeText(getContext(),"Propietario Edita", LENGTH_LONG).show();
               //  Log.d(TAG, "onClick: ");
                 mViewModel.setActionBtn2(binding.btnEditar.getText().toString(), prop);
 

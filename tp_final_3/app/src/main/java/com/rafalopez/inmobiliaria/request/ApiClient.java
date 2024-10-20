@@ -18,6 +18,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public class ApiClient {
@@ -35,8 +36,8 @@ public class ApiClient {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AppParams.URL_BASE)
                 .client(client)
-                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         return retrofit.create(InmobiliariaServices.class);
     }
@@ -48,5 +49,10 @@ public class ApiClient {
 
         @GET("propietario/perfil")
         Call<Propietario> GetPerfil(@Header("Authorization") String token);
-   }
+
+        @PATCH("propietario/update")
+        Call<Propietario> PatchPerfil(@Header("Authorization") String token,   @Body Propietario propietario);
+
+
+    }
 }

@@ -23,7 +23,7 @@ import retrofit2.Response;
  * ViewModel  inicio de SESSION
  */
 public class LoginViewModel extends AndroidViewModel {   
-    private static final String TAG = "loginViewModel";
+    private static final String TAG = "salidaDebug";
     private final Context context;
     private MutableLiveData<Propietario> mPropietario;
     private MutableLiveData<String> mLoginOk;
@@ -98,7 +98,12 @@ public class LoginViewModel extends AndroidViewModel {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // mapeo usuario
+
                     User userReq = response.body();
+//                    user.setToken(response.body().getToken());
+//                    //user.setToken(response.body().getToken());
+//                    Log.d(TAG, "onResponse104: " + user);
+//                    Log.d(TAG, "onResponse104: " + userReq.getPropietario());
 
                     // save token data
                     //todo hacer algo con los booleanos
