@@ -29,13 +29,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        final EditText email = binding.inputUsuario;
-//        final EditText password = binding.inputPassword;
-//        final Button btnLogin = binding.btnLogin;
-//        final Button btnRestore = binding.btnRestore;
+        loginViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getApplication())
+                .create(LoginViewModel.class);
 
-        loginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginViewModel.class);
 /** mutables */
+
         loginViewModel.getMLoginError().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -47,7 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-        //        iniciarApp();
+                iniciarApp();
+                //finish();
             }
         });
 
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnRestore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginViewModel.checkDataToken();
+
             }
         });
         //iniciarApp();
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * iniciando la actividad login de  app
      */
-    private void iniciarApp2() {
+    private void iniciarApp() {
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
         startActivity(intent);
     }

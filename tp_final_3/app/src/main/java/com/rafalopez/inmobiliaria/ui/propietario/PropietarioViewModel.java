@@ -101,12 +101,15 @@ public class PropietarioViewModel extends AndroidViewModel {
         }
         return mBtnAction2;
     }
-    public void verSiAnda(){
-        Propietario propietario = ApiData.leerDataPropietario(context,
-                AppParams.PREFERENCES_DATA, AppParams.PROPIETARIO_KEY);
+    public void getPropietario(){
+        Propietario propietario = ApiData.leerDataPropietario(context);
         if(propietario!=null){
             mPropietario.setValue(propietario);
+            return;
         }
+        mLoginMsgError.setValue("Error de session  logerse");
+
+
     }
     public void setActionBtn(String  action){
         switch (action){
@@ -142,7 +145,6 @@ public class PropietarioViewModel extends AndroidViewModel {
                 break;
         }
     }
-
     private class record {
     }
     // TODO: Implement the ViewModel

@@ -23,7 +23,7 @@ import com.rafalopez.inmobiliaria.entity.ActionMutable;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 
 public class PropietarioFragment extends Fragment {
-    private static final String TAG = "PropietarioFragment"; // tag para log
+    private static final String TAG = "salidaDebug";
     private PropietarioViewModel mViewModel;
     private FragmentPropietarioBinding binding;
     public static PropietarioFragment newInstance() {
@@ -91,6 +91,9 @@ public class PropietarioFragment extends Fragment {
                 Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
             }
         });
+        // llama propietario logeado
+        mViewModel.getPropietario();
+
         return binding.getRoot();
     }
     @Override

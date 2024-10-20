@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 
+import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 
 /**
@@ -92,13 +93,11 @@ public class ApiData {
      * Lee un dato de SharedPreferences.
      *
      * @param context Contexto de la app
-     * @param archivo Nombre del archivo (sin ext)
-     * @param tag Etiqueta del dato a leer
      * @return Propeitario , null si fallo
      */
     @NonNull
-    public static Propietario leerDataPropietario(Context context,String archivo, String tag) {
-        SharedPreferences appData = conectar(context, archivo);
+    public static Propietario leerDataPropietario(Context context) {
+        SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA +".dat");
         String nombre = appData.getString("nombre", "");
         String apellido = appData.getString("apellido", "");
         String dni = appData.getString("dni", "");
@@ -123,4 +122,12 @@ public class ApiData {
         editor.remove(tag);
         return editor.commit();
     }
+    /**
+     *  metodos especializados
+     */
+    public  static String getDataToken(Context context){
+        SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA + ".dat");
+        return appData.getString(AppParams.TOKEN_KEY,null);
+    }
+
 }

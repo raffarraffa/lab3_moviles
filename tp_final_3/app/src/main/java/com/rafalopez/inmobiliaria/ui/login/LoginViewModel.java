@@ -23,7 +23,7 @@ import retrofit2.Response;
  * ViewModel  inicio de SESSION
  */
 public class LoginViewModel extends AndroidViewModel {   
-    private static final String TAG = "salida";
+    private static final String TAG = "loginViewModel";
     private final Context context;
     private MutableLiveData<Propietario> mPropietario;
     private MutableLiveData<String> mLoginOk;
@@ -39,7 +39,6 @@ public class LoginViewModel extends AndroidViewModel {
         super(application);
         context = application.getApplicationContext();
         api = ApiClient.getApiInmobiliaria();
-        Log.d(TAG, "LoginViewModel: ");
     }
 
     /**
@@ -102,7 +101,7 @@ public class LoginViewModel extends AndroidViewModel {
                     User userReq = response.body();
 
                     // save token data
-                    //TODO ver agrega bearer
+                    //todo hacer algo con los booleanos
                     boolean isSavetoken = ApiData.guardarData(context, AppParams.PREFERENCES_DATA,"Bearer "+ userReq.getToken(),AppParams.TOKEN_KEY);
 
                     //save propietario data
@@ -112,7 +111,6 @@ public class LoginViewModel extends AndroidViewModel {
                     mLoginOk.setValue("Hola "+ userReq.getPropietario().getApellido()+", " + userReq.getPropietario().getApellido());
                 } else {
                     mLoginError.setValue("Error de acceso");
-
                 }
             }
            @Override

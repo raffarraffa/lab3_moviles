@@ -74,56 +74,38 @@ public class MainViewModel extends AndroidViewModel {
         if (mInternet == null) mInternet = new MutableLiveData<>();
         return mInternet;
     }
-    /**  logica aplicacion*/
-    /**
-     * inicia la verificacio  token al iniciar la aplicacin
-     *
-     * @return String  inicio del proceso
-     */
-    public void isInmobiliariaOk() {
-        // verifico si token presente
-         if(notPresentToken()) {
-             //  salgo de flujo y paso a vista login usando mutableLiveData
-             mTokenInvalid.setValue(false);
-             return;
-         }
-         // responsabiulidad del metodo, tiene asincronia  se trbaja con eventos mutableLiveData
-         isValidToken();
-      }
-    /**
-     * verificacion  token presente
-     *
-     * @return true si el token resente, false si ausente
-     */
-    private boolean notPresentToken() {
-        String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
-        return (token == null || token.isEmpty());
 
-
-    }
+    /**  logica aplicacion */
 
     /**
-     * verifica Token valido con una solicitud a la API
+     * verifica Token existey si es valido con una solicitud a la API
      */
-    private void isValidToken() {
-        String token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
+    public void isValidToken() {
+
+        // leo data d esharedpreference
+        String token = ApiData.getDataToken(context);
+        if(token == null || token.isEmpty()) {
+            mTokenInvalid.setValue(true);
+            return;
+        }
+        // call a la api para verificar is es valido el user
         Call<Propietario> propReq = api.GetPerfil(token);
         propReq.enqueue(new Callback<Propietario>() {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+                Log.d(TAG, "onResponse: code " + response.code());
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "isValidToken: 113 " + response.body().toString());
-                 //  mTokenValid.setValue(true);
-                 //   Log.d(TAG, "onResponse: ");
-                } else {
-                    Log.d(TAG, "isValidToken: 117 " + response.body().toString());
-                  //  mTokenInvalid.setValue(true);
+
+                 // codigo  entre 200 y 300, token autorizado, mostrar perfil propietario
+                   mTokenValid.setValue(true);
+                   return;
                 }
+                    // invalido
+                    mTokenInvalid.setValue(true);
             }
             @Override
             public void onFailure(Call<Propietario> call, Throwable throwable) {
                 Log.e(TAG, "Error en la solicitud de token: " + throwable.getMessage());
-              //  mTokenInvalid.setValue(true);
             }
         });
     }

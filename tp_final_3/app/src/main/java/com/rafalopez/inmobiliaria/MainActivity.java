@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Debe Activar internet", Toast.LENGTH_LONG).show();
             }
         });
-        mainViewModel.isInmobiliariaOk();
+        // verifics
+        mainViewModel.isValidToken();
     }
 
     /**
