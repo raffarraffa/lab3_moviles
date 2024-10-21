@@ -63,11 +63,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "User{\n" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", token='" + token + '\'' +
-                ", propietario=" + propietario +
-                '}';
+                ", token='" + token +
+                "\n }";
     }
 }

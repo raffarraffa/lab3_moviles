@@ -37,13 +37,14 @@ public class PropietarioFragment extends Fragment {
         mViewModel.getMPropietario().observe(getViewLifecycleOwner(),new Observer<Propietario>() {
             @Override
             public void onChanged(Propietario propietario) {
+                Log.d(TAG, "onChanged:40 "+propietario);
                 binding.inputNombre.setText(propietario.getNombre());
                 binding.inputApellido.setText(propietario.getApellido());
                 binding.inputEmail.setText(propietario.getEmail());
                 binding.inputDni.setText(propietario.getDni());
                 binding.inputTelefono.setText(propietario.getTelefono());
                 Glide.with(getContext())
-                        .load(AppParams.URL_BASE_FILE+propietario.getAvatar())
+                        .load(AppParams.URL_BASE_FILE+propietario.getId() +"/avatares/"+ propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(binding.imgAvatar);
@@ -89,12 +90,13 @@ public class PropietarioFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
+
                 Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
             }
         });
         // llama propietario logeado
-        mViewModel.getPropietario();
-
+       // mViewModel.getPropietario();
+        mViewModel.getProfile();
         return binding.getRoot();
     }
     @Override

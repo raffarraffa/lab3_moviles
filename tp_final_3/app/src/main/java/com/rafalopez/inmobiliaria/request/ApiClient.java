@@ -37,15 +37,17 @@ public class ApiClient {
                 .baseUrl(AppParams.URL_BASE)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addConverterFactory(ScalarsConverterFactory.create())
+              //  .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         return retrofit.create(InmobiliariaServices.class);
     }
 
 
     public  interface InmobiliariaServices{
+        @POST("login1")
+        Call<User> PostLogin1(@Body User user);
         @POST("login")
-        Call<User> PostLogin(@Body User user);
+        Call<String> PostLogin(@Body User user);
 
         @GET("propietario/perfil")
         Call<Propietario> GetPerfil(@Header("Authorization") String token);

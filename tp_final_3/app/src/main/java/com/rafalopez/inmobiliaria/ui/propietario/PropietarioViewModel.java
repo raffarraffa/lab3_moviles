@@ -106,8 +106,33 @@ public class PropietarioViewModel extends AndroidViewModel {
         }
         return mBtnAction2;
     }
+
+//
+public void getProfile() {
+       String token = ApiData.getDataToken(context);
+    Call<Propietario> req = api.GetPerfil(token);
+    req.enqueue(new Callback<Propietario>() {
+        @Override
+        public void onResponse(Call<Propietario> call, Response<Propietario> response) {
+            Propietario propietario = response.body();
+            boolean isPropietarioSaved = ApiData.guardarDataPropietario(context,AppParams.PREFERENCES_DATA, propietario);
+            mPropietario.setValue(propietario);
+//                String jsonInmuebles = new Gson().toJson(propietario.getInmuebles());
+//                boolean isInmublesSaved=ApiData.guardarData(context,AppParams.PREFERENCES_DATA,jsonInmuebles, AppParams.INMUEBLE_KEY);
+            Log.d(TAG, "onResponse: 41" + propietario);
+
+        }
+
+        @Override
+        public void onFailure(Call<Propietario> call, Throwable throwable) {
+
+        }
+    });
+}
+//
     public void getPropietario(){
         Propietario propietario = ApiData.leerDataPropietario(context);
+        Log.d(TAG, "getPropietario: 111" + propietario);
         if(propietario!=null){
             mPropietario.setValue(propietario);
             return;

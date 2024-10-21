@@ -1,6 +1,7 @@
 package com.rafalopez.inmobiliaria.ui.menu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,7 +26,8 @@ import com.rafalopez.inmobiliaria.databinding.ActivityMenuBinding;
  * Gestion navegación del menu
  */
 public class MenuActivity extends AppCompatActivity {
-
+    private static final String TAG = "salida";
+    private MenuViewModel menuViewModel;
     /**
      * Confg barra de aplicaciones.
      */
@@ -45,16 +48,22 @@ public class MenuActivity extends AppCompatActivity {
 
         binding = ActivityMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        menuViewModel = ViewModelProvider
+                .AndroidViewModelFactory
+                .getInstance(getApplication())
+                .create(MenuViewModel.class);
+        // button flotante
+        menuViewModel.getProfile();
 
         setSupportActionBar(binding.appBarMain2.toolbar);
-        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
+//        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null)
+//                        .setAnchorView(R.id.fab).show();
+//            }
+//        });
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -73,14 +82,16 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        // Añadir listener para manejar la selección de "Salir"
+
+        // listenerSalir
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_salir) {
-                    Toast.makeText(MenuActivity.this, "Has seleccionado Salir", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MenuActivity.this, "SALIR",
+                            Toast.LENGTH_SHORT).show();
                     drawer.closeDrawers();
                     finish();
                     return true;
@@ -88,6 +99,14 @@ public class MenuActivity extends AppCompatActivity {
                 return NavigationUI.onNavDestinationSelected(item, navController);
             }
         });
+//        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "onClick: tag");
+//            }
+//        });
+        Log.d(TAG, "onCreate: 94");
+
     }
 
 
@@ -110,8 +129,8 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        Log.d(TAG, "onSupportNavigateUp: ");
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
 

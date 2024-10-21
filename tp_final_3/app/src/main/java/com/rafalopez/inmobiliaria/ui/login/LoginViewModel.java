@@ -92,36 +92,27 @@ public class LoginViewModel extends AndroidViewModel {
      */
     public void loginUser(String email, String password) {
         User user = new User(email, password);
-        Call<User> req = api.PostLogin(user);
-        req.enqueue(new Callback<User>() {
+        Call<String> req = api.PostLogin(user);
+        req.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // mapeo usuario
-
-                    User userReq = response.body();
-//                    user.setToken(response.body().getToken());
-//                    //user.setToken(response.body().getToken());
-//                    Log.d(TAG, "onResponse104: " + user);
-//                    Log.d(TAG, "onResponse104: " + userReq.getPropietario());
-
-                    // save token data
-                    //todo hacer algo con los booleanos
-                    boolean isSavetoken = ApiData.guardarData(context, AppParams.PREFERENCES_DATA,"Bearer "+ userReq.getToken(),AppParams.TOKEN_KEY);
-
-                    //save propietario data
-                    boolean isSavePropietario = ApiData.guardarData(context, AppParams.PREFERENCES_DATA, userReq.getPropietario(), AppParams.PROPIETARIO_KEY);
-
-                    // set valor login ok para mostar perfil
-                    mLoginOk.setValue("Hola "+ userReq.getPropietario().getApellido()+", " + userReq.getPropietario().getApellido());
-                } else {
+                    Log.d(TAG, "onResponse:100 " +response.body());
+                     //todo hacer algo con los booleanos
+                    boolean isSavetoken = ApiData.guardarData(context,
+                            AppParams.PREFERENCES_DATA,
+                            "Bearer " + response.body(),
+                            AppParams.TOKEN_KEY);
+                    //todo disparar mutable LOGIN OK
+                    mLoginOk.setValue("Login ok");
+                   } else {
                     mLoginError.setValue("Error de acceso");
                 }
             }
-           @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
+            @Override
+            public void onFailure(Call<String> call, Throwable throwable) {
                 mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
-                Log.e(TAG, "onFailure: " + throwable.getMessage());
+                Log.e(TAG, "onFailure:112 " + throwable.getMessage());
             }
         });
     }

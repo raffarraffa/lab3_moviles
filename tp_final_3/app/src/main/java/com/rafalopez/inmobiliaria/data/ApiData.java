@@ -48,22 +48,23 @@ public class ApiData {
         editor.putString(tag, dato);
         return editor.commit();
     }
+
     /**
-     * Guarda los datos de un propietario en SharedPreferences
+     * Guarda los datos de un propietario en SharedPreferencesg
      *
      * @param context Contexto de la app
      * @param archivo Nombre del archivo (sin ext)
      * @param dato    Objeto Propietario a almacenar
-     * @param tag     Etiqueta del dato que se utilizará para identificarlos
      * @return Booleano que indica RESULTADO operacion
      */
-    public static boolean guardarData(
+    public static boolean guardarDataPropietario(
             Context context,
             @NonNull String archivo,
-            @NonNull Propietario dato,
-            @NonNull String tag) {
+            @NonNull Propietario dato
+            ) {
         SharedPreferences appData = conectar(context, archivo);
         SharedPreferences.Editor editor = appData.edit();
+        editor.putInt("id", dato.getId());
         editor.putString("nombre", dato.getNombre());
         editor.putString("apellido", dato.getApellido());
         editor.putString("dni", dato.getDni());
@@ -98,13 +99,14 @@ public class ApiData {
     @NonNull
     public static Propietario leerDataPropietario(Context context) {
         SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA +".dat");
+        int id= appData.getInt("id",-1);
         String nombre = appData.getString("nombre", "");
         String apellido = appData.getString("apellido", "");
         String dni = appData.getString("dni", "");
         String email = appData.getString("email", "");
         String telefono = appData.getString("telefono", "");
         String avatar = appData.getString("avatar", "");
-        return new Propietario(nombre, apellido, dni, email, telefono, avatar);
+        return new Propietario(id,nombre, apellido, dni, email, telefono, avatar);
     }
 
 

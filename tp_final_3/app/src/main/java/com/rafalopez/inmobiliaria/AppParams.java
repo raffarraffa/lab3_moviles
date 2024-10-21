@@ -12,6 +12,9 @@ public class AppParams {
         /** clave para almacenar y recuperar el token de app */
         public static final String TOKEN_KEY = "token";
 
+        /** clave para almacenar y recuperar los inmuebles de propietario */
+        public static final String INMUEBLE_KEY = "inmbuele";
+
         /** clave para almacenar y recuperar la info propietario. */
         public static final String PROPIETARIO_KEY = "propietario";
 

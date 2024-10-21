@@ -1,25 +1,29 @@
 package com.rafalopez.inmobiliaria.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Propietario {
-
-
-        private int id;
+        private int id=0;
         private String nombre;
         private String apellido;
         private String dni;
         private String email;
         private String telefono;
-        private String password;
+        private String password="";
         private String avatar;
         private boolean borrado;
  // Relaciones
-//        private Set<Inmueble> inmuebles = new HashSet<>();
-//        private Set<Contrato> contratos = new HashSet<>();
+        private Set<Inmueble> inmuebles = new HashSet<>();
+//       private Set<Contrato> contratos = new HashSet<>();
 
     public Propietario() { }
 
-    public Propietario(int id, String nombre, String apellido, String dni, String email, String telefono, String password, String avatar, boolean borrado) {
-        this.id = id;
+    public Propietario(int id, String nombre, String apellido, String dni, String email, String telefono, String avatar) { }
+
+    public Propietario(String nombre, String apellido, String dni, String email,
+                       String telefono, String password, String avatar, boolean borrado) {
+
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -77,6 +81,14 @@ public class Propietario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Inmueble> getInmuebles() {
+        return inmuebles;
+    }
+
+    public void setInmuebles(Set<Inmueble> inmuebles) {
+        this.inmuebles = inmuebles;
     }
 
     public String getTelefono() {
