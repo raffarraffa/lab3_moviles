@@ -196,9 +196,6 @@ public void getProfile() {
 
             }
         });
-
     }
-
     // TODO: Implement the ViewModel
-
 }

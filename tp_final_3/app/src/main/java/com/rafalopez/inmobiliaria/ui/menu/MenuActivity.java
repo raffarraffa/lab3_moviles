@@ -1,7 +1,9 @@
 package com.rafalopez.inmobiliaria.ui.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -11,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,8 +22,12 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rafalopez.inmobiliaria.AppParams;
+import com.rafalopez.inmobiliaria.MainActivity;
 import com.rafalopez.inmobiliaria.R;
+import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.databinding.ActivityMenuBinding;
+import com.rafalopez.inmobiliaria.ui.login.LoginActivity;
 
 /**
  * Gestion navegación del menu
@@ -78,27 +85,40 @@ public class MenuActivity extends AppCompatActivity {
                 )
                 .setOpenableLayout(drawer)
                 .build();
-
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
         // listenerSalir
+        //TODO aca poner u dialog d econfirmacion
+        /*
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-
                 if (id == R.id.nav_salir) {
-                    Toast.makeText(MenuActivity.this, "SALIR",
-                            Toast.LENGTH_SHORT).show();
-                    drawer.closeDrawers();
-                    finish();
+                    // Borrar el token
+//                    ApiData.deleteData(
+//                            getApplication(),
+//                            AppParams.PREFERENCES_DATA,
+//                            AppParams.TOKEN_KEY
+//                    );
+                    Toast.makeText(MenuActivity.this, "SALIR", Toast.LENGTH_SHORT).show();
+
+                    // Redirigir a la actividad de inicio
+//                    Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+//                    // 'InicioActivity' por tu actividad de inicio
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Para limpiar el historial de actividades
+//                    startActivity(intent);
+
+
+                //    drawer.closeDrawers();
+                    finish(); // Cierra la actividad actual para evitar volver atrás
                     return true;
+
                 }
                 return NavigationUI.onNavDestinationSelected(item, navController);
             }
-        });
+        });*/
 //        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

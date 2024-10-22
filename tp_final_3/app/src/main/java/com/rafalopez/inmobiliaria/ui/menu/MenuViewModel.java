@@ -18,33 +18,49 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * ViewModel para gestionar la lógica de la interfaz de usuario del menu
+ *
+ * Esta clase se encarga de obtener el perfil del propietario y gestionar las perticones ala API
+ */
 public class MenuViewModel extends AndroidViewModel {
     private static final String TAG = "salidaDebug";
     private final Context context;
     private final ApiClient.InmobiliariaServices api;
     private final String token;
+
+    /**
+     * Constructor del MenuViewModel
+     *
+     * @param application La app que proporciona el contexto
+     */
     public MenuViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
         api = ApiClient.getApiInmobiliaria();
-        token = ApiData.leerData(context,AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
+        token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
     }
-    public void getProfile(){
+
+    /**
+     * Obtiene el perfil del propietario desde la API
+     *
+     * Realiza una llamada a la API para obtener los datos del perfil del propietario
+     * y guarda  en sharepreferencesde la app
+     */
+    public void getProfile() {
         Call<Propietario> req = api.GetPerfil(token);
         req.enqueue(new Callback<Propietario>() {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
                 Propietario propietario = response.body();
-                boolean isProrietarioSaved =ApiData.guardarDataPropietario(context,
+                boolean isProrietarioSaved = ApiData.guardarDataPropietario(context,
                         AppParams.PREFERENCES_DATA, propietario);
-//                String jsonInmuebles = new Gson().toJson(propietario.getInmuebles());
-//                boolean isInmublesSaved=ApiData.guardarData(context,AppParams.PREFERENCES_DATA,jsonInmuebles, AppParams.INMUEBLE_KEY);
-                Log.d(TAG, "onResponse: 41"+ propietario);
-
+                Log.d(TAG, "onResponse: 41" + propietario);
             }
+
             @Override
             public void onFailure(Call<Propietario> call, Throwable throwable) {
-
+                Log.e(TAG, "Error en la solicitud: " + throwable.getMessage());
             }
         });
         Log.d(TAG, "getProfile: 22" + token);

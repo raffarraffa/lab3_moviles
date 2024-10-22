@@ -22,54 +22,69 @@ import com.rafalopez.inmobiliaria.databinding.FragmentPropietarioBinding;
 import com.rafalopez.inmobiliaria.entity.ActionMutable;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 
+/**
+ * Fragmt  info  propietario
+ *
+ */
 public class PropietarioFragment extends Fragment {
     private static final String TAG = "salidaDebug";
     private PropietarioViewModel mViewModel;
     private FragmentPropietarioBinding binding;
+
+    /**
+     *  nueva instancia de PropietarioFragment
+     *
+     * @return Una nueva instancia de PropietarioFragment
+     */
     public static PropietarioFragment newInstance() {
         return new PropietarioFragment();
     }
 
+    /**
+     * Infla  layout del fragmento y configura los observer del ViewModel
+     *
+     * @param inflater           LayoutInflater para inflar el layout
+     * @param container          ViewGroup que contiene el fragmento
+     * @param savedInstanceState estado guardado de la instancia
+     * @return  vista inflada del fragmento
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding =FragmentPropietarioBinding.inflate(inflater, container,false);
+        binding = FragmentPropietarioBinding.inflate(inflater, container, false);
         mViewModel = new ViewModelProvider(this).get(PropietarioViewModel.class);
-        mViewModel.getMPropietario().observe(getViewLifecycleOwner(),new Observer<Propietario>() {
+        mViewModel.getMPropietario().observe(getViewLifecycleOwner(), new Observer<Propietario>() {
             @Override
             public void onChanged(Propietario propietario) {
-                Log.d(TAG, "onChanged:40 "+propietario);
+                Log.d(TAG, "onChanged:40 " + propietario);
                 binding.inputNombre.setText(propietario.getNombre());
                 binding.inputApellido.setText(propietario.getApellido());
                 binding.inputEmail.setText(propietario.getEmail());
                 binding.inputDni.setText(propietario.getDni());
                 binding.inputTelefono.setText(propietario.getTelefono());
                 Glide.with(getContext())
-                        .load(AppParams.URL_BASE_FILE+propietario.getId() +"/avatares/"+ propietario.getAvatar())
+                        .load(AppParams.URL_BASE_FILE + propietario.getId() + "/avatares/" + propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(binding.imgAvatar);
                 binding.imgAvatar.setTag(propietario.getAvatar());
             }
         });
-        mViewModel.getMBtnAction().observe(getViewLifecycleOwner(),new Observer<String>() {
+        mViewModel.getMBtnAction().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 binding.btnEditar.setText(s);
             }
         });
-        mViewModel.getMBtnAction2().observe(getViewLifecycleOwner(),new Observer<ActionMutable>() {
+        mViewModel.getMBtnAction2().observe(getViewLifecycleOwner(), new Observer<ActionMutable>() {
             @Override
             public void onChanged(ActionMutable actionMutable) {
                 binding.btnEditar.setText(actionMutable.getAction());
                 inputEditable(actionMutable.isVisible());
-
-
             }
         });
         binding.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Propietario prop = new Propietario();
                 prop.setApellido(binding.inputApellido.getText().toString());
                 prop.setNombre(binding.inputNombre.getText().toString());
@@ -78,32 +93,35 @@ public class PropietarioFragment extends Fragment {
                 prop.setPassword(binding.inputPassword.getText().toString());
                 prop.setAvatar(binding.imgAvatar.getTag().toString());
                 prop.setDni(binding.inputDni.getText().toString());
-                Toast.makeText(getContext(),"Propietario Edita", LENGTH_LONG).show();
-              //  Log.d(TAG, "onClick: ");
+                Toast.makeText(getContext(), "Propietario Editado", LENGTH_LONG).show();
                 mViewModel.setActionBtn2(binding.btnEditar.getText().toString(), prop);
-
-//                binding.btnEditar.setVisibility(View.INVISIBLE);
-//                mViewModel.verSiAnda();
             }
         });
         binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
-
+                Toast.makeText(getContext(), binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
                 Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
             }
         });
-        // llama propietario logeado
-       // mViewModel.getPropietario();
         mViewModel.getProfile();
         return binding.getRoot();
     }
+
+    /**
+     * limpia el binding cuando la vista es destruida
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
+    /**
+     * cambia los campos de entrada son editables o no
+     *
+     * @param editable true  si los campos deben ser editables, falso de lo contrario
+     */
     private void inputEditable(boolean editable) {
         binding.inputNombre.setFocusable(editable);
         binding.inputNombre.setFocusableInTouchMode(editable);
@@ -116,5 +134,4 @@ public class PropietarioFragment extends Fragment {
         binding.inputPassword.setFocusable(editable);
         binding.inputPassword.setFocusableInTouchMode(editable);
     }
-
 }
