@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,7 +22,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCf5nf74CP-GeTAAWEXg0UV4FRxkAILu_4" />
-<!--           android:value="AIzaSyBsjSo2oYHxxaEiPn5lDZc1eWwuuxRdits" />-->
+        <!--           android:value="AIzaSyBsjSo2oYHxxaEiPn5lDZc1eWwuuxRdits" />-->
 
         <activity
             android:name=".MainActivity"
@@ -37,11 +38,25 @@
             android:name=".ui.menu.MenuActivity"
             android:exported="false"
             android:theme="@style/Theme.Inmobiliaria.NoActionBar">
+
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".ui.restore.RestoreActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Inmobiliaria.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="http"
+                    android:host="localhost"
+                    android:port="8104"
+                    android:pathPrefix="/api/login/restore" />
+            </intent-filter>
+        </activity>
     </application>
-
 </manifest>

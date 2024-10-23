@@ -1,7 +1,10 @@
 package com.rafalopez.inmobiliaria.ui.login;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.rafalopez.inmobiliaria.databinding.ActivityLoginBinding;
+import com.rafalopez.inmobiliaria.databinding.RestoreFormBinding;
 import com.rafalopez.inmobiliaria.ui.menu.MenuActivity;
 
 /**
@@ -18,6 +22,7 @@ import com.rafalopez.inmobiliaria.ui.menu.MenuActivity;
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private LoginViewModel loginViewModel;
+
 
     /**
      * llamado al crear la actividad
@@ -69,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnRestore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                passwordRestore();
             }
         });
         //iniciarApp();
@@ -82,4 +87,76 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
         startActivity(intent);
     }
+    /**
+     * Dilogo d restrucaion pass
+     */
+    private void  passwordRestore1(){
+        LayoutInflater inflater = getLayoutInflater();
+        RestoreFormBinding formBinding = RestoreFormBinding.inflate(inflater);
+
+        new AlertDialog.Builder(this)
+//                .setTitle("Rsetaurr Contrasñea")
+                .setView(formBinding.getRoot())
+//                .setMessage("¿Esta seguro de resetear contraseña?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Acción a realizar si el usuario confirma
+                        Toast.makeText(getApplicationContext(), "Confirmado", Toast.LENGTH_SHORT).show();
+                        loginViewModel.passwordRestore(formBinding.restoreEmail.getText().toString(),formBinding.restorePass.getText().toString());
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Acción a realizar si el usuario cancela
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+    private void passwordRestore() {
+        LayoutInflater inflater = getLayoutInflater();
+        RestoreFormBinding formBinding = RestoreFormBinding.inflate(inflater);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(formBinding.getRoot())
+                .setPositiveButton(android.R.string.yes, null) // Dejar null para manejar el clic manualmente
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String email = formBinding.restoreEmail.getText().toString();
+                        String newPassword = formBinding.restorePass.getText().toString();
+
+                        // Llama al ViewModel para restaurar la contraseña
+                        loginViewModel.passwordRestore(email, newPassword);
+
+                        // Observa el resultado de la restauración de la contraseña
+                        loginViewModel.getMRestoreResult().observe(LoginActivity.this,
+                                new Observer<String>() {
+                            @Override
+                            public void onChanged(String result) {
+                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        dialog.show();
+    }
+
 }

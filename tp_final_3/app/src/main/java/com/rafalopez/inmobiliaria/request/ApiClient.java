@@ -11,6 +11,7 @@ import com.rafalopez.inmobiliaria.entity.User;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -48,6 +49,10 @@ public class ApiClient {
         Call<User> PostLogin1(@Body User user);
         @POST("login")
         Call<String> PostLogin(@Body User user);
+
+        @POST("login/passwordrestore")
+        Call<ResponseBody> PostRestore(@Body User user);
+
 
         @GET("propietario/perfil")
         Call<Propietario> GetPerfil(@Header("Authorization") String token);

@@ -78,7 +78,7 @@
         android:ems="10"
         android:hint="Ingrese email"
         android:inputType="textEmailAddress"
-        android:text="uno@prop.com"
+        android:text="lopezrafa@gmail.com"
         app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"

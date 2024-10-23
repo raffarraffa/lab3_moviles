@@ -4,29 +4,19 @@ public class User {
     private String email;
     private String password;
     private String token= null;
-    private Propietario propietario=null;
-
+    public User() {}
     public User(String email, String password) {
         this.email=email;
         this.password=password;
     }
 
-    public User(String token, Propietario propietario) {
+    public User(String token) {
         this.token = token;
-        this.propietario = propietario;
     }
-
     public User(String email, String password, String token) {
         this.email = email;
         this.password = password;
         this.token = token;
-    }
-
-    public User(String email, String password, String token, Propietario propietario) {
-        this.email = email;
-        this.password = password;
-        this.token = token;
-        this.propietario = propietario;
     }
 
     public String getEmail() {
@@ -51,14 +41,6 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public Propietario getPropietario() {
-        return propietario;
-    }
-
-    public void setPropietario(Propietario propietario) {
-        this.propietario = propietario;
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.User;
 import com.rafalopez.inmobiliaria.request.ApiClient;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +30,7 @@ public class LoginViewModel extends AndroidViewModel {
     private MutableLiveData<String> mLoginOk;
     private MutableLiveData<String> mLoginError;
     private MutableLiveData<String> mLoginMsgError;
+    private MutableLiveData<String> mRestoreResult;
     private final ApiClient.InmobiliariaServices api;
 
     /**
@@ -63,6 +65,7 @@ public class LoginViewModel extends AndroidViewModel {
         return mLoginError;
     }
 
+
     /**
      * Obtiene LiveData que indica si el inicio de SESSION fue exitoso
      * @return LiveData de tipo Boolean
@@ -83,6 +86,17 @@ public class LoginViewModel extends AndroidViewModel {
             mLoginMsgError = new MutableLiveData<>();
         }
         return mLoginMsgError;
+    }
+
+    /**
+     * Obtiene LiveData que indica si hubo un error en el inicio de SESSION
+     * @return LiveData de tipo Boolean
+     */
+    LiveData<String> getMRestoreResult() {
+        if (mRestoreResult == null) {
+            mRestoreResult = new MutableLiveData<>();
+        }
+        return mRestoreResult;
     }
 
     /**
@@ -113,6 +127,38 @@ public class LoginViewModel extends AndroidViewModel {
             public void onFailure(Call<String> call, Throwable throwable) {
                 mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
                 Log.e(TAG, "onFailure:112 " + throwable.getMessage());
+            }
+        });
+    }
+
+    /**
+     *  Metodo para restaruacion contrasñea
+     * @param email
+     * @param password
+     */
+    public void passwordRestore(String email, String password) {
+        User user = new User(email, password);
+        Log.d(TAG, "passwordRestore: ");
+        Call<ResponseBody> req = api.PostRestore(user);
+        req.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d(TAG, "onResponse:139 " +response.message());
+//                if (response.isSuccessful() && response.body() != null) {
+//                    Log.d(TAG, "onResponse:100 " +response);
+//                    //todo hacer algo con los booleanos
+//
+//                    //todo disparar mutable LOGIN OK
+//                    mRestoreResult.setValue(response.body().toString());
+//                } else {
+//                    mLoginError.setValue("Error Intente  Nuevamente");
+//                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+
+           //     mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
+                Log.e(TAG, "onFailure:156 " + throwable.getMessage());
             }
         });
     }
