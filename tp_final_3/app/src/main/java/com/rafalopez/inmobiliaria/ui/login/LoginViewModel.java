@@ -15,7 +15,6 @@ import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.User;
 import com.rafalopez.inmobiliaria.request.ApiClient;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -132,32 +131,30 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     /**
-     *  Metodo para restaruacion contrasñea
+     *
      * @param email
      * @param password
      */
     public void passwordRestore(String email, String password) {
         User user = new User(email, password);
-        Log.d(TAG, "passwordRestore: ");
-        Call<ResponseBody> req = api.PostRestore(user);
-        req.enqueue(new Callback<ResponseBody>() {
+        Call<Void> req = api.PostRestore(user);
+        req.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d(TAG, "onResponse:139 " +response.message());
-//                if (response.isSuccessful() && response.body() != null) {
-//                    Log.d(TAG, "onResponse:100 " +response);
-//                    //todo hacer algo con los booleanos
-//
-//                    //todo disparar mutable LOGIN OK
-//                    mRestoreResult.setValue(response.body().toString());
-//                } else {
-//                    mLoginError.setValue("Error Intente  Nuevamente");
-//                }
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d(TAG, "onResponse:139 " +response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "onResponse:100 " +response.body());
+                    //todo hacer algo con los booleanos
+
+                    //todo disparar mutable LOGIN OK
+                    mRestoreResult.setValue(response.body().toString());
+                } else {
+                    mLoginError.setValue("Error Intente  Nuevamente");
+                }
             }
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
-
-           //     mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
                 Log.e(TAG, "onFailure:156 " + throwable.getMessage());
             }
         });
