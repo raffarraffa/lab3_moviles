@@ -27,7 +27,7 @@ public class AppParams {
         /** URL base para acceder a los archivos almacenados en el servidor local*/
         public static final String URL_BASE_FILE = "http://192.168.10.25:8104/archivos/";
 
-        /** URL base para acceder a los archivos almacenados en el servidor prudiccion*/
+        /** URL base para acceder a los archivos almacenados en el servidor produccion*/
         // public static final String URL_BASE_FILE = "https://api.rafalopez.ar/archivos/";
         /** Utils Maps inmobilairia */
         public  static  double MAP_LAT= -33.1866142;
