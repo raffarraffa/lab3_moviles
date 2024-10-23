@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.rafalopez.inmobiliaria.AppParams;
@@ -28,6 +29,8 @@ public class MenuViewModel extends AndroidViewModel {
     private final Context context;
     private final ApiClient.InmobiliariaServices api;
     private final String token;
+    private Propietario propietario;
+    MutableLiveData<Propietario>mPropietario;
 
     /**
      * Constructor del MenuViewModel
@@ -39,6 +42,20 @@ public class MenuViewModel extends AndroidViewModel {
         context = application.getApplicationContext();
         api = ApiClient.getApiInmobiliaria();
         token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
+//        propietario=ApiData.leerDataPropietario(context);
+
+    }
+
+    /**
+     *  Obtien instancia MytableLiveData
+     *
+     * @return  Inatancia MutalbeliveData tipo propietario
+     */
+    public  MutableLiveData<Propietario> getmPropietario (){
+        if(mPropietario==null){
+            mPropietario = new MutableLiveData<Propietario>();
+        }
+        return mPropietario;
     }
 
     /**
@@ -47,15 +64,16 @@ public class MenuViewModel extends AndroidViewModel {
      * Realiza una llamada a la API para obtener los datos del perfil del propietario
      * y guarda  en sharepreferencesde la app
      */
+
     public void getProfile() {
         Call<Propietario> req = api.GetPerfil(token);
         req.enqueue(new Callback<Propietario>() {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
-                Propietario propietario = response.body();
-                boolean isProrietarioSaved = ApiData.guardarDataPropietario(context,
-                        AppParams.PREFERENCES_DATA, propietario);
+                propietario = response.body();
+                boolean isProrietarioSaved = ApiData.guardarDataPropietario(context, AppParams.PREFERENCES_DATA, propietario);
                 Log.d(TAG, "onResponse: 41" + propietario);
+                mPropietario.setValue(propietario);
             }
 
             @Override
