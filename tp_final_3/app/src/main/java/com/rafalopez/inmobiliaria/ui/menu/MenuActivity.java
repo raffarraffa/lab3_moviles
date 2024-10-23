@@ -7,13 +7,17 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,6 +31,7 @@ import com.rafalopez.inmobiliaria.MainActivity;
 import com.rafalopez.inmobiliaria.R;
 import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.databinding.ActivityMenuBinding;
+import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.ui.login.LoginActivity;
 
 /**
@@ -59,10 +64,31 @@ public class MenuActivity extends AppCompatActivity {
                 .AndroidViewModelFactory
                 .getInstance(getApplication())
                 .create(MenuViewModel.class);
-        // button flotante
+
+        // oberver mutables
+        menuViewModel.getmPropietario().observe(this, new Observer<Propietario>() {
+            @Override
+            public void onChanged(Propietario propietario) {
+                //todo mostrar dato sperfil en head menu
+
+                Toast.makeText(getApplication(),"mutableadfasdfasdfasf",Toast.LENGTH_SHORT).show();
+               // binding.
+                View headerView =binding.navView.getHeaderView(0);
+                Log.d(TAG, "onChanged:  " + (R.id.headLayout));
+                Glide.with(getApplication())
+                        .load(AppParams.URL_BASE_FILE +  propietario.getAvatar())
+                        .error(R.drawable.no_avatar)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into((ImageView) headerView.findViewById(R.id.imageProfile));
+                ImageView imageProfile = headerView.findViewById(R.id.imageProfile);
+                String imagUrl= propietario.getAvatar();
+            }
+        });
+
         menuViewModel.getProfile();
 
         setSupportActionBar(binding.appBarMain2.toolbar);
+        // button flotante
 //        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -81,44 +107,14 @@ public class MenuActivity extends AppCompatActivity {
                         R.id.nav_propietario,
                         R.id.nav_inmueble,
                         R.id.nav_contrato,
-                        R.id.nav_salir
+                        R.id.nav_logout
                 )
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        // listenerSalir
-        //TODO aca poner u dialog d econfirmacion
-        /*
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.nav_salir) {
-                    // Borrar el token
-//                    ApiData.deleteData(
-//                            getApplication(),
-//                            AppParams.PREFERENCES_DATA,
-//                            AppParams.TOKEN_KEY
-//                    );
-                    Toast.makeText(MenuActivity.this, "SALIR", Toast.LENGTH_SHORT).show();
 
-                    // Redirigir a la actividad de inicio
-//                    Intent intent = new Intent(MenuActivity.this, MainActivity.class);
-//                    // 'InicioActivity' por tu actividad de inicio
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Para limpiar el historial de actividades
-//                    startActivity(intent);
-
-
-                //    drawer.closeDrawers();
-                    finish(); // Cierra la actividad actual para evitar volver atrás
-                    return true;
-
-                }
-                return NavigationUI.onNavDestinationSelected(item, navController);
-            }
-        });*/
 //        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
