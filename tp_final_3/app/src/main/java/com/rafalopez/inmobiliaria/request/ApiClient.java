@@ -6,11 +6,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.entity.Propietario;
+import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.entity.User;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,16 +30,18 @@ public class ApiClient {
     @NonNull
     public static InmobiliariaServices getApiInmobiliaria(){
         Gson gson = new GsonBuilder().setLenient().create();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(loggingInterceptor)
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AppParams.URL_BASE)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-              //  .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         return retrofit.create(InmobiliariaServices.class);
     }
@@ -50,7 +54,7 @@ public class ApiClient {
         Call<String> PostLogin(@Body User user);
 
         @POST("login/passwordrestore")
-        Call<Void> PostRestore(@Body User user);
+        Call<ResMsg> PostRestore(@Body User user);
 
         @GET("propietario/perfil")
         Call<Propietario> GetPerfil(@Header("Authorization") String token);

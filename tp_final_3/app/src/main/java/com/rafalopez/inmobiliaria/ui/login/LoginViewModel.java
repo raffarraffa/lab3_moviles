@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.entity.Propietario;
+import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.entity.User;
 import com.rafalopez.inmobiliaria.request.ApiClient;
 
@@ -135,27 +136,56 @@ public class LoginViewModel extends AndroidViewModel {
      * @param email
      * @param password
      */
+//    public void passwordRestore2(String email, String password) {
+//        User user = new User(email, password);
+//        Call<String> req = api.PostRestore(user);
+//        req.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                Log.d(TAG, "onResponse:139 " +response);
+//                if (response.isSuccessful() && response.body() != null) {
+//                    Log.d(TAG, "onResponse:100 " +response.body());
+//                    //todo hacer algo con los booleanos
+//
+//                    //todo disparar mutable LOGIN OK
+//                  //  mRestoreResult.setValue(response.body().toString());
+//                } else {
+//                    Log.d(TAG, "onResponse:100 " +response.body());
+//                    mLoginError.setValue("Error Intente  Nuevamente");
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<String> call, Throwable throwable) {
+//                mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
+//                Log.e(TAG, "onFailure:156 " + throwable.getMessage());
+//            }
+//        });
+//    }
     public void passwordRestore(String email, String password) {
         User user = new User(email, password);
-        Call<Void> req = api.PostRestore(user);
-        req.enqueue(new Callback<Void>() {
+        Call<ResMsg> req = api.PostRestore(user);
+        req.enqueue(new Callback<ResMsg>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d(TAG, "onResponse:139 " +response.body());
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "onResponse:100 " +response.body());
-                    //todo hacer algo con los booleanos
-
-                    //todo disparar mutable LOGIN OK
-                    mRestoreResult.setValue(response.body().toString());
-                } else {
-                    mLoginError.setValue("Error Intente  Nuevamente");
-                }
+            public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
+                Log.d(TAG, "onResponse:139 " +response.message());
+                Log.d(TAG, "onResponse:139 " +response.body().toString());
+//                if (response.isSuccessful() && response.body() != null) {
+//                    Log.d(TAG, "onResponse:100 " +response.body());
+//                    //todo hacer algo con los booleanos
+//                    boolean isSavetoken = ApiData.guardarData(context,
+//                            AppParams.PREFERENCES_DATA,
+//                            "Bearer " + response.body(),
+//                            AppParams.TOKEN_KEY);
+//                    //todo disparar mutable LOGIN OK
+//                    mLoginOk.setValue("Login ok");
+//                } else {
+//                    mLoginError.setValue("Error de acceso");
+//                }
             }
             @Override
-            public void onFailure(Call<Void> call, Throwable throwable) {
+            public void onFailure(Call<ResMsg> call, Throwable throwable) {
                 mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
-                Log.e(TAG, "onFailure:156 " + throwable.getMessage());
+                Log.e(TAG, "onFailure:112 " + throwable.getMessage());
             }
         });
     }

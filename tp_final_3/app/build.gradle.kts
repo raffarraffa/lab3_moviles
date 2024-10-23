@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.legacy.support.v4)
     implementation(libs.glide)
     implementation(libs.play.services.maps)
+    implementation(libs.logging.interceptor)
 //    implementation(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
