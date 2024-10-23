@@ -62,7 +62,7 @@ public class PropietarioFragment extends Fragment {
                 binding.inputDni.setText(propietario.getDni());
                 binding.inputTelefono.setText(propietario.getTelefono());
                 Glide.with(getContext())
-                        .load(AppParams.URL_BASE_FILE + propietario.getId() + "/avatares/" + propietario.getAvatar())
+                        .load(AppParams.URL_BASE_FILE  + propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(binding.imgAvatar);
