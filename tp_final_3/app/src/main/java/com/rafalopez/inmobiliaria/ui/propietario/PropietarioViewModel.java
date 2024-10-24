@@ -79,9 +79,8 @@ public class PropietarioViewModel extends AndroidViewModel {
     }
 
     /**
-     * GET LiveData  error
      *
-     * @return LiveData de tipo String
+     * @return instgancia mutable
      */
     LiveData<String> getMsgError() {
         if (mLoginMsgError == null) {
@@ -108,11 +107,14 @@ public class PropietarioViewModel extends AndroidViewModel {
     }
 
 //
-public void getProfile() {
+
+
+    public void getProfile() {
        String token = ApiData.getDataToken(context);
     Call<Propietario> req = api.GetPerfil(token);
     req.enqueue(new Callback<Propietario>() {
         @Override
+
         public void onResponse(Call<Propietario> call, Response<Propietario> response) {
             Propietario propietario = response.body();
             boolean isPropietarioSaved = ApiData.guardarDataPropietario(context,AppParams.PREFERENCES_DATA, propietario);

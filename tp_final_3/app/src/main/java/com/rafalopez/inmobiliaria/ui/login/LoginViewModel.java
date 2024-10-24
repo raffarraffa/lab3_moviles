@@ -26,12 +26,14 @@ import retrofit2.Response;
 public class LoginViewModel extends AndroidViewModel {   
     private static final String TAG = "salidaDebug";
     private final Context context;
+    private final ApiClient.InmobiliariaServices api;
+    // mutables
     private MutableLiveData<Propietario> mPropietario;
     private MutableLiveData<String> mLoginOk;
     private MutableLiveData<String> mLoginError;
     private MutableLiveData<String> mLoginMsgError;
-    private MutableLiveData<String> mRestoreResult;
-    private final ApiClient.InmobiliariaServices api;
+    private MutableLiveData<String> mRestoreResultOk;
+
 
     /**
      * cnstructor de LoginViewModel
@@ -92,11 +94,11 @@ public class LoginViewModel extends AndroidViewModel {
      * Obtiene LiveData que indica si hubo un error en el inicio de SESSION
      * @return LiveData de tipo Boolean
      */
-    LiveData<String> getMRestoreResult() {
-        if (mRestoreResult == null) {
-            mRestoreResult = new MutableLiveData<>();
+    LiveData<String> getMRestoreResultOk() {
+        if (mRestoreResultOk == null) {
+            mRestoreResultOk = new MutableLiveData<>();
         }
-        return mRestoreResult;
+        return mRestoreResultOk;
     }
 
     /**
@@ -136,56 +138,25 @@ public class LoginViewModel extends AndroidViewModel {
      * @param email
      * @param password
      */
-//    public void passwordRestore2(String email, String password) {
-//        User user = new User(email, password);
-//        Call<String> req = api.PostRestore(user);
-//        req.enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                Log.d(TAG, "onResponse:139 " +response);
-//                if (response.isSuccessful() && response.body() != null) {
-//                    Log.d(TAG, "onResponse:100 " +response.body());
-//                    //todo hacer algo con los booleanos
-//
-//                    //todo disparar mutable LOGIN OK
-//                  //  mRestoreResult.setValue(response.body().toString());
-//                } else {
-//                    Log.d(TAG, "onResponse:100 " +response.body());
-//                    mLoginError.setValue("Error Intente  Nuevamente");
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<String> call, Throwable throwable) {
-//                mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
-//                Log.e(TAG, "onFailure:156 " + throwable.getMessage());
-//            }
-//        });
-//    }
     public void passwordRestore(String email, String password) {
         User user = new User(email, password);
         Call<ResMsg> req = api.PostRestore(user);
         req.enqueue(new Callback<ResMsg>() {
             @Override
             public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
-                Log.d(TAG, "onResponse:139 " +response.message());
-                Log.d(TAG, "onResponse:139 " +response.body().toString());
-//                if (response.isSuccessful() && response.body() != null) {
-//                    Log.d(TAG, "onResponse:100 " +response.body());
-//                    //todo hacer algo con los booleanos
-//                    boolean isSavetoken = ApiData.guardarData(context,
-//                            AppParams.PREFERENCES_DATA,
-//                            "Bearer " + response.body(),
-//                            AppParams.TOKEN_KEY);
-//                    //todo disparar mutable LOGIN OK
-//                    mLoginOk.setValue("Login ok");
-//                } else {
-//                    mLoginError.setValue("Error de acceso");
-//                }
+                ResMsg msg=response.body();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "onResponse: " + msg.toString());
+                    mRestoreResultOk.setValue(msg.getMsg());
+                } else {
+                     mRestoreResultOk.setValue("Error de Recuper");
+                }
             }
             @Override
             public void onFailure(Call<ResMsg> call, Throwable throwable) {
-                mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
-                Log.e(TAG, "onFailure:112 " + throwable.getMessage());
+                mRestoreResultOk.setValue("Error de conexión: " + throwable.getMessage());
+                Log.e(TAG, "onFailure: " + throwable.getMessage());
             }
         });
     }

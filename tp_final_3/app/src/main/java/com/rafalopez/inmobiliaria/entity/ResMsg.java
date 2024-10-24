@@ -1,25 +1,30 @@
 package com.rafalopez.inmobiliaria.entity;
-
 public class ResMsg {
-    public static String msg;
-    public static String body;
+    private String msg;
+    private String body;
 
-    public ResMsg() {
-    }
-
-    public static String getMsg() {
+    // Getters y Setters
+    public String getMsg() {
         return msg;
     }
 
-    public static void setMsg(String msg) {
-        ResMsg.msg = msg;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public static String getBody() {
+    public String getBody() {
         return body;
     }
 
-    public static void setBody(String body) {
-        ResMsg.body = body;
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return "ResMsg{" +
+                "msg='" + msg + '\'' +
+                ", body='" + body + '\'' +
+                '}';
     }
 }

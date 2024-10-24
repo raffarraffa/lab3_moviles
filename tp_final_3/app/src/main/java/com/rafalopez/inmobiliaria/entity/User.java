@@ -3,11 +3,18 @@ package com.rafalopez.inmobiliaria.entity;
 public class User {
     private String email;
     private String password;
-    private String token= null;
+    private String token = null;
+    private int otp= -1 ;
     public User() {}
+
     public User(String email, String password) {
         this.email=email;
-        this.password=password;
+       this.password=password;
+    }
+
+    public User(String email, int otp){
+        this.email=email;
+        this.otp=otp;
     }
 
     public User(String token) {

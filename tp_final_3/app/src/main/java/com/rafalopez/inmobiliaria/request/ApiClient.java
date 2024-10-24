@@ -50,17 +50,24 @@ public class ApiClient {
     public  interface InmobiliariaServices{
         @POST("login1")
         Call<User> PostLogin1(@Body User user);
+
         @POST("login")
         Call<String> PostLogin(@Body User user);
 
         @POST("login/passwordrestore")
         Call<ResMsg> PostRestore(@Body User user);
 
+        @POST("login/acceptrestore")
+        Call<ResMsg> PostAcceptRestore(@Body User user);
+
+
         @GET("propietario/perfil")
         Call<Propietario> GetPerfil(@Header("Authorization") String token);
 
         @PATCH("propietario/update")
         Call<Propietario> PatchPerfil(@Header("Authorization") String token,   @Body Propietario propietario);
+
+
 
 
     }

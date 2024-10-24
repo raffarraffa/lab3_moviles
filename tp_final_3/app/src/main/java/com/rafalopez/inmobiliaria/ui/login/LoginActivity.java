@@ -143,11 +143,11 @@ public class LoginActivity extends AppCompatActivity {
                         loginViewModel.passwordRestore(email, newPassword);
 
                         // Observa el resultado de la restauración de la contraseña
-                        loginViewModel.getMRestoreResult().observe(LoginActivity.this,
-                                new Observer<String>() {
+                        loginViewModel.getMRestoreResultOk().observe(LoginActivity.this,  new Observer<String>() {
                             @Override
                             public void onChanged(String result) {
-                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), result,
+                                        Toast.LENGTH_LONG).show();
                                 dialog.dismiss();
                             }
                         });
@@ -155,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-
         dialog.show();
     }
 
