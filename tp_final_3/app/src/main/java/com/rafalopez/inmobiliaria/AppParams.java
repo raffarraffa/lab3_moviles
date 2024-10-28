@@ -34,8 +34,4 @@ public class AppParams {
         public  static  double MAP_LON= -66.3114745;
         public  static  float MAP_ZOOM= 10.0f;
         public  static  String  MAP_TITLE= "API";
-
-
-
-
 }

@@ -2,6 +2,8 @@ package com.rafalopez.inmobiliaria.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.rafalopez.inmobiliaria.AppParams;
@@ -11,8 +13,9 @@ import com.rafalopez.inmobiliaria.entity.Propietario;
  * Clase para almacenamiento de datos con SharedPreferences.
  */
 public class ApiData {
-
+    private static final String TAG = "salidaDebug";
     private static SharedPreferences appData;
+    private static String authToken = null;
 
     /**
      * Establece la conexión con SharedPreferences
@@ -75,7 +78,6 @@ public class ApiData {
 }
 
 
-
     /**
      * Lee un dato de SharedPreferences.
      *
@@ -109,7 +111,6 @@ public class ApiData {
         return new Propietario(id,nombre, apellido, dni, email, telefono, avatar);
     }
 
-
     /**
      * Borra un dato de SharedPreferences
      *
@@ -124,12 +125,29 @@ public class ApiData {
         editor.remove(tag);
         return editor.commit();
     }
+
     /**
      *  metodos especializados
      */
-    public  static String getDataToken(Context context){
+    public static boolean setDataToken(Context context, @NonNull String token) {
+        authToken = token;
         SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA + ".dat");
-        return appData.getString(AppParams.TOKEN_KEY,null);
+        SharedPreferences.Editor editor = appData.edit();
+        editor.putString(AppParams.TOKEN_KEY, token);
+        return editor.commit();
     }
 
+    /**
+     *  GET tken modo sinlgeton, seteado en memoria o desde shared preference
+     * @param context
+     * @return
+     */
+    public  static String getDataToken(Context context){
+        if (authToken == null) { 
+            SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA + ".dat");
+            authToken = appData.getString(AppParams.TOKEN_KEY, null);
+        }
+        Log.d(TAG, "getDataToken: " + authToken);
+        return authToken;
+    }
 }
