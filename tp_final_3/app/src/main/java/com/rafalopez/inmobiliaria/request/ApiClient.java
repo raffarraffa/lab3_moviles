@@ -5,10 +5,12 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rafalopez.inmobiliaria.AppParams;
+import com.rafalopez.inmobiliaria.entity.Inmueble;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.entity.User;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -66,6 +68,8 @@ public class ApiClient {
 
         @PATCH("propietario/update")
         Call<Propietario> PatchPerfil(@Header("Authorization") String token,   @Body Propietario propietario);
+        @GET("inmueble/listar")
+        Call<List<Inmueble>> GetInmuebleList(@Header("Authorization") String token);
 
 
 

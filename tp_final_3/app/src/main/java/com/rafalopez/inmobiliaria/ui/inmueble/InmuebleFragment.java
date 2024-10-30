@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rafalopez.inmobiliaria.R;
+import com.rafalopez.inmobiliaria.databinding.FragmentInmuebleBinding;
+import com.rafalopez.inmobiliaria.databinding.FragmentPropietarioBinding;
 
 public class InmuebleFragment extends Fragment {
-
+    private FragmentInmuebleBinding binding;
     private InmuebleViewModel mViewModel;
 
     public static InmuebleFragment newInstance() {
@@ -23,16 +25,14 @@ public class InmuebleFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_inmueble, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        binding=FragmentInmuebleBinding.inflate(inflater,container,false);
+        mViewModel = new ViewModelProvider(this).get(InmuebleViewModel.class);
+        mViewModel.getInmuebles();
+        return binding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(InmuebleViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
 
 }

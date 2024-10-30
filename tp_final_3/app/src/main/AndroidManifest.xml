@@ -18,12 +18,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCf5nf74CP-GeTAAWEXg0UV4FRxkAILu_4" />
         <!--           android:value="AIzaSyBsjSo2oYHxxaEiPn5lDZc1eWwuuxRdits" />-->
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
