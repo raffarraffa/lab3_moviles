@@ -76,27 +76,12 @@ public class MenuActivity extends AppCompatActivity {
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into((ImageView) headerView.findViewById(R.id.imageProfile));
-//              ImageView imageProfile = headerView.findViewById(R.id.imageProfile);
-//              String imagUrl= propietario.getAvatar();
             }
         });
-
         menuViewModel.getProfile();
-
         setSupportActionBar(binding.appBarMain2.toolbar);
-        // button flotante
-//        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null)
-//                        .setAnchorView(R.id.fab).show();
-//            }
-//        });
-
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-
         mAppBarConfiguration = new AppBarConfiguration.Builder
                 (
                         R.id.nav_map,
@@ -110,15 +95,7 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-//        binding.appBarMain2.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "onClick: tag");
-//            }
-//        });
         Log.d(TAG, "onCreate: 94");
-
     }
 
 
