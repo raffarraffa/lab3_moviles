@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_inmueble">
+    app:startDestination="@id/nav_map">
 
     <fragment
         android:id="@+id/nav_map"
@@ -24,11 +24,24 @@
         android:id="@+id/nav_inmueble"
         android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleFragment"
         android:label="Inmuebles"
-        tools:layout="@layout/fragment_inmueble" />
+        tools:layout="@layout/fragment_inmueble" >
+        <action
+            android:id="@+id/action_nav_inmueble_to_inmuebleDetailFragment"
+            app:destination="@id/inmuebleDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_contrato"
         android:name="com.rafalopez.inmobiliaria.ui.contrato.ContratoFragment"
         android:label="Contratos"
         tools:layout="@layout/fragment_contrato" />
+    <fragment
+        android:id="@+id/inmuebleDetailFragment"
+        android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleDetailFragment"
+        android:label="Detalle Inmueble"
+        tools:layout="@layout/fragment_inmueble_detail" >
+        <action
+            android:id="@+id/action_inmuebleDetailFragment_to_nav_inmueble"
+            app:destination="@id/nav_inmueble" />
+    </fragment>
 
 </navigation>

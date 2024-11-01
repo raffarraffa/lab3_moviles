@@ -70,18 +70,14 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onChanged(Propietario propietario) {
                 //todo mostrar dato sperfil en head menu
-
-                Toast.makeText(getApplication(),"mutableadfasdfasdfasf",Toast.LENGTH_SHORT).show();
-               // binding.
                 View headerView =binding.navView.getHeaderView(0);
-                Log.d(TAG, "onChanged:  " + (R.id.headLayout));
                 Glide.with(getApplication())
                         .load(AppParams.URL_BASE_FILE +  propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into((ImageView) headerView.findViewById(R.id.imageProfile));
-                ImageView imageProfile = headerView.findViewById(R.id.imageProfile);
-                String imagUrl= propietario.getAvatar();
+//              ImageView imageProfile = headerView.findViewById(R.id.imageProfile);
+//              String imagUrl= propietario.getAvatar();
             }
         });
 

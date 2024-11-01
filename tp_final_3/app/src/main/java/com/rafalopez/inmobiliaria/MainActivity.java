@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getMTokenInvalid().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                iniciarLogin();
+             iniciarLogin();
              //   finish();
             }
         });

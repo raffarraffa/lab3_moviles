@@ -1,8 +1,9 @@
 package com.rafalopez.inmobiliaria.entity;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 
-public class Inmueble {
+public class Inmueble implements Serializable {
 
 
     private int id;

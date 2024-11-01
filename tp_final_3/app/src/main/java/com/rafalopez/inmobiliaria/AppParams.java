@@ -7,13 +7,13 @@ package com.rafalopez.inmobiliaria;
 public class AppParams {
 
         /** clave para acceder a las preferencias almacenadas de la app */
-        public static final String PREFERENCES_DATA = "dataInmobiliaria";
+        public static final String PREFERENCES_DATA = "dataInmobiliaria.dat";
 
         /** clave para almacenar y recuperar el token de app */
         public static final String TOKEN_KEY = "token";
 
         /** clave para almacenar y recuperar los inmuebles de propietario */
-        public static final String INMUEBLE_KEY = "inmbuele";
+        public static final String INMUEBLE_KEY = "inmueble";
 
         /** clave para almacenar y recuperar la info propietario. */
         public static final String PROPIETARIO_KEY = "propietario";
@@ -23,9 +23,14 @@ public class AppParams {
 
         /** URL base de la API para el entorno de desarrollo produccion */
         // public static final String URL_BASE = "https://api.rafalopez.ar/";
+
         /** LOs servidores APIy Archviso podrian ser diferentes se seprtn las URL base */
+
         /** URL base para acceder a los archivos almacenados en el servidor local*/
         public static final String URL_BASE_FILE = "http://192.168.10.25:8104/archivos/";
+        /** URL base para acceder a los archivos imgagenes inmuebles en el servidor
+         * local*/
+        public static final String URL_BASE_IMG_INMU = "http://192.168.10.25:8104/archivos/inmuebles/";
 
         /** URL base para acceder a los archivos almacenados en el servidor produccion*/
         // public static final String URL_BASE_FILE = "https://api.rafalopez.ar/archivos/";
@@ -34,4 +39,5 @@ public class AppParams {
         public  static  double MAP_LON= -66.3114745;
         public  static  float MAP_ZOOM= 10.0f;
         public  static  String  MAP_TITLE= "API";
+        public  static  String TAG="salidaDebug";
 }

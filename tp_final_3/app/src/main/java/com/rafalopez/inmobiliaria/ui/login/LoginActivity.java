@@ -67,8 +67,9 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginViewModel.loginUser(binding.inputUsuario.getText().toString(),
-                        binding.inputPassword.getText().toString());
+                String email=binding.inputUsuario.getText().toString();
+                String password=binding.inputPassword.getText().toString();
+                loginViewModel.loginUser(email, password);
             }
         });
         binding.btnRestore.setOnClickListener(new View.OnClickListener() {

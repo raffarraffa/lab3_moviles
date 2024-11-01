@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -50,9 +49,10 @@ dependencies {
     implementation(libs.converter.scalars)
     implementation(libs.legacy.support.v4)
     implementation(libs.glide)
+
     implementation(libs.play.services.maps)
     implementation(libs.logging.interceptor)
-//    implementation(libs.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

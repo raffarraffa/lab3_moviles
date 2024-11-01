@@ -21,12 +21,11 @@ public class ApiData {
      * Establece la conexión con SharedPreferences
      *
      * @param context Contexto de la app
-     * @param archivo Nombre del archivo (sin ext)
+     * @param archivo Nombre del archivo
      * @return Instancia de SharedPreferences
      */
     private static SharedPreferences conectar(Context context, String archivo) {
         if (appData == null) {
-            archivo = archivo + ".dat";
             appData = context.getSharedPreferences(archivo, Context.MODE_PRIVATE);
         }
         return appData;
@@ -100,7 +99,7 @@ public class ApiData {
      */
     @NonNull
     public static Propietario leerDataPropietario(Context context) {
-        SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA +".dat");
+        SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA);
         int id= appData.getInt("id",-1);
         String nombre = appData.getString("nombre", "");
         String apellido = appData.getString("apellido", "");
@@ -131,7 +130,7 @@ public class ApiData {
      */
     public static boolean setDataToken(Context context, @NonNull String token) {
         authToken = token;
-        SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA + ".dat");
+        SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA );
         SharedPreferences.Editor editor = appData.edit();
         editor.putString(AppParams.TOKEN_KEY, token);
         return editor.commit();
@@ -144,7 +143,7 @@ public class ApiData {
      */
     public  static String getDataToken(Context context){
         if (authToken == null) { 
-            SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA + ".dat");
+            SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA );
             authToken = appData.getString(AppParams.TOKEN_KEY, null);
         }
         Log.d(TAG, "getDataToken: " + authToken);

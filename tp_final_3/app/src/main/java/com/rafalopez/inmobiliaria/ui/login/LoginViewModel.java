@@ -107,18 +107,17 @@ public class LoginViewModel extends AndroidViewModel {
      * @param password Contraseña del usuario
      */
     public void loginUser(String email, String password) {
+
         User user = new User(email, password);
+
         Call<String> req = api.PostLogin(user);
         req.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "onResponse:100 " +response.body());
                      //todo hacer algo con los booleanos
-                    boolean isSavetoken = ApiData.guardarData(context,
-                            AppParams.PREFERENCES_DATA,
-                            "Bearer " + response.body(),
-                            AppParams.TOKEN_KEY);
+                    String token = "Bearer " + response.body();
+                    boolean isSavetoken = ApiData.setDataToken(context, token );
                     //todo disparar mutable LOGIN OK
                     mLoginOk.setValue("Login ok");
                    } else {
@@ -128,7 +127,6 @@ public class LoginViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
                 mLoginMsgError.setValue("Error de conexión: " + throwable.getMessage());
-                Log.e(TAG, "onFailure:112 " + throwable.getMessage());
             }
         });
     }
