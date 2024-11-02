@@ -52,21 +52,21 @@ public class InmuebleDetailFragment extends Fragment {
             public void onChanged(Inmueble inmueble) {
                 //Inmueble{
                 // id=1,
-                // direccion='san martin 45',
-                // uso='Comercial',
-                // idTipo=1,
-                // ambientes=9,
-                // coordenadas='-32.414566613131946, -65.00877119828924',
-                // precio=1.26,
-                // propietarioId=4,
-                // estado='Disponible',
-                // idCiudad=1,
-                // idZona=2,
-                // borrado=false,
-                // descripcion='Casa  de 2 ambientes',
-                // urlImg='qwerty.jpg'
+                // direccion='san martin 45',*
+                // uso='Comercial',*
+                // idTipo=1,*
+                // ambientes=9,*
+                // coordenadas='-32.414566613131946, -65.00877119828924',*
+                // precio=1.26,*
+                // propietarioId=4,*
+                // estado='Disponible',*
+                // idCiudad=1,*
+                // idZona=2,*
+                // borrado=false,*
+                // descripcion='Casa  de 2 ambientes',*
+                // urlImg='qwerty.jpg'*
                 // }
-                binding.detailTitle.setText(inmueble.getDireccion());
+                binding.detailDomicilio.setText(inmueble.getDireccion());
                 String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();
                 Glide
                         .with(getContext())
