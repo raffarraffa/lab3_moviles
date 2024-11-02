@@ -66,14 +66,17 @@ public class InmuebleDetailFragment extends Fragment {
                 // descripcion='Casa  de 2 ambientes',*
                 // urlImg='qwerty.jpg'*
                 // }
-                binding.detailDomicilio.setText(inmueble.getDireccion());
+              //  binding.detailDomicilio.setText(inmueble.getDireccion());
                 String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();
-                Glide
+               /* Glide
+
+
                         .with(getContext())
                         .load(urlImg)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .skipMemoryCache(false)
                         .into(binding.detailImage);
+                        */
 
             }
         });
