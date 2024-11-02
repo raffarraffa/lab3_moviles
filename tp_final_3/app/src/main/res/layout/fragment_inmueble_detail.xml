@@ -7,149 +7,80 @@
     android:layout_height="match_parent"
     tools:context=".ui.inmueble.InmuebleDetailFragment">
 
-    <GridLayout
-        android:id="@+id/myGridLayout"
+    <!-- Usando LinearLayout para organizar CardViews como filas con sombra -->
+    <LinearLayout
+        android:id="@+id/myTableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
+        android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Par Label y Detail para Domicilio -->
-        <LinearLayout
-            android:layout_width="0dp"
+        <!-- Fila Domicilio -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_columnWeight="1"
-            android:padding="8dp">
+            android:layout_marginBottom="8dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
 
-            <TextView
-                android:id="@+id/labelDomicilio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Domicilio" />
-
-            <TextView
-                android:id="@+id/detailDomicilio"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                tools:text="Dirección del inmueble" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-        <!-- Par Label y Detail para Ciudad -->
-        <LinearLayout
-            android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/labelDomicilio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Domicilio" />
+
+                <TextView
+                    android:id="@+id/detailDomicilio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="16dp"
+                    tools:text="Dirección del inmueble" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Fila Ciudad -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_columnWeight="1"
-            android:padding="8dp">
+            android:layout_marginBottom="8dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
 
-            <TextView
-                android:id="@+id/labelCiudad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ciudad" />
-
-            <TextView
-                android:id="@+id/detailCiudad"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                tools:text="Ciudad del inmueble" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-        <!-- Par Label y Detail para Uso -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_columnWeight="1"
-            android:padding="8dp">
+                <TextView
+                    android:id="@+id/labelCiudad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ciudad" />
 
-            <TextView
-                android:id="@+id/labelUso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Uso" />
+                <TextView
+                    android:id="@+id/detailCiudad"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="16dp"
+                    tools:text="Ciudad del inmueble" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/detailUso"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                tools:text="Uso del inmueble" />
-        </LinearLayout>
+        <!-- Repite para las demás filas -->
 
-        <!-- Par Label y Detail para Tipo -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_columnWeight="1"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/labelTipo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tipo" />
-
-            <TextView
-                android:id="@+id/detailTipo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                tools:text="Tipo de inmueble" />
-        </LinearLayout>
-
-        <!-- Par Label y Detail para Precio -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_columnWeight="1"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/labelPrecio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Precio" />
-
-            <TextView
-                android:id="@+id/detailPrecio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                tools:text="Precio del inmueble" />
-        </LinearLayout>
-
-        <!-- Par Label y Detail para Ambientes -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_columnWeight="1"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/labelAmbientes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ambientes" />
-
-            <TextView
-                android:id="@+id/detailAmbientes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                tools:text="Cantidad de ambientes" />
-        </LinearLayout>
-
-    </GridLayout>
+    </LinearLayout>
 
     <!-- Imagen al final de la pantalla -->
     <ImageView
@@ -158,7 +89,7 @@
         android:layout_height="106dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/logo7"
-        app:layout_constraintTop_toBottomOf="@id/myGridLayout"
+        app:layout_constraintTop_toBottomOf="@id/myTableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
