@@ -25,6 +25,7 @@ import com.rafalopez.inmobiliaria.entity.Inmueble;
 
 
 public class InmuebleDetailFragment extends Fragment {
+    private static String TAG= AppParams.TAG;
     private FragmentInmuebleDetailBinding binding;
     private  InmuebleDetailViewModel mViewModel;
 
@@ -67,16 +68,25 @@ public class InmuebleDetailFragment extends Fragment {
                 // urlImg='qwerty.jpg'*
                 // }
               //  binding.detailDomicilio.setText(inmueble.getDireccion());
+                binding.txtDireccion.setText(inmueble.getDireccion());
+                binding.txtCiudad.setText(inmueble.getCiudadNombre());
+                binding.txtTipo.setText(inmueble.getTipo());
+                binding.txtAmbientes.setText(inmueble.getAmbientes()+"");
+                binding.txtUso.setText(inmueble.getUso());
+                binding.txtPrecio.setText("$ "+inmueble.getPrecio());
+               binding.txtDescripcion.setText(inmueble.getDescripcion());
+
+
+    //           Log.d(TAG, "onChanged: detial fragment 73 " + inmueble.getPrecio());
+
+
                 String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();
-               /* Glide
-
-
+                Glide
                         .with(getContext())
                         .load(urlImg)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .skipMemoryCache(false)
                         .into(binding.detailImage);
-                        */
 
             }
         });

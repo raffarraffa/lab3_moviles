@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_inmueble_detail"
+    android:id="@+id/nav_inmueble_new"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.inmueble.InmuebleDetailFragment">
+    tools:context=".ui.inmueble.InmuebleNewFragment">
 
     <TableLayout
         android:id="@+id/myTableLayout"
@@ -14,69 +14,57 @@
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TableRow android:layout_marginBottom="8dp">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="1dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/linearLayout"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:weightSum="2">
 
-                    <TextView
-                        android:id="@+id/txtDisponible"
-                        android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/btnConfirm"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="36dp"
-                        android:layout_marginEnd="27dp"
-                        android:text="Disponible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/checkBox"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_gravity="start"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:text="Confirmar" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/btnDisponibl"
-                        android:layout_width="53dp"
-                        android:layout_height="44dp"
-                        android:layout_marginStart="80dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/checkBox"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox"
-                        android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/btnCancel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/btnDisponibl"
-                        app:layout_constraintStart_toEndOf="@+id/txtDisponible"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_gravity="end"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:text="Cancelar" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
         </TableRow>
+
         <!-- Fila 1 -->
         <TableRow android:layout_marginBottom="8dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
@@ -87,25 +75,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dirección"
+                        android:text="Direccion"
                         android:textSize="10sp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/txtDireccion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="San Martín 45" />
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:hint="Direccion Inmueble"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
@@ -114,21 +103,27 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ciudad"
+                        android:text="Uso"
                         android:textSize="10sp" />
 
-                    <TextView
-                        android:id="@+id/txtCiudad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="Comercial" />
+                    <Spinner
+                        android:id="@+id/inputUso"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        android:entries="@array/uso_items"
+                        android:paddingBottom="2dp"
+                        tools:ignore="Suspicious0dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </TableRow>
@@ -138,7 +133,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
@@ -149,25 +144,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="2dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tipo"
-                        android:textSize="10sp" />
-
-                    <TextView
+                    <EditText
                         android:id="@+id/txtTipo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Casa" />
+                        tools:hint="Tipo" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
@@ -179,12 +168,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ambientes"
-                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/txtAmbientes"
@@ -200,7 +183,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
@@ -214,12 +197,6 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Precio"
-                        android:textSize="10sp" />
-
-                    <TextView
                         android:id="@+id/txtPrecio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -229,7 +206,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
@@ -242,66 +219,61 @@
                     android:orientation="vertical"
                     android:padding="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Uso"
-                        android:textSize="10sp" />
-
-                    <TextView
+                    <EditText
                         android:id="@+id/txtUso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-<!--
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="#6D44B3DF"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="8dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="1dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Estado"
-                        android:textSize="10sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="24dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="0dp">
-
-                        <TextView
-                            android:id="@+id/txtDisponible"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            tools:text="Disponible" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="120dp"
+            <!--
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:layout_weight="1"
-                            android:hint="SDF"
-                            android:text="SADFYT" />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            -->
+                            app:cardBackgroundColor="#6D44B3DF"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingStart="8dp"
+                                android:paddingTop="8dp"
+                                android:paddingBottom="1dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Estado"
+                                    android:textSize="10sp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="24dp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="0dp">
+
+                                    <TextView
+                                        android:id="@+id/txtDisponible"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        tools:text="Disponible" />
+
+                                    <com.google.android.material.chip.Chip
+                                        android:id="@+id/chip2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="120dp"
+                                        android:layout_weight="1"
+                                        android:hint="SDF"
+                                        android:text="SADFYT" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        -->
         </TableRow>
 
         <!-- frow 4 -->
@@ -340,7 +312,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="#6D44B3DF"
                 app:cardCornerRadius="8dp"
@@ -392,5 +364,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </TableRow>
+
     </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

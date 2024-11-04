@@ -19,7 +19,7 @@ public class AppParams {
         public static final String PROPIETARIO_KEY = "propietario";
 
         /** URL base de la API para el entorno de desarrollo local */
-        public static final String URL_BASE = "http://192.168.10.25:8104/api/";
+        public static final String URL_BASE = "http://192.168.10.26:8104/api/";
 
         /** URL base de la API para el entorno de desarrollo produccion */
         // public static final String URL_BASE = "https://api.rafalopez.ar/";
@@ -27,10 +27,10 @@ public class AppParams {
         /** LOs servidores APIy Archviso podrian ser diferentes se seprtn las URL base */
 
         /** URL base para acceder a los archivos almacenados en el servidor local*/
-        public static final String URL_BASE_FILE = "http://192.168.10.25:8104/archivos/";
+        public static final String URL_BASE_FILE = "http://192.168.10.26:8104/archivos/";
         /** URL base para acceder a los archivos imgagenes inmuebles en el servidor
          * local*/
-        public static final String URL_BASE_IMG_INMU = "http://192.168.10.25:8104/archivos/inmuebles/";
+        public static final String URL_BASE_IMG_INMU = "http://192.168.10.26:8104/archivos/inmuebles/";
 
         /** URL base para acceder a los archivos almacenados en el servidor produccion*/
         // public static final String URL_BASE_FILE = "https://api.rafalopez.ar/archivos/";

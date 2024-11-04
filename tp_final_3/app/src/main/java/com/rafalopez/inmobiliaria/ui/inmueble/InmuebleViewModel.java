@@ -66,6 +66,7 @@ public class InmuebleViewModel extends AndroidViewModel {
             public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     inmuebles = response.body();
+                    Log.d(TAG, "onResponse: inmueble view model 69" + response.body());
                     mListInmuebles.setValue(inmuebles);
                     Log.d(TAG, "Inmuebles obtenidos: " + inmuebles.size());
                 } else {

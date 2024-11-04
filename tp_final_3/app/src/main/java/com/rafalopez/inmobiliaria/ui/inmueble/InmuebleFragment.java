@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.util.Log;
@@ -63,6 +64,7 @@ public class InmuebleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"nuevo inmueble",Toast.LENGTH_LONG).show();
+                Navigation.findNavController(v).navigate(R.id.action_nav_inmueble_to_inmuebleNewFragment);
             }
         });
         return binding.getRoot();

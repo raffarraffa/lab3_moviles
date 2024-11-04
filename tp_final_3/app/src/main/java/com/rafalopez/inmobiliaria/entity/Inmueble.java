@@ -20,6 +20,8 @@ public class Inmueble implements Serializable {
     private boolean borrado;
     private String descripcion;
     private String urlImg;
+    private String ciudadNombre;
+    private  String tipo;
 
 
 
@@ -182,6 +184,22 @@ public class Inmueble implements Serializable {
         this.urlImg = urlImg;
     }
 
+    public String getCiudadNombre() {
+        return ciudadNombre;
+    }
+
+    public void setCiudadNombre(String ciudadNombre) {
+        this.ciudadNombre = ciudadNombre;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     @Override
     public String toString() {
         return "Inmueble{" +
@@ -199,6 +217,8 @@ public class Inmueble implements Serializable {
                 ", borrado=" + borrado +
                 ", descripcion='" + descripcion + '\'' +
                 ", urlImg='" + urlImg + '\'' +
+                ", ciudadNombre='" + ciudadNombre + '\'' +
+                ", tipo='" + tipo + '\'' +
                 '}';
     }
 }
