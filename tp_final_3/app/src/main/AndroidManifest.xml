@@ -21,11 +21,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCf5nf74CP-GeTAAWEXg0UV4FRxkAILu_4" />
-        <!--           android:value="AIzaSyBsjSo2oYHxxaEiPn5lDZc1eWwuuxRdits" />-->
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Inmobiliaria.NoActionBar"> <!-- Aquí se añade el tema -->
+            android:theme="@style/Theme.Inmobiliaria.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,5 +55,5 @@
                     android:pathPrefix="/api/login/restore" />
             </intent-filter>
         </activity>
-    </application>
+      </application>
 </manifest>

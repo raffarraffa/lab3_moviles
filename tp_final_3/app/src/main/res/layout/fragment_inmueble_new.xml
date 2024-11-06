@@ -111,17 +111,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Uso"
+                        android:text="Ciudad"
                         android:textSize="10sp" />
 
                     <Spinner
-                        android:id="@+id/inputUso"
+                        android:id="@+id/txtCiudad"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        android:entries="@array/uso_items"
+                        android:entries="@array/ciudad_items"
                         android:paddingBottom="2dp"
                         tools:ignore="Suspicious0dp" />
                 </LinearLayout>
@@ -145,13 +145,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="2dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo"
+                        android:textSize="10sp" />
 
-                    <EditText
+                    <Spinner
+                        android:id="@+id/txtTipo"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        android:entries="@array/tipo_items"
+                        android:paddingBottom="2dp"
+                        tools:ignore="Suspicious0dp" />
+                </LinearLayout>
+                <!-- <EditText
                         android:id="@+id/txtTipo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:hint="Tipo" />
                 </LinearLayout>
+                -->
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -168,13 +185,31 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ambientes"
+                        android:textSize="10sp" />
+                    <Spinner
+                        android:id="@+id/txtAmbientes"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        android:entries="@array/ambientes_items"
+                        android:paddingBottom="2dp"
+                        tools:ignore="Suspicious0dp" />
+                </LinearLayout>
 
+                    <!--
                     <TextView
                         android:id="@+id/txtAmbientes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="9" />
                 </LinearLayout>
+                -->
             </androidx.cardview.widget.CardView>
         </TableRow>
 
@@ -195,12 +230,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="8dp">
-
                     <TextView
-                        android:id="@+id/txtPrecio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="$1.2" />
+                        android:text="Precio"
+                        android:textSize="10sp" />
+                <EditText
+                    android:id="@+id/txtPrecio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -218,11 +258,23 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="8dp">
-
-                    <EditText
-                        android:id="@+id/txtUso"
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="Uso"
+                        android:textSize="10sp" />
+
+                    <Spinner
+                        android:id="@+id/txtUso"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        android:entries="@array/uso_items"
+                        android:paddingBottom="2dp"
+                        tools:ignore="Suspicious0dp" />
+
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -330,10 +382,14 @@
                         android:text="Descripción"
                         android:textSize="10sp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/txtDescripcion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:hint="Descricion"
+                        android:textSize="12sp" />
+
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </TableRow>
@@ -354,11 +410,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cargar Imagen "
+                        android:textSize="10sp" />
 
                     <ImageView
                         android:id="@+id/detailImage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         android:contentDescription="Imagen del inmueble"
                         android:src="@drawable/logo7" />
                 </LinearLayout>

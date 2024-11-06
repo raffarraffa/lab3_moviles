@@ -1,11 +1,8 @@
 package com.rafalopez.inmobiliaria.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
 
 public class Inmueble implements Serializable {
-
-
     private int id;
     private String direccion;
     private String uso;
@@ -20,18 +17,13 @@ public class Inmueble implements Serializable {
     private boolean borrado;
     private String descripcion;
     private String urlImg;
-    private String ciudadNombre;
+    private String ciudad;
     private  String tipo;
-
-
-
-
-    // Relaciones
+// Relaciones
  //   private Set<Contrato> contratos = new HashSet<>();
 
-    // Constructores
+// Constructores
     public Inmueble() { }
-
     public Inmueble(int id, String direccion, String uso, int idTipo, byte ambientes,
                     String coordenadas, BigDecimal precio, int propietarioId,
                     String estado, int idCiudad, int idZona, boolean borrado,
@@ -124,8 +116,16 @@ public class Inmueble implements Serializable {
         return precio;
     }
 
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
+    public void setPrecio(String precio) {
+        if (precio != null && !precio.isEmpty()) {
+            try {
+                this.precio = new BigDecimal(precio);
+            } catch (NumberFormatException e) {
+                this.precio = BigDecimal.ZERO;
+            }
+        } else {
+            this.precio = BigDecimal.ZERO;
+        }
     }
 
     public int getPropietarioId() {
@@ -184,12 +184,12 @@ public class Inmueble implements Serializable {
         this.urlImg = urlImg;
     }
 
-    public String getCiudadNombre() {
-        return ciudadNombre;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setCiudadNombre(String ciudadNombre) {
-        this.ciudadNombre = ciudadNombre;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
     public String getTipo() {
@@ -217,8 +217,9 @@ public class Inmueble implements Serializable {
                 ", borrado=" + borrado +
                 ", descripcion='" + descripcion + '\'' +
                 ", urlImg='" + urlImg + '\'' +
-                ", ciudadNombre='" + ciudadNombre + '\'' +
+                ", ciudad='" + ciudad + '\'' +
                 ", tipo='" + tipo + '\'' +
                 '}';
     }
+
 }

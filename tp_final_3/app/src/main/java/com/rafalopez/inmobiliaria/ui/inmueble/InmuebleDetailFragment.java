@@ -35,9 +35,7 @@ public class InmuebleDetailFragment extends Fragment {
     }
 
 
-     public static InmuebleDetailFragment newInstance() {
-        return new InmuebleDetailFragment();
-   }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,15 +67,13 @@ public class InmuebleDetailFragment extends Fragment {
                 // }
               //  binding.detailDomicilio.setText(inmueble.getDireccion());
                 binding.txtDireccion.setText(inmueble.getDireccion());
-                binding.txtCiudad.setText(inmueble.getCiudadNombre());
+                binding.txtCiudad.setText(inmueble.getCiudad());
                 binding.txtTipo.setText(inmueble.getTipo());
                 binding.txtAmbientes.setText(inmueble.getAmbientes()+"");
                 binding.txtUso.setText(inmueble.getUso());
                 binding.txtPrecio.setText("$ "+inmueble.getPrecio());
                binding.txtDescripcion.setText(inmueble.getDescripcion());
-
-
-    //           Log.d(TAG, "onChanged: detial fragment 73 " + inmueble.getPrecio());
+           Log.d(TAG, "onChanged: detial fragment 78 " + inmueble);
 
 
                 String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();

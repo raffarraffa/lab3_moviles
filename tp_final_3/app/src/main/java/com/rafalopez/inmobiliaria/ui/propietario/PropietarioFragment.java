@@ -2,8 +2,12 @@ package com.rafalopez.inmobiliaria.ui.propietario;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,9 +31,12 @@ import com.rafalopez.inmobiliaria.entity.Propietario;
  *
  */
 public class PropietarioFragment extends Fragment {
-    private static final String TAG = "salidaDebug";
+
+    private static final String TAG = "salida";
     private PropietarioViewModel mViewModel;
     private FragmentPropietarioBinding binding;
+    private ActivityResultLauncher<Intent> imgProfileLanzador;
+    private ActivityResultLauncher<String> permisoLanzador;
 
     /**
      *  nueva instancia de PropietarioFragment
@@ -53,6 +60,7 @@ public class PropietarioFragment extends Fragment {
         binding = FragmentPropietarioBinding.inflate(inflater, container, false);
         mViewModel = new ViewModelProvider(this).get(PropietarioViewModel.class);
         mViewModel.getMPropietario().observe(getViewLifecycleOwner(), new Observer<Propietario>() {
+
             @Override
             public void onChanged(Propietario propietario) {
                 Log.d(TAG, "onChanged:40 " + propietario);
@@ -69,6 +77,7 @@ public class PropietarioFragment extends Fragment {
                 binding.imgAvatar.setTag(propietario.getAvatar());
             }
         });
+
         mViewModel.getMBtnAction().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -100,11 +109,12 @@ public class PropietarioFragment extends Fragment {
         binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
+         //       Toast.makeText(getContext(), binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
                 Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
             }
         });
         mViewModel.getProfile();
+        verificarPermisos();
         return binding.getRoot();
     }
 
@@ -133,5 +143,17 @@ public class PropietarioFragment extends Fragment {
         binding.inputTelefono.setFocusableInTouchMode(editable);
         binding.inputPassword.setFocusable(editable);
         binding.inputPassword.setFocusableInTouchMode(editable);
+    }
+    private void verificarPermisos(){
+        permisoLanzador = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    if (isGranted) {
+                        //abrirGaleria();
+                    } else {
+                        Toast.makeText(getContext().getApplicationContext(), "Permiso de almacenamiento denegado", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 }

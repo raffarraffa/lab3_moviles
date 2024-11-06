@@ -48,25 +48,26 @@ public class InmuebleFragment extends Fragment {
                         GridLayoutManager.VERTICAL,false);
                 binding.listaInmuebles.setLayoutManager(grid);
                 binding.listaInmuebles.setAdapter(inmuebleAdapter);
-                Toast.makeText(getContext(),"inmu fragment 41",Toast.LENGTH_LONG).show();
-              //  Log.d(AppParams.TAG, "onChanged: fragment inmueble 43" + inmuebles);
             }
         });
         mViewModel.getmInmueble().observe(getViewLifecycleOwner(), new Observer<Inmueble>() {
             @Override
             public void onChanged(Inmueble inmueble) {
-                Toast.makeText(getContext().getApplicationContext(), "Clic en: " + inmueble.getDireccion(),
-                        Toast.LENGTH_SHORT).show();
             }
         });
         mViewModel.getInmuebles();
         binding.btnNuevoInmueble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"nuevo inmueble",Toast.LENGTH_LONG).show();
                 Navigation.findNavController(v).navigate(R.id.action_nav_inmueble_to_inmuebleNewFragment);
             }
         });
         return binding.getRoot();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+     //   mViewModel.getInmuebles();
+
     }
 }

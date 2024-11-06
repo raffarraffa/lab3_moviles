@@ -128,7 +128,7 @@
                         android:id="@+id/txtCiudad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Comercial" />
+                        tools:text="San Luis" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </TableRow>
