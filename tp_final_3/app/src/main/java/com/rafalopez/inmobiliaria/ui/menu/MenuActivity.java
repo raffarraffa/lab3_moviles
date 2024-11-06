@@ -1,6 +1,9 @@
 package com.rafalopez.inmobiliaria.ui.menu;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,6 +57,7 @@ public class MenuActivity extends AppCompatActivity {
 
     /**
      * creacionb de actividad y configurcion interfaz de usuario
+     *
      * @param savedInstanceState estado de la actividad guardada
      */
     @Override
@@ -64,15 +70,16 @@ public class MenuActivity extends AppCompatActivity {
                 .AndroidViewModelFactory
                 .getInstance(getApplication())
                 .create(MenuViewModel.class);
+      //  getPermisos();
 
         // oberver mutables
         menuViewModel.getmPropietario().observe(this, new Observer<Propietario>() {
             @Override
             public void onChanged(Propietario propietario) {
                 //todo mostrar dato sperfil en head menu
-                View headerView =binding.navView.getHeaderView(0);
+                View headerView = binding.navView.getHeaderView(0);
                 Glide.with(getApplication())
-                        .load(AppParams.URL_BASE_FILE +  propietario.getAvatar())
+                        .load(AppParams.URL_BASE_FILE + propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into((ImageView) headerView.findViewById(R.id.imageProfile));
@@ -99,9 +106,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * infaldo del menu en barra e
+     *
      * @param menu menu a inflar
      * @return resultado del infalte
      */
@@ -113,6 +120,7 @@ public class MenuActivity extends AppCompatActivity {
 
     /**
      * contoller de  navegacion hacia arriba
+     *
      * @return True si se navego hacia arriba
      */
     @Override
@@ -130,4 +138,6 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
+
+
 }

@@ -3,7 +3,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -23,16 +22,7 @@ public class InmuebleNewFragment extends Fragment {
     private static String TAG= AppParams.TAG;
     private FragmentInmuebleNewBinding binding;
     private InmuebleNewViewModel mViewModel;
-    private Intent intent;
-    private ActivityResultLauncher<Intent> galeriaLanzador;
-    private ActivityResultLauncher<String> permisoLanzador;
-
-
-
-
-
     public InmuebleNewFragment () { }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,  @Nullable Bundle savedInstanceState) {
         binding = FragmentInmuebleNewBinding.inflate(inflater,container, false);
@@ -42,8 +32,6 @@ public class InmuebleNewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        permisoLanzador = registerForActivityResult(new ActivityResultContracts.RequestPermission(), this::handlePermisoResultado);
-
         // observers de mutables
         mViewModel.getMResultOk().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -51,12 +39,11 @@ public class InmuebleNewFragment extends Fragment {
                 Navigation.findNavController(view).navigateUp();
             }
         });
-        // reempalzando fuinciones anoniam con fucnioen flecha
+        // reempalzando fuinciones anoniam con fucnioen lambda
         mViewModel.getmPermisoGaleria().observe(getViewLifecycleOwner(), permiso -> {
                 Toast.makeText(getContext(),"permiso " + permiso,Toast.LENGTH_SHORT).show();
                Log.d(TAG, "onViewCreated: 55");
                 });
-
 
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,9 +56,7 @@ public class InmuebleNewFragment extends Fragment {
                 inmueble.setPrecio(binding.txtPrecio.getText().toString());
                 inmueble.setUso(binding.txtUso.getSelectedItem().toString());
                 inmueble.setDescripcion(binding.txtDescripcion.getText().toString());
-
                 Log.d(TAG, "Inmueble creado: " + inmueble);
-
                 // Envía el objeto al ViewModel
                 mViewModel.crearInmueble(inmueble);  // Método en ViewModel para guardar
            //     Navigation.findNavController(view).navigateUp();
@@ -81,17 +66,9 @@ public class InmuebleNewFragment extends Fragment {
         binding.detailImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.verificarPermiso(permisoLanzador);
-            //    permisoLanzador.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
                 Log.d(TAG, "onClick: 92");
                 Toast.makeText(getContext() , "apreto imagen", Toast.LENGTH_SHORT).show();
-
             }
         });
-    }
-    private void handlePermisoResultado(Boolean permisoConcedido) {
-        // Manejar el resultado de la solicitud de permiso
-        mViewModel.getPermisoImagenGalery(permisoConcedido);
-    }
-
+   }
 }
