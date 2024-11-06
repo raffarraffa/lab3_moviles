@@ -1,8 +1,17 @@
 package com.rafalopez.inmobiliaria.ui.inmueble;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -11,6 +20,11 @@ import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.entity.InmuebleDto;
 import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.request.ApiClient;
+import com.rafalopez.inmobiliaria.utils.RealPathUtil;
+
+import java.io.File;
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,6 +36,7 @@ public class InmuebleNewViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> mResultOk;
     private MutableLiveData<String> mMsg;
     private MutableLiveData<Boolean> mPermisoGaleria;
+    private MutableLiveData<Uri> mUriImage;
 
     /**
      * cnstructor de InmuebleNewViewModel
@@ -51,8 +66,18 @@ public class InmuebleNewViewModel extends AndroidViewModel {
         }
         return mMsg;
     }
+    LiveData<Uri> getMUri() {
+        if(mUriImage==null) {
+            mUriImage = new MutableLiveData<>();
+        }
+        return mUriImage;
+    }
 
-    public void  crearInmueble(InmuebleDto inmueble){
+
+    public void  crearInmueble(InmuebleDto inmueble, Uri uriImage){
+        String path = RealPathUtil.getRealPath(context, uriImage);
+        File file = new File(path);
+
         String token = ApiData.getDataToken(context);
         Log.d(TAG, "crearInmueble: " + inmueble);
         Call<ResMsg> req =api.CreateInmueble(token,inmueble);
@@ -74,4 +99,15 @@ public class InmuebleNewViewModel extends AndroidViewModel {
             }
         });
    }
+
+    public void setImage(ActivityResult result) {
+
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                Uri uri = data.getData();
+                mUriImage.setValue(uri);
+               // Toast.makeText(context, "uri: " + uri.toString() , Toast.LENGTH_SHORT).show();
+            }
+        }
+
 }
