@@ -42,6 +42,8 @@ public class InmuebleNewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        permisoLanzador = registerForActivityResult(new ActivityResultContracts.RequestPermission(), this::handlePermisoResultado);
+
         // observers de mutables
         mViewModel.getMResultOk().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -55,10 +57,6 @@ public class InmuebleNewFragment extends Fragment {
                Log.d(TAG, "onViewCreated: 55");
                 });
 
-        permisoLanzador = registerForActivityResult(
-                new ActivityResultContracts.RequestPermission(),
-                permiso -> mViewModel.getPermisoImagenGalery(permiso)
-        );
 
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +84,14 @@ public class InmuebleNewFragment extends Fragment {
                 mViewModel.verificarPermiso(permisoLanzador);
             //    permisoLanzador.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
                 Log.d(TAG, "onClick: 92");
-          //      Toast.makeText(getContext() , "apreto imagen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext() , "apreto imagen", Toast.LENGTH_SHORT).show();
 
             }
         });
+    }
+    private void handlePermisoResultado(Boolean permisoConcedido) {
+        // Manejar el resultado de la solicitud de permiso
+        mViewModel.getPermisoImagenGalery(permisoConcedido);
     }
 
 }
