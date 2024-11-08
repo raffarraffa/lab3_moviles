@@ -1,6 +1,7 @@
 package com.rafalopez.inmobiliaria.utils;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,8 +10,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.webkit.MimeTypeMap;
 
 import androidx.loader.content.CursorLoader;
+
+import java.net.URLConnection;
 
 public class RealPathUtil {
 
@@ -205,6 +209,39 @@ public class RealPathUtil {
      */
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    public static String getMimeTypeFromUri(Context context, Uri uri) {
+        String mimeType = null;
+        // Obtener el tipo MIME desde el ContentResolver
+        if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            String extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+            mimeType = mime.getMimeTypeFromExtension(extension);
+        } else {
+            mimeType = URLConnection.guessContentTypeFromName(uri.getPath());
+        }
+        return mimeType;
+    }
+    public static String getMimeTypeFromUri2(Context context, Uri uri) {
+        String mimeType = null;
+
+        // Verifica si la URI es del tipo "content"
+        if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            ContentResolver contentResolver = context.getContentResolver();
+            mimeType = contentResolver.getType(uri); // Obtiene el tipo MIME de la URI
+        }
+
+        // Si no es una URI "content", intenta usar la extensión del archivo
+        if (mimeType == null) {
+            // Si no se pudo obtener el MIME de la URI "content", intenta con la extensión
+            String extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+            if (extension != null) {
+                mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+            }
+        }
+
+        return mimeType;
     }
 
 }

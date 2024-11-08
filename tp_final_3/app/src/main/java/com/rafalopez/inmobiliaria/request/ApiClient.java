@@ -1,5 +1,7 @@
 package com.rafalopez.inmobiliaria.request;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -11,18 +13,22 @@ import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.entity.User;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -39,19 +45,54 @@ public class ApiClient {
     @NonNull
     public static InmobiliariaServices getApiInmobiliaria(){
         Gson gson = new GsonBuilder().setLenient().create();
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(new Interceptor() {
+                    @Override
+
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        Log.d(TAG, "Solicitud URL: " + request.url());
+                        Log.d(TAG, "Solicitud Headers: " + request.headers());
+                        Response response = chain.proceed(request);
+                        Log.d(TAG, "Respuesta Headers: " + response.headers());
+                        if (response.body() != null) {
+                            String responseBody = response.body().string();  // Leer el cuerpo
+                            Log.d(TAG, "Cuerpo de la respuesta: " + responseBody);
+
+                            // Si necesitas crear un nuevo ResponseBody (por ejemplo, para modificaciones)
+                            ResponseBody newResponseBody = ResponseBody.create(
+                                    MediaType.parse("application/json"), // Tipo de contenido esperado
+                                    responseBody // Cuerpo de la respuesta
+                            );
+
+                            // Devuelve una nueva respuesta con el cuerpo manipulado (si es necesario)
+                            return response.newBuilder()
+                                    .body(newResponseBody)
+                                    .build();
+                        } else {
+                            Log.d(TAG, "No se encontró cuerpo en la respuesta");
+                            return response;
+                        }
+                    }
+
+                })
                 .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AppParams.URL_BASE)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+
         return retrofit.create(InmobiliariaServices.class);
     }
 
@@ -84,5 +125,25 @@ public class ApiClient {
         @Multipart
         @POST("{entity}/{id}/imagen")
         Call<ResMsg> UploadImg( @Path("entity") String entity, @Path("id") String id, @Part MultipartBody.Part img );
+
+
+        @Multipart
+        @POST("{entity}/new3")
+        Call<ResMsg> CreateEntityJson2(
+                       @Header("Authorization") String token,
+                        @Path("entity") String entity,
+                        @Part("inmuebleJson") RequestBody inmuebleJson,
+                        @Part MultipartBody.Part imagen
+            );
+
+        @Multipart
+        @POST("inmueble/new")
+        Call<ResMsg> CreateInmueble(
+                @Header("Authorization") String token,
+                @Part("inmueble") RequestBody inmueble,
+                @Part MultipartBody.Part imagen
+        );
+
+
     }
 }

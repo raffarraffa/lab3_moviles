@@ -55,6 +55,7 @@ public class InmuebleNewFragment extends Fragment {
         mViewModel.getMUri().observe(getViewLifecycleOwner(), uriImg ->{
           //  Toast.makeText(getContext()," uri" + uriImg.toString(),Toast.LENGTH_SHORT).show();
             binding.detailImage.setImageURI(uriImg);
+            binding.detailImage.setTag(uriImg);
         });
 
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
@@ -68,12 +69,17 @@ public class InmuebleNewFragment extends Fragment {
                 inmueble.setPrecio(binding.txtPrecio.getText().toString());
                 inmueble.setUso(binding.txtUso.getSelectedItem().toString());
                 inmueble.setDescripcion(binding.txtDescripcion.getText().toString());
+                Object tag = binding.detailImage.getTag();
+                Log.d(TAG, "onClick: " + tag);
                 Uri uriImage = (Uri) binding.detailImage.getTag();
 
-                Toast.makeText(getContext()," uri" + binding.detailImage.getDrawable().toString(),Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getContext()," uri" + binding.detailImage.getDrawable().toString(),Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Inmueble creado: " + inmueble);
                 // Envía el objeto al ViewModel
+                Log.d(TAG, "crearInmueble: 83" + uriImage);
                 mViewModel.crearInmueble(inmueble, uriImage );
+
+
            //     Navigation.findNavController(view).navigateUp();
             }
         });
