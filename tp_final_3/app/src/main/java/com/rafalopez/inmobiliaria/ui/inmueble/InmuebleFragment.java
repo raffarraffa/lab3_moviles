@@ -23,6 +23,7 @@ import com.rafalopez.inmobiliaria.R;
 import com.rafalopez.inmobiliaria.databinding.FragmentInmuebleBinding;
 import com.rafalopez.inmobiliaria.databinding.FragmentPropietarioBinding;
 import com.rafalopez.inmobiliaria.entity.Inmueble;
+import com.rafalopez.inmobiliaria.utils.GridSpace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +41,21 @@ public class InmuebleFragment extends Fragment {
     {
         binding=FragmentInmuebleBinding.inflate(inflater,container,false);
         mViewModel = new ViewModelProvider(this).get(InmuebleViewModel.class);
+
         mViewModel.getmListInmuebles().observe(getViewLifecycleOwner(), new Observer<List<Inmueble>>() {
             @Override
             public void onChanged(List<Inmueble> inmuebles) {
                 InmuebleAdapter inmuebleAdapter = new InmuebleAdapter(inmuebles,getContext());
-                GridLayoutManager grid = new GridLayoutManager(getContext(),1,
-                        GridLayoutManager.VERTICAL,false);
+                GridLayoutManager grid = new GridLayoutManager(
+                        getContext(),
+                        1,
+                        GridLayoutManager.VERTICAL,
+                        false
+                );
                 binding.listaInmuebles.setLayoutManager(grid);
+                binding.listaInmuebles.addItemDecoration(new GridSpace(8));
+                int padding = getResources().getDimensionPixelSize(R.dimen.padding_8);
+                binding.listaInmuebles.setPadding(padding, padding, padding, padding);
                 binding.listaInmuebles.setAdapter(inmuebleAdapter);
             }
         });

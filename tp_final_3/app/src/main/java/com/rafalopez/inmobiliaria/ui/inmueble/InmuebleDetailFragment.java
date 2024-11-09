@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.R;
 import com.rafalopez.inmobiliaria.databinding.FragmentInmuebleDetailBinding;
@@ -76,12 +77,13 @@ public class InmuebleDetailFragment extends Fragment {
            Log.d(TAG, "onChanged: detial fragment 78 " + inmueble);
 
 
-                String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();
+                String urlImg = AppParams.URL_BASE_FILE + inmueble.getUrlImg();
                 Glide
                         .with(getContext())
                         .load(urlImg)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .skipMemoryCache(false)
+                        .transform(new RoundedCorners(30))
                         .into(binding.detailImage);
 
             }

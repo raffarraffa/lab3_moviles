@@ -7,13 +7,16 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rafalopez.inmobiliaria.AppParams;
+import com.rafalopez.inmobiliaria.entity.Contrato;
 import com.rafalopez.inmobiliaria.entity.Inmueble;
 import com.rafalopez.inmobiliaria.entity.InmuebleDto;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.entity.User;
+import com.rafalopez.inmobiliaria.utils.DateCoverter;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -44,10 +47,11 @@ public class ApiClient {
     private static final String TAG = "ApiClient";
     @NonNull
     public static InmobiliariaServices getApiInmobiliaria(){
-        Gson gson = new GsonBuilder().setLenient().create();
-
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .registerTypeAdapter(Date.class, new DateCoverter())
+                .create();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -134,7 +138,7 @@ public class ApiClient {
                         @Path("entity") String entity,
                         @Part("inmuebleJson") RequestBody inmuebleJson,
                         @Part MultipartBody.Part imagen
-            );
+        );
 
         @Multipart
         @POST("inmueble/new")
@@ -143,6 +147,9 @@ public class ApiClient {
                 @Part("inmueble") RequestBody inmueble,
                 @Part MultipartBody.Part imagen
         );
+
+        @GET("contrato/listar")
+        Call<List<Contrato>> GetListContrato(@Header("Authorization") String token);
 
 
     }
