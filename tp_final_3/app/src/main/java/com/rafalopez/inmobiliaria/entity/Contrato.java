@@ -1,6 +1,7 @@
 package com.rafalopez.inmobiliaria.entity;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -9,17 +10,17 @@ public class Contrato {
     private int id;
     private int idInquilino;
     private int idInmueble;
-    private Date fechaInicio;
-    private Date fechaFin;
-    private Date fechaEfectiva;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
+    private LocalDateTime fechaEfectiva;
     private Double monto;
     private Boolean borrado;
-    private Date creadoFecha;
+    private LocalDateTime creadoFecha;
     private int creadoUsuario;
-    private Date canceladoFecha;
+    private LocalDateTime canceladoFecha;
     private int canceladoUsuario;
     private Integer editadoUsuario;
-    private Date editadoFecha;
+    private LocalDateTime editadoFecha;
     private int propietarioId;
 
 
@@ -27,25 +28,6 @@ public class Contrato {
     private Inmueble inmueble;
    // private List<Pago> pagos;
     public Contrato(){}
-
-    public Contrato(int id, int idInquilino, int idInmueble, Date fechaInicio, Date fechaFin, Date fechaEfectiva, Double monto, Boolean borrado, Date creadoFecha, int creadoUsuario, Date canceladoFecha, int canceladoUsuario, Integer editadoUsuario, Date editadoFecha, int propietarioId, Inmueble inmueble) {
-        this.id = id;
-        this.idInquilino = idInquilino;
-        this.idInmueble = idInmueble;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.fechaEfectiva = fechaEfectiva;
-        this.monto = monto;
-        this.borrado = borrado;
-        this.creadoFecha = creadoFecha;
-        this.creadoUsuario = creadoUsuario;
-        this.canceladoFecha = canceladoFecha;
-        this.canceladoUsuario = canceladoUsuario;
-        this.editadoUsuario = editadoUsuario;
-        this.editadoFecha = editadoFecha;
-        this.propietarioId = propietarioId;
-        this.inmueble = inmueble;
-    }
 
     public int getId() {
         return id;
@@ -71,27 +53,27 @@ public class Contrato {
         this.idInmueble = idInmueble;
     }
 
-    public Date getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public Date getFechaEfectiva() {
+    public LocalDateTime getFechaEfectiva() {
         return fechaEfectiva;
     }
 
-    public void setFechaEfectiva(Date fechaEfectiva) {
+    public void setFechaEfectiva(LocalDateTime fechaEfectiva) {
         this.fechaEfectiva = fechaEfectiva;
     }
 
@@ -111,11 +93,11 @@ public class Contrato {
         this.borrado = borrado;
     }
 
-    public Date getCreadoFecha() {
+    public LocalDateTime getCreadoFecha() {
         return creadoFecha;
     }
 
-    public void setCreadoFecha(Date creadoFecha) {
+    public void setCreadoFecha(LocalDateTime creadoFecha) {
         this.creadoFecha = creadoFecha;
     }
 
@@ -127,11 +109,11 @@ public class Contrato {
         this.creadoUsuario = creadoUsuario;
     }
 
-    public Date getCanceladoFecha() {
+    public LocalDateTime getCanceladoFecha() {
         return canceladoFecha;
     }
 
-    public void setCanceladoFecha(Date canceladoFecha) {
+    public void setCanceladoFecha(LocalDateTime canceladoFecha) {
         this.canceladoFecha = canceladoFecha;
     }
 
@@ -151,11 +133,11 @@ public class Contrato {
         this.editadoUsuario = editadoUsuario;
     }
 
-    public Date getEditadoFecha() {
+    public LocalDateTime getEditadoFecha() {
         return editadoFecha;
     }
 
-    public void setEditadoFecha(Date editadoFecha) {
+    public void setEditadoFecha(LocalDateTime editadoFecha) {
         this.editadoFecha = editadoFecha;
     }
 
