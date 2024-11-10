@@ -44,7 +44,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
         holder.direccion.setText(inmueble.getDireccion());
         holder.precio.setText("$ " + inmueble.getPrecio()+"");
 //        String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();
-        String urlImg = AppParams.URL_BASE_FILE + inmueble.getUrlImg();
+        String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getUrlImg();
         if (urlImg != null && !urlImg.isEmpty()) {
             Glide
                     .with(contexto)

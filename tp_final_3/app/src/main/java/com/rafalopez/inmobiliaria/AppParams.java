@@ -28,9 +28,10 @@ public class AppParams {
 
         /** URL base para acceder a los archivos almacenados en el servidor local*/
         public static final String URL_BASE_FILE = "http://192.168.10.26:8104/archivos/";
-        /** URL base para acceder a los archivos imgagenes inmuebles en el servidor
-         * local*/
+        /** URL base para acceder a los archivos imgagenes inmuebles en el servidor local */
         public static final String URL_BASE_IMG_INMU = "http://192.168.10.26:8104/archivos/inmuebles/";
+        /** URL base para acceder a los archivos imgagenes avatar en el servidor local */
+        public static final String URL_BASE_IMG_AVATAR = "http://192.168.10.26:8104/archivos/avatares/";
 
         /** URL base para acceder a los archivos almacenados en el servidor produccion*/
         // public static final String URL_BASE_FILE = "https://api.rafalopez.ar/archivos/";

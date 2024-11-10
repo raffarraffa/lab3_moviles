@@ -50,6 +50,7 @@ public class ContratoFragment extends Fragment {
             Log.e(AppParams.TAG, "onCreateView: " +contratos.size());
         });
 
+
         getContratos(mViewModel);
         return binding.getRoot();
         

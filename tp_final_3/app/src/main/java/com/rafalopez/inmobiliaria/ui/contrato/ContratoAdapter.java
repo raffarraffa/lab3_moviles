@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,8 +21,14 @@ import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.R;
 import com.rafalopez.inmobiliaria.entity.Contrato;
 import com.rafalopez.inmobiliaria.entity.Inmueble;
+import com.rafalopez.inmobiliaria.entity.Pago;
+import com.rafalopez.inmobiliaria.utils.Utils;
 
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHolder>  {
     private static final String TAG = "salida";
@@ -42,29 +49,23 @@ public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ContratoAdapter.ViewHolder holder, int position) {
         Contrato contrato = contratos.get(position);
+        holder.direccion.setText(contrato.getInmueble().getDireccion().toString());
         holder.precio.setText(contrato.getMonto()+"");
-
-       /* String urlImg = AppParams.URL_BASE_IMG_INMU + contrato.getId() +"/"+ contrato.getUrlImg();
-        if (urlImg != null && !urlImg.isEmpty()) {
-            Glide
-                    .with(contexto)
-                    .load(urlImg)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .skipMemoryCache(false)
-                    .into(holder.img);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String fecha = Utils.stringToDate(contrato.getFechaFin());
+        holder.vence.setText(fecha.toString());
+        Log.e(TAG, "onBindViewHolder: " + contrato.toString());
+        if (contrato.getPagos().isEmpty()) {
+             holder.btnPagos.setVisibility(View.GONE);
         } else {
-            Log.d(TAG, "Cargando imagen por defecto");
-            holder.img.setImageResource(R.drawable.logo7);
+                holder.btnPagos.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pagoDetail(contrato.getId(),contrato.getPagos(),v);
+                    }
+                });
+          holder.btnPagos.setVisibility(View.VISIBLE);
         }
-        Log.d(TAG, "onBindViewHolder: 47" + urlImg);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contratoDetail(contrato,v);
-                Log.d(TAG, "onBindViewHolder: position linea 40 " + inmueble);
-            }
-        });*/
     }
 
     @Override
@@ -75,17 +76,28 @@ public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHo
         TextView precio;
         TextView direccion;
         TextView vence;
-
+        Button btnPagos;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             precio=itemView.findViewById(R.id.textPrecio);
             direccion = itemView.findViewById(R.id.textDireccion);
             vence = itemView.findViewById(R.id.textVence);
+            btnPagos =itemView.findViewById(R.id.btnPagos);
         }
     }
-    private void contratoDetail(Contrato contrato , View v) {
-        //Bundle bundle = new Bundle();
-        //bundle.putSerializable("contrato",contrato);
-        //Navigation.findNavController(v).navigate(R.id.action_nav_inmueble_to_inmuebleDetailFragment,bundle);
+    private void pagoDetail(int id, List<Pago> pagos, View v) {
+        Bundle bundle = new Bundle();
+        StringBuilder infoPagos = new StringBuilder();
+        pagos.forEach(p ->{
+            infoPagos.append(p.toString());
+        });
+        bundle.putString("pagos", infoPagos.toString());
+        bundle.putInt("idContrato",id);
+        Log.e(TAG, "pagoDetail:\n" + infoPagos );
+       // Navigation.findNavController(v).navigate(R.id.action_nav_contrato_to_pagosDetailFragment,bundle);
+        Navigation.findNavController(v).navigate(R.id.action_nav_contrato_to_pagoDetailFragment,bundle);
+
+        Log.d(TAG, "Navegación realizada hacia pagosDetailFragment con datos: \n" + infoPagos);
+
     }
 }

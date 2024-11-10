@@ -105,10 +105,6 @@ public class PropietarioViewModel extends AndroidViewModel {
         }
         return mBtnAction2;
     }
-
-//
-
-
     public void getProfile() {
        String token = ApiData.getDataToken(context);
     Call<Propietario> req = api.GetPerfil(token);

@@ -13,7 +13,7 @@ import com.rafalopez.inmobiliaria.entity.InmuebleDto;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.entity.User;
-import com.rafalopez.inmobiliaria.utils.DateCoverter;
+
 
 import java.io.IOException;
 import java.util.Date;
@@ -47,10 +47,12 @@ public class ApiClient {
     private static final String TAG = "ApiClient";
     @NonNull
     public static InmobiliariaServices getApiInmobiliaria(){
-        Gson gson = new GsonBuilder()
+       Gson gson = new GsonBuilder()
                 .setLenient()
-                .registerTypeAdapter(Date.class, new DateCoverter())
+      //          .registerTypeAdapter(Date.class, new DateCoverter())
                 .create();
+
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -61,7 +63,6 @@ public class ApiClient {
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(new Interceptor() {
                     @Override
-
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request();
                         Log.d(TAG, "Solicitud URL: " + request.url());
@@ -69,16 +70,12 @@ public class ApiClient {
                         Response response = chain.proceed(request);
                         Log.d(TAG, "Respuesta Headers: " + response.headers());
                         if (response.body() != null) {
-                            String responseBody = response.body().string();  // Leer el cuerpo
+                            String responseBody = response.body().string();
                             Log.d(TAG, "Cuerpo de la respuesta: " + responseBody);
-
-                            // Si necesitas crear un nuevo ResponseBody (por ejemplo, para modificaciones)
                             ResponseBody newResponseBody = ResponseBody.create(
-                                    MediaType.parse("application/json"), // Tipo de contenido esperado
-                                    responseBody // Cuerpo de la respuesta
+                                    MediaType.parse("application/json"),
+                                    responseBody
                             );
-
-                            // Devuelve una nueva respuesta con el cuerpo manipulado (si es necesario)
                             return response.newBuilder()
                                     .body(newResponseBody)
                                     .build();

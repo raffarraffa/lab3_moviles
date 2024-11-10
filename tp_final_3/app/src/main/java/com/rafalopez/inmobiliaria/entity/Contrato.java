@@ -1,7 +1,7 @@
 package com.rafalopez.inmobiliaria.entity;
 
 
-import java.time.LocalDateTime;
+
 import java.util.Date;
 import java.util.List;
 
@@ -10,23 +10,24 @@ public class Contrato {
     private int id;
     private int idInquilino;
     private int idInmueble;
-    private LocalDateTime fechaInicio;
-    private LocalDateTime fechaFin;
-    private LocalDateTime fechaEfectiva;
+    private String fechaInicio;
+    private String fechaFin;
+    private String fechaEfectiva;
     private Double monto;
     private Boolean borrado;
-    private LocalDateTime creadoFecha;
+    private String creadoFecha;
     private int creadoUsuario;
-    private LocalDateTime canceladoFecha;
+    private String canceladoFecha;
     private int canceladoUsuario;
     private Integer editadoUsuario;
-    private LocalDateTime editadoFecha;
+    private String editadoFecha;
     private int propietarioId;
 
 
  //   private Inquilino inquilino;
     private Inmueble inmueble;
-   // private List<Pago> pagos;
+
+    private List<Pago> pagos;
     public Contrato(){}
 
     public int getId() {
@@ -53,27 +54,27 @@ public class Contrato {
         this.idInmueble = idInmueble;
     }
 
-    public LocalDateTime getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDateTime fechaInicio) {
+    public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDateTime getFechaFin() {
+    public String getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDateTime fechaFin) {
+    public void setFechaFin(String fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public LocalDateTime getFechaEfectiva() {
+    public String getFechaEfectiva() {
         return fechaEfectiva;
     }
 
-    public void setFechaEfectiva(LocalDateTime fechaEfectiva) {
+    public void setFechaEfectiva(String fechaEfectiva) {
         this.fechaEfectiva = fechaEfectiva;
     }
 
@@ -93,11 +94,11 @@ public class Contrato {
         this.borrado = borrado;
     }
 
-    public LocalDateTime getCreadoFecha() {
+    public String getCreadoFecha() {
         return creadoFecha;
     }
 
-    public void setCreadoFecha(LocalDateTime creadoFecha) {
+    public void setCreadoFecha(String creadoFecha) {
         this.creadoFecha = creadoFecha;
     }
 
@@ -109,11 +110,11 @@ public class Contrato {
         this.creadoUsuario = creadoUsuario;
     }
 
-    public LocalDateTime getCanceladoFecha() {
+    public String getCanceladoFecha() {
         return canceladoFecha;
     }
 
-    public void setCanceladoFecha(LocalDateTime canceladoFecha) {
+    public void setCanceladoFecha(String canceladoFecha) {
         this.canceladoFecha = canceladoFecha;
     }
 
@@ -133,11 +134,11 @@ public class Contrato {
         this.editadoUsuario = editadoUsuario;
     }
 
-    public LocalDateTime getEditadoFecha() {
+    public String getEditadoFecha() {
         return editadoFecha;
     }
 
-    public void setEditadoFecha(LocalDateTime editadoFecha) {
+    public void setEditadoFecha(String editadoFecha) {
         this.editadoFecha = editadoFecha;
     }
 
@@ -155,6 +156,14 @@ public class Contrato {
 
     public void setInmueble(Inmueble inmueble) {
         this.inmueble = inmueble;
+    }
+
+    public List<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<Pago> pagos) {
+        this.pagos = pagos;
     }
 
     @Override

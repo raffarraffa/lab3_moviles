@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_inmueble">
+    app:startDestination="@id/nav_map">
 
     <fragment
         android:id="@+id/nav_map"
@@ -27,7 +27,9 @@
         tools:layout="@layout/fragment_inmueble" >
         <action
             android:id="@+id/action_nav_inmueble_to_inmuebleDetailFragment"
-            app:destination="@id/inmuebleDetailFragment" />
+            app:destination="@id/inmuebleDetailFragment"
+            app:enterAnim="@anim/nav_default_exit_anim"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_nav_inmueble_to_inmuebleNewFragment"
             app:destination="@id/inmuebleNewFragment" />
@@ -36,7 +38,11 @@
         android:id="@+id/nav_contrato"
         android:name="com.rafalopez.inmobiliaria.ui.contrato.ContratoFragment"
         android:label="Contratos"
-        tools:layout="@layout/fragment_contrato" />
+        tools:layout="@layout/fragment_contrato" >
+        <action
+            android:id="@+id/action_nav_contrato_to_pagoDetailFragment"
+            app:destination="@id/pagoDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/inmuebleDetailFragment"
         android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleDetailFragment"
@@ -54,6 +60,20 @@
         <action
             android:id="@+id/action_inmuebleNewFragment_to_nav_inmueble"
             app:destination="@id/nav_inmueble" />
+    </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.rafalopez.inmobiliaria.ui.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/pagoDetailFragment"
+        android:name="com.rafalopez.inmobiliaria.ui.contrato.PagoDetailFragment"
+        android:label="Detalle Pagos Contrato"
+        tools:layout="@layout/fragment_pago_detail">
+        <action
+            android:id="@+id/action_pagoDetailFragment_to_nav_contrato"
+            app:destination="@id/nav_contrato" />
     </fragment>
 
 </navigation>

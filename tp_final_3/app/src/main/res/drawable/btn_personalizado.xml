@@ -1,0 +1,18 @@
+<!-- res/drawable/btn_personalizado.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado presionado -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#FF5733"/> <!-- Rojo -->
+            <corners android:radius="20dp"/> <!-- Esquinas redondeadas -->
+        </shape>
+    </item>
+
+    <!-- Estado normal (cuando no está presionado) -->
+    <item>
+        <shape>
+            <solid android:color="#4CAF50"/> <!-- Verde -->
+            <corners android:radius="20dp"/> <!-- Esquinas redondeadas -->
+        </shape>
+    </item>
+</selector>
