@@ -72,7 +72,7 @@ public class MenuViewModel extends AndroidViewModel {
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
                 propietario = response.body();
                 boolean isProrietarioSaved = ApiData.guardarDataPropietario(context, AppParams.PREFERENCES_DATA, propietario);
-                Log.d(TAG, "onResponse: 41" + propietario);
+                Log.d(TAG, "MENU VIEW MODEL: 41" + propietario);
                 mPropietario.setValue(propietario);
             }
 

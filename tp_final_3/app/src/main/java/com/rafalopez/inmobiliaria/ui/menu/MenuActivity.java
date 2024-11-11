@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -79,11 +80,14 @@ public class MenuActivity extends AppCompatActivity {
                 //todo mostrar dato sperfil en head menu
                 View headerView = binding.navView.getHeaderView(0);
                 Glide.with(getApplication())
-                        .load(AppParams.URL_BASE_FILE + propietario.getAvatar())
+                        .load(AppParams.URL_BASE_IMG_AVATAR + propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into((ImageView) headerView.findViewById(R.id.imageProfile));
+                TextView headerText = headerView.findViewById(R.id.headProfileName);
+                headerText.setText(propietario.getApellido() +" " + propietario.getNombre());
             }
+
         });
         menuViewModel.getProfile();
         setSupportActionBar(binding.appBarMain2.toolbar);

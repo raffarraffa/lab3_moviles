@@ -2,18 +2,14 @@ package com.rafalopez.inmobiliaria.ui.propietario;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,23 +30,19 @@ import com.rafalopez.inmobiliaria.databinding.FragmentPropietarioBinding;
 import com.rafalopez.inmobiliaria.entity.ActionMutable;
 import com.rafalopez.inmobiliaria.entity.Propietario;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Fragmt  info  propietario
  *
  */
 public class PropietarioFragment extends Fragment {
 
-    private static final int CAMERA_REQUEST_CODE = 100;
-    private static final int CAMERA_PERMISSION_CODE = 200;
     private static final String TAG = "salida";
     private PropietarioViewModel mViewModel;
     private FragmentPropietarioBinding binding;
     private ActivityResultLauncher<Intent> imgProfileLanzador;
     private ActivityResultLauncher<String> permisoLanzador;
-    private Uri imageUri;
+    private Intent intent;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     /**
      *  nueva instancia de PropietarioFragment
@@ -89,8 +81,6 @@ public class PropietarioFragment extends Fragment {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(binding.imgAvatar);
                 binding.imgAvatar.setTag(propietario.getAvatar());
-                Log.e(TAG, "onChanged: " + propietario.getAvatar().toString() );
-
             }
         });
 
@@ -106,6 +96,10 @@ public class PropietarioFragment extends Fragment {
                 binding.btnEditar.setText(actionMutable.getAction());
                 inputEditable(actionMutable.isVisible());
             }
+        });
+        mViewModel.getMUri().observe(getViewLifecycleOwner(), uriImg ->{
+            binding.imgAvatar.setImageURI(uriImg);
+            binding.imgAvatar.setTag(uriImg);
         });
         binding.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,20 +119,21 @@ public class PropietarioFragment extends Fragment {
         binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                abrirGaleria();
+                Toast.makeText(getContext(), binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
+                Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
+            }
+        });
 
-                if (binding.imgAvatar.getTag() != null) {
-                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                        // Solicitar el permiso para usar la cámara
-                        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-                    } else {
-                        // Abrir la cámara si el permiso ya está concedido
-                        openCamera();
-                    }}
-
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                mViewModel. setImage(result);
             }
         });
         mViewModel.getProfile();
-        verificarPermisos();
+
+        //      verificarPermisos();
         return binding.getRoot();
     }
 
@@ -167,49 +162,11 @@ public class PropietarioFragment extends Fragment {
         binding.inputTelefono.setFocusableInTouchMode(editable);
         binding.inputPassword.setFocusable(editable);
         binding.inputPassword.setFocusableInTouchMode(editable);
-    }
-    private void verificarPermisos(){
-        permisoLanzador = registerForActivityResult(
-                new ActivityResultContracts.RequestPermission(),
-                isGranted -> {
-                    if (isGranted) {
-                        // abrirGaleria();
-                    } else {
-                        Toast.makeText(getContext().getApplicationContext(), "Permiso de almacenamiento denegado", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-    }
-    private void openCamera() {
-        try {
-            File photoFile = File.createTempFile("temp_image", ".jpg", requireActivity().getExternalFilesDir(null));
-            imageUri = FileProvider.getUriForFile(requireContext(), "com.rafalopez.inmobiliaria.fileprovider", photoFile);
-
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Error al crear el archivo de imagen", Toast.LENGTH_SHORT).show();
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            } else {
-                Toast.makeText(getContext(), "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
-            binding.imgAvatar.setImageURI(imageUri);
-            Log.e(TAG, "Imagen cargada: " + imageUri);
-        }
+        binding.imgAvatar.setFocusableInTouchMode(editable);
     }
 
+    private void abrirGaleria() {
+        intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        activityResultLauncher.launch(intent);
+    }
 }

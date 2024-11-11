@@ -68,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
       //  mainViewModel.isValidToken();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+            Toast.makeText(this, "Has regresado ", Toast.LENGTH_LONG).show();
+
+    }
+
     /**
      * iicia  actividad de inicio de sesión (LoginActivity) si el token no es valido
      */

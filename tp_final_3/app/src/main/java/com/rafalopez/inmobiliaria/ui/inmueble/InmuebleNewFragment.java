@@ -53,7 +53,6 @@ public class InmuebleNewFragment extends Fragment {
                Log.d(TAG, "onViewCreated: 55");
                 });
         mViewModel.getMUri().observe(getViewLifecycleOwner(), uriImg ->{
-          //  Toast.makeText(getContext()," uri" + uriImg.toString(),Toast.LENGTH_SHORT).show();
             binding.detailImage.setImageURI(uriImg);
             binding.detailImage.setTag(uriImg);
         });
@@ -72,15 +71,7 @@ public class InmuebleNewFragment extends Fragment {
                 Object tag = binding.detailImage.getTag();
                 Log.d(TAG, "onClick: " + tag);
                 Uri uriImage = (Uri) binding.detailImage.getTag();
-
-            //    Toast.makeText(getContext()," uri" + binding.detailImage.getDrawable().toString(),Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Inmueble creado: " + inmueble);
-                // Envía el objeto al ViewModel
-                Log.d(TAG, "crearInmueble: 83" + uriImage);
                 mViewModel.crearInmueble(inmueble, uriImage );
-
-
-           //     Navigation.findNavController(view).navigateUp();
             }
         });
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -93,8 +84,6 @@ public class InmuebleNewFragment extends Fragment {
         binding.detailImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: 92");
-                Toast.makeText(getContext() , "apreto imagen", Toast.LENGTH_SHORT).show();
                 abrirGaleria();
             }
         });

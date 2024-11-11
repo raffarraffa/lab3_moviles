@@ -116,6 +116,14 @@ public class ApiClient {
 
         @PATCH("propietario/update")
         Call<Propietario> PatchPerfil(@Header("Authorization") String token,   @Body Propietario propietario);
+        @Multipart
+        @PATCH("propietario/update")
+        Call<Propietario> PatchPerfil_bad(@Header("Authorization") String token,   @Body Propietario propietario, @Part MultipartBody.Part imagen);
+
+        @Multipart
+        @PATCH("propietario/avatar")
+        Call<ResMsg> UploadAvatar( @Header("Authorization") String token,   @Part MultipartBody.Part imagen );
+
 
         @GET("inmueble/listar")
         Call<List<Inmueble>> GetInmuebleList(@Header("Authorization") String token);
@@ -125,7 +133,7 @@ public class ApiClient {
 
         @Multipart
         @POST("{entity}/{id}/imagen")
-        Call<ResMsg> UploadImg( @Path("entity") String entity, @Path("id") String id, @Part MultipartBody.Part img );
+        Call<ResMsg> UploadImg( @Path("entity") String entity, @Path("id") String id, @Part MultipartBody.Part imagen );
 
 
         @Multipart
@@ -147,6 +155,7 @@ public class ApiClient {
 
         @GET("contrato/listar")
         Call<List<Contrato>> GetListContrato(@Header("Authorization") String token);
+
 
 
     }
