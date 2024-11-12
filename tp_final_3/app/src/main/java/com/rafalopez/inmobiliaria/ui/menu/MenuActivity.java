@@ -106,6 +106,8 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
         Log.d(TAG, "onCreate: 94");
     }
 
@@ -122,6 +124,8 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     /**
      * contoller de  navegacion hacia arriba
      *
@@ -130,7 +134,9 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
-        Log.d(TAG, "onSupportNavigateUp: ");
+
+
+        Log.d(TAG, "onSupportNavigateUp: kkk");
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 

@@ -2,6 +2,8 @@ package com.rafalopez.inmobiliaria.entity;
 
 
 
+import com.rafalopez.inmobiliaria.utils.Utils;
+
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +26,16 @@ public class Contrato {
     private int propietarioId;
 
 
- //   private Inquilino inquilino;
+    private Inquilino inquilino;
     private Inmueble inmueble;
+
+    public Inquilino getInquilino() {
+        return inquilino;
+    }
+
+    public void setInquilino(Inquilino inquilino) {
+        this.inquilino = inquilino;
+    }
 
     private List<Pago> pagos;
     public Contrato(){}
@@ -168,23 +178,13 @@ public class Contrato {
 
     @Override
     public String toString() {
-        return "Contrato{" +
-                "id=" + id +
-                ", idInquilino=" + idInquilino +
-                ", idInmueble=" + idInmueble +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFin=" + fechaFin +
-                ", fechaEfectiva=" + fechaEfectiva +
-                ", monto=" + monto +
-                ", borrado=" + borrado +
-                ", creadoFecha=" + creadoFecha +
-                ", creadoUsuario=" + creadoUsuario +
-                ", canceladoFecha=" + canceladoFecha +
-                ", canceladoUsuario=" + canceladoUsuario +
-                ", editadoUsuario=" + editadoUsuario +
-                ", editadoFecha=" + editadoFecha +
-                ", propietarioId=" + propietarioId +
-                ", inmueble=" + inmueble +
-                '}';
+        return "\n Contrato N° " + id +
+                "\n Domicilio Inmueble " + inmueble.getDireccion() +
+                "\n Monto alquiler $" + monto +
+                "\n Fecha Incio " + Utils.stringToDate(fechaInicio) +
+                "\n Fecha Fin " + Utils.stringToDate(fechaFin) +
+                "\n Inquilino " + inquilino.getApellido() + ", " + inquilino.getNombre() +
+                "\n Telefono " + inquilino.getTelefono() +
+                "\n Email " + inquilino.getEmail();
     }
 }

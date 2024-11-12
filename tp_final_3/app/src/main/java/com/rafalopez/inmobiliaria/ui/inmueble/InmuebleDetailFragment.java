@@ -77,7 +77,7 @@ public class InmuebleDetailFragment extends Fragment {
            Log.d(TAG, "onChanged: detial fragment 78 " + inmueble);
 
 
-                String urlImg = AppParams.URL_BASE_FILE + inmueble.getUrlImg();
+                String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getUrlImg();
                 Glide
                         .with(getContext())
                         .load(urlImg)

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_propietario">
+    app:startDestination="@id/nav_map">
 
     <fragment
         android:id="@+id/nav_map"
@@ -15,11 +15,6 @@
         android:name="com.rafalopez.inmobiliaria.ui.propietario.PropietarioFragment"
         android:label="Propietario"
         tools:layout="@layout/fragment_propietario" />
-    <fragment
-        android:id="@+id/nav_inquilino"
-        android:name="com.rafalopez.inmobiliaria.ui.inquilino.InquilinoFragment"
-        android:label="Inquilinos"
-        tools:layout="@layout/fragment_inquilino" />
     <fragment
         android:id="@+id/nav_inmueble"
         android:name="com.rafalopez.inmobiliaria.ui.inmueble.InmuebleFragment"
@@ -74,6 +69,14 @@
         <action
             android:id="@+id/action_pagoDetailFragment_to_nav_contrato"
             app:destination="@id/nav_contrato" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.rafalopez.inmobiliaria.ui.login.LogoutFragment"
+        android:label="Salir de sesion" >
+        <action
+            android:id="@+id/action_nav_logout_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
 
 </navigation>

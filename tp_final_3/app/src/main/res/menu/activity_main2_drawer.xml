@@ -21,17 +21,13 @@
             android:icon="@drawable/ic_launcher_foreground"
             android:title="Inmuebles" />
         <item
-            android:id="@+id/nav_inquilino"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="Inquilinos" />
-        <item
             android:id="@+id/nav_contrato"
             android:icon="@drawable/ic_menu_camera"
             android:title="Contratos" />
         <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="LogOut" />
+        android:id="@+id/nav_logout"
+        android:title="Cerrar sesión"
+        android:icon="@drawable/common_google_signin_btn_icon_dark" />
 <!--        <item-->
 <!--            android:id="@+id/nav_home"-->
 <!--            android:icon="@drawable/ic_menu_camera"-->

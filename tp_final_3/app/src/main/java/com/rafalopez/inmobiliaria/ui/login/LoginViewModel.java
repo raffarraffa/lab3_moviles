@@ -134,10 +134,10 @@ public class LoginViewModel extends AndroidViewModel {
     /**
      *
      * @param email
-     * @param password
+     *
      */
-    public void passwordRestore(String email, String password) {
-        User user = new User(email, password);
+    public void passwordRestore(String email) {
+        User user = new User(email);
         Call<ResMsg> req = api.PostRestore(user);
         req.enqueue(new Callback<ResMsg>() {
             @Override

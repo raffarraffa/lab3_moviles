@@ -149,4 +149,10 @@ public class ApiData {
         Log.d(TAG, "getDataToken: " + authToken);
         return authToken;
     }
+    public  static void delDataToken(Context context){
+        SharedPreferences appData = conectar(context, AppParams.PREFERENCES_DATA );
+        SharedPreferences.Editor editor = appData.edit();
+        editor.clear();
+        editor.commit();
+    }
 }

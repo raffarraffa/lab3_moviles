@@ -109,7 +109,7 @@ public class ApiClient {
         Call<ResMsg> PostRestore(@Body User user);
 
         @POST("login/acceptrestore")
-        Call<ResMsg> PostAcceptRestore(@Body User user);
+        Call<ResMsg> PostAcceptRestore(@Header("Authorization") String token, @Body User user);
 
         @GET("propietario/perfil")
         Call<Propietario> GetPerfil(@Header("Authorization") String token);

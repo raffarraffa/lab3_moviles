@@ -21,6 +21,7 @@ import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.R;
 import com.rafalopez.inmobiliaria.entity.Contrato;
 import com.rafalopez.inmobiliaria.entity.Inmueble;
+import com.rafalopez.inmobiliaria.entity.Inquilino;
 import com.rafalopez.inmobiliaria.entity.Pago;
 import com.rafalopez.inmobiliaria.utils.Utils;
 
@@ -49,11 +50,12 @@ public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ContratoAdapter.ViewHolder holder, int position) {
         Contrato contrato = contratos.get(position);
-        holder.direccion.setText(contrato.getInmueble().getDireccion().toString());
-        holder.precio.setText(contrato.getMonto()+"");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String fecha = Utils.stringToDate(contrato.getFechaFin());
-        holder.vence.setText(fecha.toString());
+        holder.direccion.setText(contrato.toString());
+      //  holder.direccion.setText(contrato.getInmueble().getDireccion().toString() + contrato.getInquilino().getApellido().toString());
+   //     holder.precio.setText(contrato.getMonto()+"");
+   //     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+   //     String fecha = Utils.stringToDate(contrato.getFechaFin());
+     //   holder.vence.setText(fecha.toString());
         Log.e(TAG, "onBindViewHolder: " + contrato.toString());
         if (contrato.getPagos().isEmpty()) {
              holder.btnPagos.setVisibility(View.GONE);
@@ -73,15 +75,15 @@ public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHo
                 return contratos.size();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView precio;
+   //     TextView precio;
         TextView direccion;
-        TextView vence;
+  //      TextView vence;
         Button btnPagos;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            precio=itemView.findViewById(R.id.textPrecio);
+          //  precio=itemView.findViewById(R.id.textPrecio);
             direccion = itemView.findViewById(R.id.textDireccion);
-            vence = itemView.findViewById(R.id.textVence);
+
             btnPagos =itemView.findViewById(R.id.btnPagos);
         }
     }

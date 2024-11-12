@@ -208,6 +208,7 @@ public class PropietarioViewModel extends AndroidViewModel {
                     @Override
                     public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
                         if (response.isSuccessful()) {
+                            getProfile();
                             Log.d(TAG, "Inmueble creado con éxito: " + response.body());
                         } else {
                             Log.e(TAG, "Error en la respuesta: " + response.code());
@@ -228,6 +229,7 @@ public class PropietarioViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
                 if (response.isSuccessful()) {
+                    mPropietario.setValue(response.body());
                     Log.d(TAG, "view model porpietario linea 213"+response.body() +"");
                 } else {
                     Log.e(TAG,

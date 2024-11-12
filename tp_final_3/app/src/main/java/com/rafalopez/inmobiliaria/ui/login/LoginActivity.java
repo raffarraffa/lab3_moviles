@@ -1,5 +1,7 @@
 package com.rafalopez.inmobiliaria.ui.login;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -84,6 +86,9 @@ public class LoginActivity extends AppCompatActivity {
                 passwordRestore();
             }
         });
+        binding.btnSalir.setOnClickListener(v->{
+            mostarSalirApp();
+        });
         getPermisos();
         //iniciarApp();
     }
@@ -110,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Acción a realizar si el usuario confirma
                         Toast.makeText(getApplicationContext(), "Confirmado", Toast.LENGTH_SHORT).show();
-                        loginViewModel.passwordRestore(formBinding.restoreEmail.getText().toString(),formBinding.restorePass.getText().toString());
+                        loginViewModel.passwordRestore(formBinding.restoreEmail.getText().toString());
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -145,10 +150,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String email = formBinding.restoreEmail.getText().toString();
-                        String newPassword = formBinding.restorePass.getText().toString();
 
                         // Llama al ViewModel para restaurar la contraseña
-                        loginViewModel.passwordRestore(email, newPassword);
+                        loginViewModel.passwordRestore(email);
 
                         // Observa el resultado de la restauración de la contraseña
                         loginViewModel.getMRestoreResultOk().observe(LoginActivity.this,  new Observer<String>() {
@@ -195,6 +199,16 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permiso denegado. La aplicación necesita acceso a las imágenes.", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    private void mostarSalirApp() {
+        new AlertDialog.Builder(this)
+                .setTitle("Salir aplcacion")
+                .setMessage("¿Estás seguro de que salir de la aplicación?")
+                .setPositiveButton("Salir", (dialog, which) -> {
+                    finishAffinity();
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 
 }
