@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,6 +72,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error en el inicio de sesión", Toast.LENGTH_SHORT).show();
             }
         });
+
+        loginViewModel.getmShake().observe(this, shake->{
+            Toast.makeText(getApplicationContext(),"Llamando a tel:123456789",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:123456789"));
+            startActivity(intent);
+        });
 /** binidngs */
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
             mostarSalirApp();
         });
         getPermisos();
+        //solicitarPermisos();
+        loginViewModel.sensorShake();
     }
 
     /**
@@ -161,6 +171,11 @@ public class LoginActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CALL_PHONE}, 2);
+        }
     }
 
     @Override
@@ -170,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d("MenuActivity", "Permiso concedido");
             } else {
-                Toast.makeText(this, "Permiso denegado. La aplicación necesita acceso a las imágenes.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Permiso denegado. \nLa aplicación necesita acceso Para llamar .", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -184,5 +199,8 @@ public class LoginActivity extends AppCompatActivity {
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
+
+
+
 
 }

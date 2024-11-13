@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MenuActivity", "Permiso concedido");
                 mainViewModel.isValidToken();
             } else {
-                Toast.makeText(this, "Permiso denegado. La aplicacion necesita acceso a las imágenes.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Permiso denegado. La aplicacion necesita acceso a las imágenes", Toast.LENGTH_LONG).show();
                 mostrarMensajeConfiguracion();
             }
         }
