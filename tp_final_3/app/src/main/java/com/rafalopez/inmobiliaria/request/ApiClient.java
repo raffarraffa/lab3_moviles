@@ -116,6 +116,7 @@ public class ApiClient {
 
         @PATCH("propietario/update")
         Call<Propietario> PatchPerfil(@Header("Authorization") String token,   @Body Propietario propietario);
+
         @Multipart
         @PATCH("propietario/update")
         Call<Propietario> PatchPerfil_bad(@Header("Authorization") String token,   @Body Propietario propietario, @Part MultipartBody.Part imagen);
@@ -124,7 +125,6 @@ public class ApiClient {
         @PATCH("propietario/avatar")
         Call<ResMsg> UploadAvatar( @Header("Authorization") String token,   @Part MultipartBody.Part imagen );
 
-
         @GET("inmueble/listar")
         Call<List<Inmueble>> GetInmuebleList(@Header("Authorization") String token);
 
@@ -132,30 +132,22 @@ public class ApiClient {
         Call<ResMsg> CreateInmueble(@Header("Authorization") String token, @Body InmuebleDto inmueble);
 
         @Multipart
+        @POST("inmueble/new")
+        Call<ResMsg> CreateInmueble( @Header("Authorization") String token, @Part("inmueble") RequestBody inmueble, @Part MultipartBody.Part imagen);
+
+        @PATCH("inmueble/changeEstado/{id}/{estado}")
+        Call<Inmueble> CambiarEstado(@Header("Authorization") String token, @Path("id") int id, @Path("estado") String estado);
+
+        @Multipart
         @POST("{entity}/{id}/imagen")
         Call<ResMsg> UploadImg( @Path("entity") String entity, @Path("id") String id, @Part MultipartBody.Part imagen );
 
-
         @Multipart
         @POST("{entity}/new3")
-        Call<ResMsg> CreateEntityJson2(
-                       @Header("Authorization") String token,
-                        @Path("entity") String entity,
-                        @Part("inmuebleJson") RequestBody inmuebleJson,
-                        @Part MultipartBody.Part imagen
-        );
-
-        @Multipart
-        @POST("inmueble/new")
-        Call<ResMsg> CreateInmueble(
-                @Header("Authorization") String token,
-                @Part("inmueble") RequestBody inmueble,
-                @Part MultipartBody.Part imagen
-        );
+        Call<ResMsg> CreateEntityJson2( @Header("Authorization") String token, @Path("entity") String entity, @Part("inmuebleJson") RequestBody inmuebleJson, @Part MultipartBody.Part imagen );
 
         @GET("contrato/listar")
         Call<List<Contrato>> GetListContrato(@Header("Authorization") String token);
-
 
 
     }

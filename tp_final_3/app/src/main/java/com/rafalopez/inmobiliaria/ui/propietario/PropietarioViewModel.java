@@ -42,6 +42,7 @@ public class PropietarioViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> mLoginError;
     private MutableLiveData<String> mLoginMsgError;
     private MutableLiveData<String> mBtnAction;
+    private MutableLiveData<Boolean> mBtnAvatar;
     private MutableLiveData<ActionMutable> mBtnAction2;
     private MutableLiveData<Uri> mUriImage;
     private final Context context;
@@ -123,6 +124,12 @@ public class PropietarioViewModel extends AndroidViewModel {
         }
         return mUriImage;
     }
+    LiveData<Boolean> getMBtnAvatar() {
+        if(mBtnAvatar==null) {
+            mBtnAvatar = new MutableLiveData<>();
+        }
+        return mBtnAvatar;
+    }
     public void getProfile() {
        String token = ApiData.getDataToken(context);
     Call<Propietario> req = api.GetPerfil(token);
@@ -133,22 +140,15 @@ public class PropietarioViewModel extends AndroidViewModel {
             Propietario propietario = response.body();
             boolean isPropietarioSaved = ApiData.guardarDataPropietario(context,AppParams.PREFERENCES_DATA, propietario);
             mPropietario.setValue(propietario);
-//                String jsonInmuebles = new Gson().toJson(propietario.getInmuebles());
-//                boolean isInmublesSaved=ApiData.guardarData(context,AppParams.PREFERENCES_DATA,jsonInmuebles, AppParams.INMUEBLE_KEY);
             Log.d(TAG, "onResponse: 41" + propietario);
-
         }
-
         @Override
         public void onFailure(Call<Propietario> call, Throwable throwable) {
-
         }
     });
 }
-//
     public void getPropietario(){
         Propietario propietario = ApiData.leerDataPropietario(context);
-        Log.d(TAG, "getPropietario: 111" + propietario);
         if(propietario!=null){
             mPropietario.setValue(propietario);
             return;
@@ -173,20 +173,15 @@ public class PropietarioViewModel extends AndroidViewModel {
         Log.d(TAG, "setActionBtn2: " + action);
         switch (action){
            case "Editar":
-               Log.d(TAG, "setActionBtn2: 176" + prop.toString());
                 actionMutable.setAction("Guardar");
                 actionMutable.setVisible(true);
-                Log.d(TAG, "setActionBtn2:179 " + actionMutable.getAction().toString());
                 mBtnAction2.setValue(actionMutable);
-                // acciones de edicion
                 break;
             case "Guardar":
                 Log.d(TAG, "setActionBtn2: 184" + prop.toString());
                 actionMutable.setVisible(false);
                 actionMutable.setAction("Editar");
                 mBtnAction2.setValue(actionMutable);
-                Log.d(TAG, "setActionBtn2: 188" + actionMutable.getAction().toString());
-                // acciones de guardado
                 updatePerfil(prop);
                 break;
         }
@@ -248,5 +243,10 @@ public class PropietarioViewModel extends AndroidViewModel {
             mUriImage.setValue(uri);
             updateAvatar(uri);
         }
+    }
+    public  void verificarAvatarEditable(){
+            if(actionMutable.getAction()=="Guardar") {
+                mBtnAvatar.setValue(true);
+            }
     }
 }

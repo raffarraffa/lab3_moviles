@@ -88,11 +88,8 @@ public class PropietarioFragment extends Fragment {
             }
         });
 
-        mViewModel.getMBtnAction().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
+        mViewModel.getMBtnAction().observe(getViewLifecycleOwner(), s ->{
                 binding.btnEditar.setText(s);
-            }
         });
         mViewModel.getMBtnAction2().observe(getViewLifecycleOwner(), new Observer<ActionMutable>() {
             @Override
@@ -116,18 +113,16 @@ public class PropietarioFragment extends Fragment {
                 prop.setPassword(binding.inputPassword.getText().toString());
                 prop.setAvatar(binding.imgAvatar.getTag().toString());
                 prop.setDni(binding.inputDni.getText().toString());
-                Toast.makeText(getContext(), "Propietario Editado", LENGTH_LONG).show();
                 mViewModel.setActionBtn2(binding.btnEditar.getText().toString(), prop);
             }
         });
-        binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirGaleria();
-                Toast.makeText(getContext(), binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
-                Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
-            }
+        mViewModel.getMBtnAvatar().observe(getViewLifecycleOwner(), b->{  abrirGaleria();  });
+
+        binding.imgAvatar.setOnClickListener( v-> {
+            mViewModel.verificarAvatarEditable();
         });
+
+
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override

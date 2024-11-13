@@ -83,7 +83,6 @@ public class InmuebleNewViewModel extends AndroidViewModel {
         String token = ApiData.getDataToken(context);
         String inmuebleStr;
         File file;
-
         // Se obtiene el path de la imagen
         String path = "drawable/logo_final.webp";
         String mime= null;
@@ -91,8 +90,6 @@ public class InmuebleNewViewModel extends AndroidViewModel {
             path = RealPathUtil.getRealPath(context, uriImage);
             mime = RealPathUtil.getMimeTypeFromUri2(context,uriImage);
         }
-        Log.d(TAG, "crearInmueble: 94" + mime);
-
         file = new File(path);
 
         // Convertir el objeto inmuebleDto a un String JSON
@@ -105,9 +102,6 @@ public class InmuebleNewViewModel extends AndroidViewModel {
         RequestBody fileBody = RequestBody.create(file, MediaType.parse(mime));
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("imagen", file.getName(), fileBody);
 
-        // Verificar los valores
-        Log.d(TAG, "crearInmueble: JSON inmueble: " + inmuebleStr);
-        Log.d(TAG, "crearInmueble: Imagen: " + imagePart.headers());
 
         // Realizar la solicitud Retrofit
         Call<ResMsg> req = api.CreateInmueble(token, inmueble, imagePart);
@@ -115,9 +109,10 @@ public class InmuebleNewViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "Inmueble creado con éxito: " + response.body());
+                    Toast.makeText(context,"Inmueble crerado con exito ",Toast.LENGTH_SHORT).show();
+                    mResultOk.setValue(true);
                 } else {
-                    Log.e(TAG, "Error en la respuesta: " + response.code());
+                    Toast.makeText(context,"Error creando inmueble ",Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -128,101 +123,11 @@ public class InmuebleNewViewModel extends AndroidViewModel {
         });
     }
 
-
-
-    /*
-    public  void  crearInmueble( InmuebleDto inmuebleDto, Uri uriImage)
-    {
-        String token = ApiData.getDataToken(context);
-        String inmuebleStr;
-        File file;
-//        String path ="res/drawable/logo_final.webp";
-        String path ="drawable/logo_final.webp";
-        if(uriImage !=null) {
-            path = RealPathUtil.getRealPath(context, uriImage);
-        }
-        file = new File(path);
-        inmuebleStr = new Gson().toJson(inmuebleDto);
-        // ceate body con json
-      //  RequestBody inmueble = RequestBody.create(inmuebleStr,MediaType.parse("text/plain"));
-        RequestBody inmueble = RequestBody.create(inmuebleStr, MediaType.parse("application/json"));
-        // create body imagen
-        RequestBody fileBody = RequestBody.create(file,MediaType.parse("multipart/form-data"));
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("imagen", file.getName(), fileBody);
-
-        Log.d(TAG, "crearInmueble: 98 \n" + inmuebleStr );
-        Log.d(TAG, "crearInmueble: 99 \n" + inmueble.contentType() );
-        Log.d(TAG, "crearInmueble: 100 \n" + imagePart.headers() );
-
-        Call<ResMsg> req = api.CreateInmueble(token, inmueble,imagePart);
-        req.enqueue(new Callback<ResMsg>() {
-            @Override
-            public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
-                if (response.isSuccessful()) {
-                    // Respuesta exitosa
-                    Log.d(TAG, "Inmueble creado con éxito: " + response.body());
-                } else {
-                    // Manejo de errores en la respuesta
-                    Log.e(TAG, "Error en la respuesta: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResMsg> call, Throwable throwable) {
-                // Error al hacer la llamada
-                Log.e(TAG, "onFailure: Error al hacer la llamada", throwable);
-            }
-        });
-   }
-   */
-
-/*
-    public void  crearInmueble(InmuebleDto inmueble, Uri uriImage){
-    String token = ApiData.getDataToken(context);
-    File file;
-    String path ="res/drawable/logo_final.webp";
-    if(uriImage !=null) {
-        path = RealPathUtil.getRealPath(context, uriImage);
-    }
-    file = new File(path);
-    RequestBody rBodyFile = RequestBody.create(file, MediaType.parse("image/jpeg"));
-    MultipartBody.Part imagen = MultipartBody.Part.createFormData("imagen", file.getName(), rBodyFile);
-    String inmu = new Gson().toJson(inmueble);
-   Log.d(TAG, "crearInmueble: 94" + inmu);
-    String inmuebleJson2 = "{\"direccion\":\"Junin 67\",\"uso\":\"Residencial\",\"ambientes\":1,\"coordenadas\":null,\"precio\":123,\"descripcion\":\"asdasd\",\"ciudad\":\"Carpinteria\",\"tipo\":\"Casa\"}" ;
-    RequestBody inmuebleJson = RequestBody.create(inmuebleJson2,MediaType.parse("application/json"));
-        Call<ResMsg> req =api.CreateEntityJson(  token, "inmueble", inmuebleJson,  imagen);
-        req.enqueue(new Callback<ResMsg>() {
-            @Override
-            public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
-                if(response.isSuccessful()){
-                    mResultOk.setValue(true);
-                    Log.d(TAG, "onResponse: 68");
-                }else{
-                    Log.d(TAG, "onResponse: 71");
-                }
-
-                Log.d(TAG, "onResponse: " + response);
-            }
-            @Override
-            public void onFailure(Call<ResMsg> call, Throwable throwable) {
-                Log.d(TAG, "onResponse: 112");
-            }
-        });
-
-   }
-   */
-
     public void setImage(ActivityResult result) {
-
             if (result.getResultCode() == RESULT_OK) {
                 Intent data = result.getData();
                 Uri uri = data.getData();
                 mUriImage.setValue(uri);
-               // Toast.makeText(context, "uri: " + uri.toString() , Toast.LENGTH_SHORT).show();
             }
         }
-
-
-
 }

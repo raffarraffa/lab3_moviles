@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getMTokenValid().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                iniciarApp();
-              //  finish();
+              iniciarApp();
+              finish();
             }
         });
         mainViewModel.getMInternet().observe(this, new Observer<Boolean>() {
@@ -62,17 +62,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Debe Activar internet", Toast.LENGTH_LONG).show();
             }
         });
-        // verifics
-        getPermisos();
-
-      //  mainViewModel.isValidToken();
-    }
+        // verificar
+         getPermisos();
+       }
 
     @Override
     protected void onResume() {
         super.onResume();
             Toast.makeText(this, "Has regresado ", Toast.LENGTH_LONG).show();
-
     }
 
     /**

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/restore_form"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:backgroundTint="#03A9F4">
 
     <ImageView
         android:id="@+id/imageLogo"
@@ -18,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/logo7" />
 
     <TextView
@@ -41,42 +42,17 @@
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="376dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#00BCD4"
         android:hint="Ingrese su email"
         android:inputType="textEmailAddress"
         android:text="lopezrafa@gmail.com"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
-
-    <EditText
-        android:id="@+id/restorePass"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="320dp"
-        android:hint="Ingrese Nueva Clave"
-        android:inputType="number"
-        android:text="123"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:visibility="invisible"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="445dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

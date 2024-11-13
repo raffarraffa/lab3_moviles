@@ -137,7 +137,9 @@ public class LoginViewModel extends AndroidViewModel {
      *
      */
     public void passwordRestore(String email) {
-        User user = new User(email);
+
+        User user = new User();
+        user.setEmail(email);
         Call<ResMsg> req = api.PostRestore(user);
         req.enqueue(new Callback<ResMsg>() {
             @Override
@@ -146,9 +148,9 @@ public class LoginViewModel extends AndroidViewModel {
 
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "onResponse: " + msg.toString());
-                    mRestoreResultOk.setValue(msg.getMsg());
+                    mRestoreResultOk.setValue("Se ha enviado un Email \n Verifique el codigo y link recibido");
                 } else {
-                     mRestoreResultOk.setValue("Error de Recuper");
+                     mRestoreResultOk.setValue("Error de Recupereracion");
                 }
             }
             @Override

@@ -19,7 +19,7 @@ public class LogoutFragment extends Fragment {
 
         new AlertDialog.Builder(getContext())
                 .setTitle("Cerrar sesión")
-                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                .setMessage("¿Estás seguro de que deseas cerrar sesion?")
                 .setPositiveButton("Sí", (dialog, which) -> {
                     accionLogout();
                 })
@@ -30,12 +30,10 @@ public class LogoutFragment extends Fragment {
     }
 
     private void accionLogout() {
-
         // eliminar tokens
-        ApiData.delDataToken(getContext());
+        ApiData.setDataToken(getContext(),"");
         Toast.makeText(getContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show();
-
-      // vivle a login
+        // vuelve a login
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

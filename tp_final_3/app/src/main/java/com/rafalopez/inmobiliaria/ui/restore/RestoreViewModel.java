@@ -49,33 +49,22 @@ public class RestoreViewModel extends AndroidViewModel {
      */
     public void acceptRestore(String token, String codigo) {
         int otp= Integer.parseInt(codigo);
-        Log.e(TAG, "acceptRestore: " + otp );
         User user = new User(token, otp);
-
-        Log.e(TAG, "acceptRestore: 52" );
         Call<ResMsg> req = api.PostAcceptRestore("Bearer "+ token, user);
         req.enqueue(new Callback<ResMsg>() {
             @Override
             public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
-
                 if (response.isSuccessful() && response.body() != null) {
                     if(ApiData.setDataToken(context, "Bearer "+ token)){
                         mAceptResultOk.setValue("ok");
                     }
-
-
                 } else {
-
                     Log.d(TAG, "onResponse : 61");
-
                 }
-                Log.e(TAG, "onResponse: linea 70 _____++++++++______ " + ApiData.getDataToken(context));
             }
             @Override
             public void onFailure(Call<ResMsg> call, Throwable throwable) {
-//                mAceptResultOk.setValue("Error de conexión: " + throwable.getMessage());
-               // mAceptResultOk.setValue("Error de conexión: " );
-                Log.e(TAG, "onFailure: " + throwable.getMessage());
+
             }
         });
     }

@@ -11,48 +11,40 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="284dp"
+        android:layout_height="wrap_content"
         android:paddingVertical="20dp">
 
         <ImageView
             android:id="@+id/imageInmueble"
-            android:layout_width="306dp"
-            android:layout_height="174dp"
+            android:layout_width="346dp"
+            android:layout_height="197dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.403"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textDireccion"
+            app:layout_constraintVertical_bias="1.0"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/textDireccion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="346dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:capitalize="words"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:phoneNumber="false"
             android:text="TextView"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.213"
+            app:layout_constraintHorizontal_bias="0.396"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/imageInmueble"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.213"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textDireccion"
-            app:layout_constraintVertical_bias="0.305" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

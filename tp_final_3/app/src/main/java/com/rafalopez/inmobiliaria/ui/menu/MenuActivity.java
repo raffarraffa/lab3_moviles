@@ -74,6 +74,7 @@ public class MenuActivity extends AppCompatActivity {
       //  getPermisos();
 
         // oberver mutables
+        //TODO bug en mutable
         menuViewModel.getmPropietario().observe(this, new Observer<Propietario>() {
             @Override
             public void onChanged(Propietario propietario) {
@@ -86,6 +87,7 @@ public class MenuActivity extends AppCompatActivity {
                         .into((ImageView) headerView.findViewById(R.id.imageProfile));
                 TextView headerText = headerView.findViewById(R.id.headProfileName);
                 headerText.setText(propietario.getApellido() +" " + propietario.getNombre());
+
             }
 
         });

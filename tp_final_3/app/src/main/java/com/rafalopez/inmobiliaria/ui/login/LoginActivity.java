@@ -90,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
             mostarSalirApp();
         });
         getPermisos();
-        //iniciarApp();
     }
 
     /**
@@ -101,39 +100,15 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
     /**
-     * Dilogo d restrucaion pass
+     * Dilogo de restore pass
      */
-    private void  passwordRestore1(){
-        LayoutInflater inflater = getLayoutInflater();
-        RestoreFormBinding formBinding = RestoreFormBinding.inflate(inflater);
-
-        new AlertDialog.Builder(this)
-//                .setTitle("Rsetaurr Contrasñea")
-                .setView(formBinding.getRoot())
-//                .setMessage("¿Esta seguro de resetear contraseña?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Acción a realizar si el usuario confirma
-                        Toast.makeText(getApplicationContext(), "Confirmado", Toast.LENGTH_SHORT).show();
-                        loginViewModel.passwordRestore(formBinding.restoreEmail.getText().toString());
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Acción a realizar si el usuario cancela
-                        dialog.dismiss();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
-    private void passwordRestore() {
+     private void passwordRestore() {
         LayoutInflater inflater = getLayoutInflater();
         RestoreFormBinding formBinding = RestoreFormBinding.inflate(inflater);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(formBinding.getRoot())
-                .setPositiveButton(android.R.string.yes, null) // Dejar null para manejar el clic manualmente
+                .setPositiveButton(android.R.string.yes, null)
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -151,15 +126,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String email = formBinding.restoreEmail.getText().toString();
 
-                        // Llama al ViewModel para restaurar la contraseña
+                        // llama al ViewModel para restaurar la pass
                         loginViewModel.passwordRestore(email);
 
-                        // Observa el resultado de la restauración de la contraseña
+                        // observer resultado de la restauración de pass
                         loginViewModel.getMRestoreResultOk().observe(LoginActivity.this,  new Observer<String>() {
                             @Override
                             public void onChanged(String result) {
-                                Toast.makeText(getApplicationContext(), result,
-                                        Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), result,Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         });

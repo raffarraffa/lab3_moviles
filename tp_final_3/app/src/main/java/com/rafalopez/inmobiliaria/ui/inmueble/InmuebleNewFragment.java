@@ -56,7 +56,6 @@ public class InmuebleNewFragment extends Fragment {
             binding.detailImage.setImageURI(uriImg);
             binding.detailImage.setTag(uriImg);
         });
-
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

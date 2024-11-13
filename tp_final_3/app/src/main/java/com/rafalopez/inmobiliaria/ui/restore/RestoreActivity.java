@@ -28,11 +28,8 @@ import com.rafalopez.inmobiliaria.ui.login.LoginActivity;
 import com.rafalopez.inmobiliaria.ui.login.LoginViewModel;
 
 public class RestoreActivity extends AppCompatActivity {
-    private static final String TAG = "salidaDebug";
     private ActivityRestoreBinding binding;
     private RestoreViewModel restoreViewModel;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
