@@ -25,6 +25,7 @@ import com.rafalopez.inmobiliaria.utils.RealPathUtil;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -224,7 +225,7 @@ public class PropietarioViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
                 if (response.isSuccessful()) {
-                    mPropietario.setValue(response.body());
+                    mPropietario.postValue(response.body());
                     Log.d(TAG, "view model porpietario linea 213"+response.body() +"");
                 } else {
                     Log.e(TAG,
@@ -240,12 +241,12 @@ public class PropietarioViewModel extends AndroidViewModel {
         if (result.getResultCode() == RESULT_OK) {
             Intent data = result.getData();
             Uri uri = data.getData();
-            mUriImage.setValue(uri);
+            mUriImage.postValue(uri);
             updateAvatar(uri);
         }
     }
     public  void verificarAvatarEditable(){
-            if(actionMutable.getAction()=="Guardar") {
+            if(Objects.equals(actionMutable.getAction(), "Guardar")) {
                 mBtnAvatar.setValue(true);
             }
     }

@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginViewModel.getmShake().observe(this, shake->{
-            Toast.makeText(getApplicationContext(),"Llamando a tel:123456789",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Telefono N° 123456789",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse("tel:123456789"));
             startActivity(intent);

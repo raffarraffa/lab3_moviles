@@ -78,6 +78,7 @@ public class MenuActivity extends AppCompatActivity {
         menuViewModel.getmPropietario().observe(this, new Observer<Propietario>() {
             @Override
             public void onChanged(Propietario propietario) {
+
                 //todo mostrar dato sperfil en head menu
                 View headerView = binding.navView.getHeaderView(0);
                 Glide.with(getApplication())
@@ -87,9 +88,7 @@ public class MenuActivity extends AppCompatActivity {
                         .into((ImageView) headerView.findViewById(R.id.imageProfile));
                 TextView headerText = headerView.findViewById(R.id.headProfileName);
                 headerText.setText(propietario.getApellido() +" " + propietario.getNombre());
-
             }
-
         });
         menuViewModel.getProfile();
         setSupportActionBar(binding.appBarMain2.toolbar);
@@ -108,9 +107,7 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-
-        Log.d(TAG, "onCreate: 94");
+        menuViewModel.getProfile();
     }
 
 

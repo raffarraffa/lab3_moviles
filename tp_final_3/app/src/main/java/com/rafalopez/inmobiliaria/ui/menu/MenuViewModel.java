@@ -42,8 +42,6 @@ public class MenuViewModel extends AndroidViewModel {
         context = application.getApplicationContext();
         api = ApiClient.getApiInmobiliaria();
         token = ApiData.leerData(context, AppParams.PREFERENCES_DATA, AppParams.TOKEN_KEY);
-//        propietario=ApiData.leerDataPropietario(context);
-
     }
 
     /**
@@ -72,16 +70,12 @@ public class MenuViewModel extends AndroidViewModel {
             public void onResponse(Call<Propietario> call, Response<Propietario> response) {
                 propietario = response.body();
                 boolean isProrietarioSaved = ApiData.guardarDataPropietario(context, AppParams.PREFERENCES_DATA, propietario);
-                Log.d(TAG, "MENU VIEW MODEL: 41" + isProrietarioSaved);
-
-                mPropietario.setValue(propietario);
+                mPropietario.postValue(propietario);
             }
-
             @Override
             public void onFailure(Call<Propietario> call, Throwable throwable) {
-                Log.e(TAG, "Error en la solicitud: " + throwable.getMessage());
             }
         });
-        Log.d(TAG, "getProfile: 22" + token);
+
     }
 }
