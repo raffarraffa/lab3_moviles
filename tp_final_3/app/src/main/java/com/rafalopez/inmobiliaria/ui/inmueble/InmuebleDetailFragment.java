@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.R;
 import com.rafalopez.inmobiliaria.databinding.FragmentInmuebleDetailBinding;
@@ -28,6 +30,7 @@ public class InmuebleDetailFragment extends Fragment {
     private static String TAG= AppParams.TAG;
     private FragmentInmuebleDetailBinding binding;
     private  InmuebleDetailViewModel mViewModel;
+    private boolean banderaDisponible;
 
 
     public InmuebleDetailFragment() {
@@ -49,22 +52,7 @@ public class InmuebleDetailFragment extends Fragment {
         mViewModel.getmInmueble().observe(getViewLifecycleOwner(), new Observer<Inmueble>() {
             @Override
             public void onChanged(Inmueble inmueble) {
-                //Inmueble{
-                // id=1,
-                // direccion='san martin 45',*
-                // uso='Comercial',*
-                // idTipo=1,*
-                // ambientes=9,*
-                // coordenadas='-32.414566613131946, -65.00877119828924',*
-                // precio=1.26,*
-                // propietarioId=4,*
-                // estado='Disponible',*
-                // idCiudad=1,*
-                // idZona=2,*
-                // borrado=false,*
-                // descripcion='Casa  de 2 ambientes',*
-                // urlImg='qwerty.jpg'*
-                // }
+                banderaDisponible = inmueble.getDisponible();
               //  binding.detailDomicilio.setText(inmueble.getDireccion());
                 binding.txtDireccion.setText(inmueble.getDireccion());
                 binding.txtCiudad.setText(inmueble.getCiudad());
@@ -72,25 +60,48 @@ public class InmuebleDetailFragment extends Fragment {
                 binding.txtAmbientes.setText(inmueble.getAmbientes()+"");
                 binding.txtUso.setText(inmueble.getUso());
                 binding.txtPrecio.setText("$ "+inmueble.getPrecio());
-               binding.txtDescripcion.setText(inmueble.getDescripcion());
-           Log.d(TAG, "onChanged: detial fragment 78 " + inmueble);
-
-
-                String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();
+                binding.txtDescripcion.setText(inmueble.getDescripcion());
+                binding.switch1.setChecked(banderaDisponible);
+                binding.switch1.setText(inmueble.getEstado());
+                String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getUrlImg();
                 Glide
                         .with(getContext())
                         .load(urlImg)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .skipMemoryCache(false)
+                        .transform(new RoundedCorners(30))
                         .into(binding.detailImage);
 
             }
         });
+        mViewModel.getMSwitch().observe(getViewLifecycleOwner(), msg->{
+            Log.e(TAG, "onCreateView: " + msg );
+            mostrarConfirmacionDialogo(banderaDisponible,msg);
+        });
+
         mViewModel.getBundle(getArguments());
-
-
-
+        binding.switch1.setOnCheckedChangeListener((v, isChecked) -> {
+            mViewModel.verificaEstado(banderaDisponible,isChecked);
+        });
         return binding.getRoot();
+    }
+
+    private void mostrarConfirmacionDialogo(boolean banderaDisponible, String msg) {
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Cambiar estado Inmueble")
+                .setMessage(banderaDisponible + "")
+             //   .setMessage("¿Estas seguro ?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    Inmueble inmueble = mViewModel.getmInmueble().getValue();
+                    binding.switch1.setText(msg);
+                    mViewModel.cambiarEstado(inmueble.getId(), msg);
+                    requireActivity().getSupportFragmentManager().popBackStack();
+                })
+                .setNegativeButton("No", (dialog, which)->{
+                    binding.switch1.setChecked(banderaDisponible);
+                })
+                .show();
     }
 
 

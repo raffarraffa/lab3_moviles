@@ -10,17 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.rafalopez.inmobiliaria.AppParams;
 import com.rafalopez.inmobiliaria.R;
 import com.rafalopez.inmobiliaria.entity.Inmueble;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHolder>  {
@@ -42,15 +41,16 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull InmuebleAdapter.ViewHolder holder, int position) {
         Inmueble inmueble = inmuebles.get(position);
-        holder.direccion.setText(inmueble.getDireccion());
-        holder.precio.setText("$ " + inmueble.getPrecio()+"");
-        String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getId() +"/"+ inmueble.getUrlImg();
+        holder.direccion.setText(inmueble.toString());
+
+        String urlImg = AppParams.URL_BASE_IMG_INMU + inmueble.getUrlImg();
         if (urlImg != null && !urlImg.isEmpty()) {
             Glide
                     .with(contexto)
                     .load(urlImg)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .skipMemoryCache(false)
+                    .transform(new RoundedCorners(30))
                     .into(holder.img);
         } else {
             Log.d(TAG, "Cargando imagen por defecto");
@@ -75,10 +75,9 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
         TextView precio;
         TextView direccion;
         ImageView img;
-        public ViewHolder(@NonNull View itemView) {
+    public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            precio= itemView.findViewById(R.id.textPrecio);
-            direccion=itemView.findViewById(R.id.textDomicilio);
+            direccion=itemView.findViewById(R.id.textDireccion);
             img=itemView.findViewById(R.id.imageInmueble);
         }
     }

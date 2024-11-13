@@ -1,7 +1,5 @@
 package com.rafalopez.inmobiliaria.entity;
 
-import androidx.annotation.NonNull;
-
 public class ActionMutable {
     private boolean visible;
     private String action;

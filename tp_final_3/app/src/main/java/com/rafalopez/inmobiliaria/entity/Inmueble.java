@@ -1,4 +1,6 @@
 package com.rafalopez.inmobiliaria.entity;
+import android.util.Log;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -200,26 +202,26 @@ public class Inmueble implements Serializable {
         this.tipo = tipo;
     }
 
+    public  boolean getDisponible(){
+        Log.e("salida", "getDisponible: " + this.estado);
+        return (this.estado.equals("Disponible"));
+    }
     @Override
     public String toString() {
-        return "Inmueble{" +
-                "id=" + id +
-                ", direccion='" + direccion + '\'' +
-                ", uso='" + uso + '\'' +
-                ", idTipo=" + idTipo +
-                ", ambientes=" + ambientes +
-                ", coordenadas='" + coordenadas + '\'' +
-                ", precio=" + precio +
-                ", propietarioId=" + propietarioId +
-                ", estado='" + estado + '\'' +
-                ", idCiudad=" + idCiudad +
-                ", idZona=" + idZona +
-                ", borrado=" + borrado +
-                ", descripcion='" + descripcion + '\'' +
-                ", urlImg='" + urlImg + '\'' +
-                ", ciudad='" + ciudad + '\'' +
-                ", tipo='" + tipo + '\'' +
-                '}';
+        return " Direccion " + direccion +
+                ", " + ciudad +
+                "\n Precio $" + precio
+                ;
     }
+    public String toStringDetalle() {
+        return " Direccion " + direccion +
+                "\n Ciudad " + ciudad +
+                "\n Precio $" + precio +
+                "\n Uso " + uso +
+                "\n Ambientes " + ambientes +
+                "\n Estado " + estado +
+                "\n Ddescripcion " + descripcion ;
+    }
+
 
 }

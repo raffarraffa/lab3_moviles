@@ -1,15 +1,19 @@
 package com.rafalopez.inmobiliaria.ui.inmueble;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,17 +26,11 @@ public class InmuebleNewFragment extends Fragment {
 
     private static String TAG= AppParams.TAG;
     private FragmentInmuebleNewBinding binding;
-    private InmuebleNewViewModel mViewModel;
     private Intent intent;
-    private ActivityResultLauncher<Intent> galeriaLanzador;
-    private ActivityResultLauncher<String> permisoLanzador;
-
-
-
-
+    private InmuebleNewViewModel mViewModel;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     public InmuebleNewFragment () { }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,  @Nullable Bundle savedInstanceState) {
         binding = FragmentInmuebleNewBinding.inflate(inflater,container, false);
@@ -42,8 +40,6 @@ public class InmuebleNewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        permisoLanzador = registerForActivityResult(new ActivityResultContracts.RequestPermission(), this::handlePermisoResultado);
-
         // observers de mutables
         mViewModel.getMResultOk().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -51,13 +47,15 @@ public class InmuebleNewFragment extends Fragment {
                 Navigation.findNavController(view).navigateUp();
             }
         });
-        // reempalzando fuinciones anoniam con fucnioen flecha
+        // reempalzando fuinciones anoniam con fucnioen lambda
         mViewModel.getmPermisoGaleria().observe(getViewLifecycleOwner(), permiso -> {
                 Toast.makeText(getContext(),"permiso " + permiso,Toast.LENGTH_SHORT).show();
                Log.d(TAG, "onViewCreated: 55");
                 });
-
-
+        mViewModel.getMUri().observe(getViewLifecycleOwner(), uriImg ->{
+            binding.detailImage.setImageURI(uriImg);
+            binding.detailImage.setTag(uriImg);
+        });
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,29 +67,30 @@ public class InmuebleNewFragment extends Fragment {
                 inmueble.setPrecio(binding.txtPrecio.getText().toString());
                 inmueble.setUso(binding.txtUso.getSelectedItem().toString());
                 inmueble.setDescripcion(binding.txtDescripcion.getText().toString());
-
-                Log.d(TAG, "Inmueble creado: " + inmueble);
-
-                // Envía el objeto al ViewModel
-                mViewModel.crearInmueble(inmueble);  // Método en ViewModel para guardar
-           //     Navigation.findNavController(view).navigateUp();
+                Object tag = binding.detailImage.getTag();
+                Log.d(TAG, "onClick: " + tag);
+                Uri uriImage = (Uri) binding.detailImage.getTag();
+                mViewModel.crearInmueble(inmueble, uriImage );
+            }
+        });
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                mViewModel. setImage(result);
             }
         });
 
         binding.detailImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.verificarPermiso(permisoLanzador);
-            //    permisoLanzador.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-                Log.d(TAG, "onClick: 92");
-                Toast.makeText(getContext() , "apreto imagen", Toast.LENGTH_SHORT).show();
-
+                abrirGaleria();
             }
         });
+   }
+    private void abrirGaleria() {
+        intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        activityResultLauncher.launch(intent);
     }
-    private void handlePermisoResultado(Boolean permisoConcedido) {
-        // Manejar el resultado de la solicitud de permiso
-        mViewModel.getPermisoImagenGalery(permisoConcedido);
-    }
+
 
 }

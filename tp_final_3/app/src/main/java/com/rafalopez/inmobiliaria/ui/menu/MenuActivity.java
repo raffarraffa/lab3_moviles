@@ -1,6 +1,9 @@
 package com.rafalopez.inmobiliaria.ui.menu;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -8,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +20,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,6 +58,7 @@ public class MenuActivity extends AppCompatActivity {
 
     /**
      * creacionb de actividad y configurcion interfaz de usuario
+     *
      * @param savedInstanceState estado de la actividad guardada
      */
     @Override
@@ -64,18 +71,23 @@ public class MenuActivity extends AppCompatActivity {
                 .AndroidViewModelFactory
                 .getInstance(getApplication())
                 .create(MenuViewModel.class);
+      //  getPermisos();
 
         // oberver mutables
+        //TODO bug en mutable
         menuViewModel.getmPropietario().observe(this, new Observer<Propietario>() {
             @Override
             public void onChanged(Propietario propietario) {
+
                 //todo mostrar dato sperfil en head menu
-                View headerView =binding.navView.getHeaderView(0);
+                View headerView = binding.navView.getHeaderView(0);
                 Glide.with(getApplication())
-                        .load(AppParams.URL_BASE_FILE +  propietario.getAvatar())
+                        .load(AppParams.URL_BASE_IMG_AVATAR + propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into((ImageView) headerView.findViewById(R.id.imageProfile));
+                TextView headerText = headerView.findViewById(R.id.headProfileName);
+                headerText.setText(propietario.getApellido() +" " + propietario.getNombre());
             }
         });
         menuViewModel.getProfile();
@@ -95,13 +107,13 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        Log.d(TAG, "onCreate: 94");
+        menuViewModel.getProfile();
     }
-
 
 
     /**
      * infaldo del menu en barra e
+     *
      * @param menu menu a inflar
      * @return resultado del infalte
      */
@@ -111,14 +123,19 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     /**
      * contoller de  navegacion hacia arriba
+     *
      * @return True si se navego hacia arriba
      */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
-        Log.d(TAG, "onSupportNavigateUp: ");
+
+
+        Log.d(TAG, "onSupportNavigateUp: kkk");
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
@@ -130,4 +147,6 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
+
+
 }

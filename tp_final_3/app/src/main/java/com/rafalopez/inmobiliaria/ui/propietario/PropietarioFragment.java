@@ -2,6 +2,8 @@ package com.rafalopez.inmobiliaria.ui.propietario;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.Observer;
@@ -12,10 +14,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +43,8 @@ public class PropietarioFragment extends Fragment {
     private FragmentPropietarioBinding binding;
     private ActivityResultLauncher<Intent> imgProfileLanzador;
     private ActivityResultLauncher<String> permisoLanzador;
+    private Intent intent;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     /**
      *  nueva instancia de PropietarioFragment
@@ -70,19 +78,18 @@ public class PropietarioFragment extends Fragment {
                 binding.inputDni.setText(propietario.getDni());
                 binding.inputTelefono.setText(propietario.getTelefono());
                 Glide.with(getContext())
-                        .load(AppParams.URL_BASE_FILE  + propietario.getAvatar())
+                        .load(AppParams.URL_BASE_IMG_AVATAR  + propietario.getAvatar())
                         .error(R.drawable.no_avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(binding.imgAvatar);
                 binding.imgAvatar.setTag(propietario.getAvatar());
+
+
             }
         });
 
-        mViewModel.getMBtnAction().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
+        mViewModel.getMBtnAction().observe(getViewLifecycleOwner(), s ->{
                 binding.btnEditar.setText(s);
-            }
         });
         mViewModel.getMBtnAction2().observe(getViewLifecycleOwner(), new Observer<ActionMutable>() {
             @Override
@@ -90,6 +97,10 @@ public class PropietarioFragment extends Fragment {
                 binding.btnEditar.setText(actionMutable.getAction());
                 inputEditable(actionMutable.isVisible());
             }
+        });
+        mViewModel.getMUri().observe(getViewLifecycleOwner(), uriImg ->{
+            binding.imgAvatar.setImageURI(uriImg);
+            binding.imgAvatar.setTag(uriImg);
         });
         binding.btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,19 +113,26 @@ public class PropietarioFragment extends Fragment {
                 prop.setPassword(binding.inputPassword.getText().toString());
                 prop.setAvatar(binding.imgAvatar.getTag().toString());
                 prop.setDni(binding.inputDni.getText().toString());
-                Toast.makeText(getContext(), "Propietario Editado", LENGTH_LONG).show();
                 mViewModel.setActionBtn2(binding.btnEditar.getText().toString(), prop);
             }
         });
-        binding.imgAvatar.setOnClickListener(new View.OnClickListener() {
+        mViewModel.getMBtnAvatar().observe(getViewLifecycleOwner(), b->{  abrirGaleria();  });
+
+        binding.imgAvatar.setOnClickListener( v-> {
+            mViewModel.verificarAvatarEditable();
+        });
+
+
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
-            public void onClick(View v) {
-         //       Toast.makeText(getContext(), binding.imgAvatar.getTag().toString(), LENGTH_LONG).show();
-                Log.d(TAG, "onClick: " + binding.imgAvatar.getTag().toString());
+            public void onActivityResult(ActivityResult result) {
+                mViewModel. setImage(result);
             }
         });
         mViewModel.getProfile();
-        verificarPermisos();
+
+        //      verificarPermisos();
         return binding.getRoot();
     }
 
@@ -143,17 +161,11 @@ public class PropietarioFragment extends Fragment {
         binding.inputTelefono.setFocusableInTouchMode(editable);
         binding.inputPassword.setFocusable(editable);
         binding.inputPassword.setFocusableInTouchMode(editable);
+        binding.imgAvatar.setFocusableInTouchMode(editable);
     }
-    private void verificarPermisos(){
-        permisoLanzador = registerForActivityResult(
-                new ActivityResultContracts.RequestPermission(),
-                isGranted -> {
-                    if (isGranted) {
-                        //abrirGaleria();
-                    } else {
-                        Toast.makeText(getContext().getApplicationContext(), "Permiso de almacenamiento denegado", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
+
+    private void abrirGaleria() {
+        intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        activityResultLauncher.launch(intent);
     }
 }

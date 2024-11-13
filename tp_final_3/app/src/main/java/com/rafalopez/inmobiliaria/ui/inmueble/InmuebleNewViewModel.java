@@ -1,26 +1,36 @@
 package com.rafalopez.inmobiliaria.ui.inmueble;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.PixelCopy;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-
-//import com.rafalopez.inmobiliaria.Manifest;
-import android.Manifest;
+import com.google.gson.Gson;
 import com.rafalopez.inmobiliaria.data.ApiData;
 import com.rafalopez.inmobiliaria.entity.InmuebleDto;
 import com.rafalopez.inmobiliaria.entity.ResMsg;
 import com.rafalopez.inmobiliaria.request.ApiClient;
+import com.rafalopez.inmobiliaria.utils.RealPathUtil;
 
+import java.io.File;
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +42,7 @@ public class InmuebleNewViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> mResultOk;
     private MutableLiveData<String> mMsg;
     private MutableLiveData<Boolean> mPermisoGaleria;
+    private MutableLiveData<Uri> mUriImage;
 
     /**
      * cnstructor de InmuebleNewViewModel
@@ -61,53 +72,62 @@ public class InmuebleNewViewModel extends AndroidViewModel {
         }
         return mMsg;
     }
+    LiveData<Uri> getMUri() {
+        if(mUriImage==null) {
+            mUriImage = new MutableLiveData<>();
+        }
+        return mUriImage;
+    }
 
-    public void  crearInmueble(InmuebleDto inmueble){
+    public void crearInmueble(InmuebleDto inmuebleDto, Uri uriImage) {
         String token = ApiData.getDataToken(context);
-        Log.d(TAG, "crearInmueble: " + inmueble);
-        Call<ResMsg> req =api.CreateInmueble(token,inmueble);
+        String inmuebleStr;
+        File file;
+        // Se obtiene el path de la imagen
+        String path = "drawable/logo_final.webp";
+        String mime= null;
+        if (uriImage != null) {
+            path = RealPathUtil.getRealPath(context, uriImage);
+            mime = RealPathUtil.getMimeTypeFromUri2(context,uriImage);
+        }
+        file = new File(path);
+
+        // Convertir el objeto inmuebleDto a un String JSON
+        inmuebleStr = new Gson().toJson(inmuebleDto);
+
+        // Crear el RequestBody para el JSON del inmueble
+        RequestBody inmueble = RequestBody.create(inmuebleStr, MediaType.parse("application/json"));
+
+        // Crear el RequestBody para la imagen
+        RequestBody fileBody = RequestBody.create(file, MediaType.parse(mime));
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("imagen", file.getName(), fileBody);
+
+
+        // Realizar la solicitud Retrofit
+        Call<ResMsg> req = api.CreateInmueble(token, inmueble, imagePart);
         req.enqueue(new Callback<ResMsg>() {
             @Override
             public void onResponse(Call<ResMsg> call, Response<ResMsg> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
+                    Toast.makeText(context,"Inmueble crerado con exito ",Toast.LENGTH_SHORT).show();
                     mResultOk.setValue(true);
-                    Log.d(TAG, "onResponse: 68");
-              //      Toast.makeText(context, "Inmueble Creado", Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.d(TAG, "onResponse: 71");
-                //    Toast.makeText(context, "Inmueble Nopudo crearse", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context,"Error creando inmueble ",Toast.LENGTH_SHORT).show();
                 }
-
-                Log.d(TAG, "onResponse: " + response);
             }
 
             @Override
             public void onFailure(Call<ResMsg> call, Throwable throwable) {
-
+                Log.e(TAG, "Error al hacer la llamada", throwable);
             }
         });
-
-
     }
-    public void  getPermisoImagenGalery(Boolean permiso)
-    {
-        if(permiso){
-            mMsg.setValue("Permiso otorgado");
-            mPermisoGaleria.setValue(true);
-        }else {
-            mMsg.setValue("Permiso denegado");
+
+    public void setImage(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                Uri uri = data.getData();
+                mUriImage.setValue(uri);
+            }
         }
-    }
-
-    public void verificarPermiso( ActivityResultLauncher<String> permisoLanzador) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            mPermisoGaleria.setValue(true);
-        } else {
-            Log.d(TAG, "verificarPermiso: 107");
-            permisoLanzador.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-        }
-    }
-
-
 }

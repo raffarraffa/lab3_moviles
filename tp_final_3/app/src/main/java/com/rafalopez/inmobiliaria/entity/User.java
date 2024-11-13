@@ -12,8 +12,8 @@ public class User {
        this.password=password;
     }
 
-    public User(String email, int otp){
-        this.email=email;
+    public User(String token, int otp){
+        this.token=token;
         this.otp=otp;
     }
 
@@ -30,9 +30,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) {this.email = email;}
 
     public String getPassword() {
         return password;

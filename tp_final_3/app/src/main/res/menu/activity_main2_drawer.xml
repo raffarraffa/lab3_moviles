@@ -8,30 +8,26 @@
 <!-- Inicio mapa -->
         <item
             android:id="@+id/nav_map"
-            android:icon="@drawable/logo7"
+            android:icon="@drawable/home"
             android:title="Inicio" />
 <!-- Perfil popietario       -->
         <item
             android:id="@+id/nav_propietario"
-            android:icon="@drawable/logo_final"
+            android:icon="@drawable/person_apron_24px"
             android:title="Perfil" />
 <!--  -->
         <item
             android:id="@+id/nav_inmueble"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/apartment_24px"
             android:title="Inmuebles" />
         <item
-            android:id="@+id/nav_inquilino"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="Inquilinos" />
-        <item
             android:id="@+id/nav_contrato"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/contrato"
             android:title="Contratos" />
         <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="LogOut" />
+        android:id="@+id/nav_logout"
+        android:title="Cerrar sesión"
+        android:icon="@drawable/login" />
 <!--        <item-->
 <!--            android:id="@+id/nav_home"-->
 <!--            android:icon="@drawable/ic_menu_camera"-->
