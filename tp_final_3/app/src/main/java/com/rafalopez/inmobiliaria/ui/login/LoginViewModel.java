@@ -214,8 +214,7 @@ public class LoginViewModel extends AndroidViewModel {
             if (shake > 12) {
           //      Toast.makeText(context, acelX + " " + acelY + " " + acelZ + " " , Toast.LENGTH_LONG  ).show();
                 Log.e(TAG, "onSensorChanged: " + acelX + " " + acelY + " " + acelZ   );
-                mShake.setValue(true);
-          //      shakeDetected.setValue(true);  // Notifica el evento de agitación
+                mShake.setValue(true);          
             }
         }
 
